@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 const colorPrimary = Color(0xFFa7beb2);
 const colorPrimaryDark = Color(0xFF44524a);
 const colorAccent = Color(0xFF7d8f83);
-const colorPrimaryBg = Color(0xFFF7F8FD);
+const colorPrimaryBg = Color.fromARGB(255, 241, 246, 244);
 
 const color_gray = Color(0xFF626C74);
 const color_red_light = Color(0xFFEFAEB4);

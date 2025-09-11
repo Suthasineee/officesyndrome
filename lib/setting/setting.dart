@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:office_syndrome/helper/app_controller.dart';
 import 'package:office_syndrome/helper/colors.dart';
@@ -8,7 +9,12 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  bool isOn = false;
+  bool isWarningOn = false;
+  bool isClockWarningOn = false;
+  bool isTimeOn = false;
+  bool onSelectTimeButton = false;
+  bool onSelectOneTimeButton = false;
+  bool onSelectTwoTimeButton = false;
   @override
   void initState() {
     super.initState();
@@ -25,145 +31,442 @@ class _SettingPageState extends State<SettingPage> {
       appBar: AppBar(elevation: 0, backgroundColor: colorPrimary),
       backgroundColor: Colors.white,
       bottomNavigationBar: _nextButton(),
-      body: Column(
-        children: <Widget>[
-          Container(
-            width: MediaQuery.sizeOf(context).width,
-            color: colorPrimary,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(height: 70),
-                Stack(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 20),
-                      child: Text(
-                        'ตั',
-                        style: TextStyle(
-                          //  color: colorPrimaryDark,
-                          fontSize: 35,
-                          fontFamily: fontMitr,
-                          fontWeight: FontWeight.w600,
+      body: SingleChildScrollView(
+        physics: ScrollPhysics(),
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: MediaQuery.sizeOf(context).width,
+              color: colorPrimary,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: 70),
+                  Stack(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 20),
+                        child: Text(
+                          'ตั้งเวลา',
+                          style: TextStyle(
+                            //  color: colorPrimaryDark,
+                            fontSize: 35,
+                            fontFamily: fontMitr,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 48, left: 20),
-                      child: Text(
-                        'ซินโดรม',
-                        style: TextStyle(
-                          //  color: colorPrimaryDark,
-                          fontSize: 35,
-                          fontFamily: fontMitr,
-                          fontWeight: FontWeight.w600,
+                      Container(
+                        margin: EdgeInsets.only(top: 48, left: 20),
+                        child: Text(
+                          'การแจ้งเตือน',
+                          style: TextStyle(
+                            //  color: colorPrimaryDark,
+                            fontSize: 35,
+                            fontFamily: fontMitr,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-              ],
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                ],
+              ),
             ),
-          ),
-          Container(
-            color: colorPrimary,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(46),
-                  topRight: Radius.circular(46),
+            Container(
+              color: colorPrimary,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(46),
+                    topRight: Radius.circular(46),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [_warningButton(), _timeButton()],
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _twoHourButton() {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          onSelectTwoTimeButton = true;
+          onSelectOneTimeButton = false;
+          onSelectTimeButton = false;
+        });
+      },
+      child: Container(
+        color: onSelectTwoTimeButton ? colorPrimaryBg : Colors.white,
+        child: Column(
+          children: [
+            Container(
+              height: 50,
+              width: MediaQuery.of(context).size.width * 0.6,
+              margin: EdgeInsets.only(top: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(left: 25, top: 25),
                     child: Text(
-                      'ตั้งเวลาการแจ้งเตือน',
+                      'ทุกๆ 2 ชั่วโมง',
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: fontMitr,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 26,
                       ),
                     ),
                   ),
-                  Container(
-                    height: 50,
-                    margin: EdgeInsets.only(left: 15, right: 15, top: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                        color: Colors.black26, // สีขอบ
-                        width: 1.0, // ความหนาของเส้น
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(left: 15),
-                          child: Text(
-                            'ทุกๆ 2 ชั่วโมง',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: fontMitr,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 20),
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 50,
-                    margin: EdgeInsets.only(left: 15, right: 15, top: 20),
+                ],
+              ),
+            ),
+            Container(
+              height: 1,
+              color: Colors.black12,
+              margin: EdgeInsets.only(top: 5),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(left: 15),
-                          child: Text(
-                            'แจ้งเตือน',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: fontMitr,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                        Switch(
-                          activeColor: Colors.white,
-                          activeTrackColor: colorAccent,
-                          value: isOn,
-                          onChanged: (value) {
-                            setState(() {
-                              isOn = value;
-                            });
-                          },
-                        ),
-                      ],
+  int _value = 0;
+
+  void _increment() {
+    setState(() {
+      _value++;
+    });
+  }
+
+  void _decrement() {
+    setState(() {
+      if (_value > 0) _value--; // กันไม่ให้ติดลบ
+    });
+  }
+
+  Widget _CountNumber() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          icon: Icon(Icons.remove_circle_outline, size: 30),
+          onPressed: _decrement,
+        ),
+        SizedBox(width: 10),
+        Text('$_value', style: TextStyle(fontSize: 22)),
+        SizedBox(width: 10),
+        IconButton(
+          icon: Icon(Icons.add_circle_outline, size: 30),
+          onPressed: _increment,
+        ),
+      ],
+    );
+  }
+
+  Duration selectedClock = Duration(
+    hours: DateTime.now().hour,
+    minutes: DateTime.now().minute,
+    seconds: DateTime.now().second,
+  );
+  Widget _selectClockButton() {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          onSelectTwoTimeButton = false;
+          onSelectOneTimeButton = true;
+          onSelectTimeButton = false;
+        });
+      },
+      child: SizedBox(
+        height: 150,
+        child: CupertinoTimerPicker(
+          mode: CupertinoTimerPickerMode.hms, // hour, minute, second
+          initialTimerDuration: selectedClock,
+          onTimerDurationChanged: (Duration newTime) {
+            setState(() {
+              selectedClock = newTime;
+            });
+          },
+        ),
+      ),
+    );
+  }
+
+  Duration selectedTime = Duration(hours: 0, minutes: 0, seconds: 0);
+  Widget _selectTimeButton() {
+    return Container(
+      color: onSelectTimeButton ? colorPrimaryBg : Colors.white,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          InkWell(
+            onTap: () {
+              setState(() {
+                onSelectTwoTimeButton = false;
+                onSelectOneTimeButton = false;
+                onSelectTimeButton = true;
+              });
+            },
+            child: Container(
+              width: 250,
+              height: 50,
+              margin: EdgeInsets.only(top: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(left: 54),
+                    child: Text(
+                      'กำหนดเวลา',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: fontMitr,
+                        fontSize: 26,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Icon(
+                      !onSelectTimeButton
+                          ? Icons.keyboard_arrow_down
+                          : Icons.keyboard_arrow_up,
+                      color: Colors.black,
+                      size: 40,
                     ),
                   ),
                 ],
               ),
             ),
           ),
+
+          onSelectTimeButton
+              ? Column(
+                  children: [
+                    Text(
+                      "แจ้งเตือนทุกๆ : " +
+                          "${selectedTime.inHours.toString().padLeft(2, '0')}:"
+                              "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}:"
+                              "${(selectedTime.inSeconds % 60).toString().padLeft(2, '0')}" +
+                          "   ",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: fontMitr,
+                        fontSize: 22,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    SizedBox(
+                      height: 150,
+                      child: CupertinoTimerPicker(
+                        mode: CupertinoTimerPickerMode
+                            .hms, // hour, minute, second
+                        initialTimerDuration: selectedTime,
+                        onTimerDurationChanged: (Duration newTime) {
+                          setState(() {
+                            selectedTime = newTime;
+                          });
+                        },
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          'จำนวน',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: fontMitr,
+                            fontSize: 22,
+                          ),
+                        ),
+                        _CountNumber(),
+                        Text(
+                          'ครั้ง',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: fontMitr,
+                            fontSize: 22,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              : Container(),
+
+          Container(
+            height: 1,
+            color: Colors.black12,
+            margin: EdgeInsets.only(top: 5),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _oneHourButton() {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          onSelectTwoTimeButton = false;
+          onSelectOneTimeButton = true;
+          onSelectTimeButton = false;
+        });
+      },
+      child: Container(
+        color: onSelectOneTimeButton ? colorPrimaryBg : Colors.white,
+        child: Column(
+          children: [
+            Container(
+              height: 50,
+              width: MediaQuery.of(context).size.width * 0.6,
+              margin: EdgeInsets.only(top: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    child: Text(
+                      'ทุกๆ 1 ชั่วโมง',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: fontMitr,
+                        fontSize: 26,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 1,
+              color: Colors.black12,
+              margin: EdgeInsets.only(top: 5),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _warningButton() {
+    return Column(
+      children: [
+        InkWell(
+          onTap: () {
+            setState(() {
+              isWarningOn = !isWarningOn;
+            });
+          },
+          child: Container(
+            height: 50,
+            margin: EdgeInsets.only(left: 15, right: 15, top: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(left: 15),
+                  child: Text(
+                    'แจ้งเตือนซ้ำ',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: fontMitr,
+                      fontSize: 26,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: Icon(
+                    !isWarningOn
+                        ? Icons.keyboard_arrow_down
+                        : Icons.keyboard_arrow_up,
+                    color: Colors.black,
+                    size: 40,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          height: 1,
+          color: Colors.black12,
+          margin: EdgeInsets.only(top: 5),
+        ),
+        isWarningOn
+            ? Column(
+                children: [
+                  _oneHourButton(),
+                  _twoHourButton(),
+                  _selectTimeButton(),
+                ],
+              )
+            : Container(),
+      ],
+    );
+  }
+
+  Widget _timeButton() {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          isClockWarningOn = !isClockWarningOn;
+          isWarningOn = false;
+        });
+      },
+      child: Column(
+        children: [
+          Container(
+            height: 50,
+            margin: EdgeInsets.only(left: 15, right: 15, top: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(left: 15),
+                  child: Text(
+                    'แจ้งเตือนตามเวลา',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: fontMitr,
+                      fontSize: 26,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: Icon(
+                    !isClockWarningOn
+                        ? Icons.keyboard_arrow_down
+                        : Icons.keyboard_arrow_up,
+                    color: Colors.black,
+                    size: 40,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 1,
+            color: Colors.black12,
+            margin: EdgeInsets.only(top: 5),
+          ),
+          SizedBox(height: 20),
+          isClockWarningOn ? _selectClockButton() : Container(),
         ],
       ),
     );
@@ -171,7 +474,7 @@ class _SettingPageState extends State<SettingPage> {
 
   Widget _nextButton() {
     return Container(
-      margin: EdgeInsets.only(bottom: 50, left: 30, right:30),
+      margin: EdgeInsets.only(bottom: 50, left: 30, right: 30),
       height: 48,
       width: MediaQuery.of(context).size.width * 0.5,
       // margin: EdgeInsets.only(top: 50),
@@ -196,7 +499,7 @@ class _SettingPageState extends State<SettingPage> {
           height: 50,
           alignment: Alignment.center,
           child: Text(
-            'เล่นตอนนี้',
+            'บันทึก',
             style: TextStyle(
               color: Colors.white,
               fontFamily: fontMitr,

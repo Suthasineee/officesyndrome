@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:office_syndrome/helper/app_controller.dart';
 import 'package:office_syndrome/helper/colors.dart';
+import 'package:office_syndrome/setting/setting.dart';
+import 'package:office_syndrome/video/video.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -93,39 +95,47 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 50,
-                    margin: EdgeInsets.only(left: 15, right: 15, top: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                        color: Colors.black26, // สีขอบ
-                        width: 1.0, // ความหนาของเส้น
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => SettingPage()),
+                      );
+                    },
+                    child: Container(
+                      height: 50,
+                      margin: EdgeInsets.only(left: 15, right: 15, top: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Colors.black26, // สีขอบ
+                          width: 1.0, // ความหนาของเส้น
+                        ),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(left: 15),
-                          child: Text(
-                            'ทุกๆ 2 ชั่วโมง',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: fontMitr,
-                              fontSize: 16,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(left: 15),
+                            child: Text(
+                              'ทุกๆ 2 ชั่วโมง',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: fontMitr,
+                                fontSize: 18,
+                              ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 20),
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            color: Colors.black,
+                          Padding(
+                            padding: EdgeInsets.only(right: 20),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Container(
@@ -171,7 +181,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _nextButton() {
     return Container(
-      margin: EdgeInsets.only(bottom: 50, left: 30, right:30),
+      margin: EdgeInsets.only(bottom: 50, left: 30, right: 30),
       height: 48,
       width: MediaQuery.of(context).size.width * 0.5,
       // margin: EdgeInsets.only(top: 50),
@@ -185,12 +195,10 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         onPressed: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (_) => TellerDetailPage(),
-          //   ),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => VideoPage()),
+          );
         },
         child: Container(
           height: 50,
