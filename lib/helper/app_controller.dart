@@ -1,0 +1,1 @@
+const fontMitr = 'SukhumvitSet';
