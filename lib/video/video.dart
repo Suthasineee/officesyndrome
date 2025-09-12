@@ -78,7 +78,7 @@ class _VideoPageState extends State<VideoPage> {
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.75,
                       child: AspectRatio(
                         aspectRatio: _controller.value.aspectRatio,
                         child: VideoPlayer(_controller),
@@ -88,7 +88,7 @@ class _VideoPageState extends State<VideoPage> {
                     Column(
                       children: [
                         Container(
-                          height: MediaQuery.of(context).size.height * 0.7,
+                          height: MediaQuery.of(context).size.height * 0.65,
                         ),
                         // ปุ่มเล่น/หยุด
                         Container(
@@ -233,7 +233,7 @@ class _VideoPageState extends State<VideoPage> {
                                   );
                                 },
                               ),
-                              const SizedBox(height: 8),
+                             // const SizedBox(height: 8),
                             ],
                           ),
                         ),

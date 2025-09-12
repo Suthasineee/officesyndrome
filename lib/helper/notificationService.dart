@@ -16,8 +16,6 @@ class NotificationService {
 
   final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
   Future<void> init() async {
     tz.initializeTimeZones();
     final String currentTimeZone = DateTime.now().timeZoneName;
@@ -27,9 +25,9 @@ class NotificationService {
         AndroidInitializationSettings('@mipmap/ic_launcher');
     final DarwinInitializationSettings initializationSettingsIOS =
         DarwinInitializationSettings(
-          requestSoundPermission: false,
-          requestBadgePermission: false,
-          requestAlertPermission: false,
+          requestSoundPermission: true,
+          requestBadgePermission: true,
+          requestAlertPermission: true,
         );
     final InitializationSettings initializationSettings =
         InitializationSettings(

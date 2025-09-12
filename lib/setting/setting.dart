@@ -185,7 +185,7 @@ class _SettingPageState extends State<SettingPage> {
           onPressed: _decrement,
         ),
         SizedBox(width: 10),
-        Text('$_value', style: TextStyle(fontSize: 22)),
+        Text('$_value', style: TextStyle(fontSize: 18)),
         SizedBox(width: 10),
         IconButton(
           icon: Icon(Icons.add_circle_outline, size: 30),
@@ -273,7 +273,7 @@ class _SettingPageState extends State<SettingPage> {
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: fontMitr,
-                        fontSize: 22,
+                        fontSize: 18,
                       ),
                     ),
                   ),
@@ -302,7 +302,7 @@ class _SettingPageState extends State<SettingPage> {
                 style: TextStyle(
                   color: Colors.black,
                   fontFamily: fontMitr,
-                  fontSize: 22,
+                  fontSize: 18,
                 ),
               ),
               SizedBox(height: 20),
@@ -338,7 +338,7 @@ class _SettingPageState extends State<SettingPage> {
                     style: TextStyle(
                       color: Colors.black,
                       fontFamily: fontMitr,
-                      fontSize: 22,
+                      fontSize: 18,
                     ),
                   ),
                   _CountNumber(),
@@ -347,7 +347,7 @@ class _SettingPageState extends State<SettingPage> {
                     style: TextStyle(
                       color: Colors.black,
                       fontFamily: fontMitr,
-                      fontSize: 22,
+                      fontSize: 18,
                     ),
                   ),
                 ],
@@ -435,7 +435,7 @@ class _SettingPageState extends State<SettingPage> {
                     style: TextStyle(
                       color: Colors.black,
                       fontFamily: fontMitr,
-                      fontSize: 24,
+                      fontSize: 18,
                     ),
                   ),
                 ),
@@ -506,7 +506,7 @@ class _SettingPageState extends State<SettingPage> {
                     style: TextStyle(
                       color: Colors.black,
                       fontFamily: fontMitr,
-                      fontSize: 24,
+                      fontSize: 18,
                     ),
                   ),
                 ),

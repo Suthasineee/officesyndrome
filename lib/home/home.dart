@@ -18,26 +18,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool isOn = true;
   NotificationData data = NotificationData();
-
-  final FlutterLocalNotificationsPlugin _notifications =
-      FlutterLocalNotificationsPlugin();
-
   @override
   void initState() {
     // _initNotification();
     NotificationService().init();
     super.initState();
-  }
-
-  Future<void> _initNotification() async {
-    const AndroidInitializationSettings androidInit =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
-
-    const InitializationSettings initSettings = InitializationSettings(
-      android: androidInit,
-    );
-
-    await _notifications.initialize(initSettings);
   }
 
   void _startTimer(int time, count) {
@@ -123,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.black,
                         fontFamily: fontMitr,
                         fontSize: 20,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
@@ -209,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                               color: Colors.black,
                               fontFamily: fontMitr,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w500,
                               fontSize: 20,
                             ),
                           ),
