@@ -79,7 +79,7 @@
 50        android:debuggable="true"
 51        android:extractNativeLibs="true"
 52        android:icon="@mipmap/ic_launcher"
-53        android:label="office_syndrome" >
+53        android:label="ป้องกันออฟฟิศซินโดรม" >
 54        <receiver
 55            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver"
 56            android:exported="false" />
