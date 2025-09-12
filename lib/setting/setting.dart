@@ -11,10 +11,11 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   bool isWarningOn = false;
   bool isClockWarningOn = false;
-  bool isTimeOn = false;
   bool onSelectTimeButton = false;
   bool onSelectOneTimeButton = false;
   bool onSelectTwoTimeButton = false;
+  int _value = 1;
+
   @override
   void initState() {
     super.initState();
@@ -120,11 +121,11 @@ class _SettingPageState extends State<SettingPage> {
                 children: [
                   Container(
                     child: Text(
-                      'ทุกๆ 2 ชั่วโมง',
+                      'ทุก 2 ชั่วโมง',
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: fontMitr,
-                        fontSize: 26,
+                        fontSize: 22,
                       ),
                     ),
                   ),
@@ -142,8 +143,6 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 
-  int _value = 0;
-
   void _increment() {
     setState(() {
       _value++;
@@ -152,7 +151,7 @@ class _SettingPageState extends State<SettingPage> {
 
   void _decrement() {
     setState(() {
-      if (_value > 0) _value--; // กันไม่ให้ติดลบ
+      if (_value > 1) _value--; // กันไม่ให้ติดลบ
     });
   }
 
@@ -189,17 +188,34 @@ class _SettingPageState extends State<SettingPage> {
           onSelectTimeButton = false;
         });
       },
-      child: SizedBox(
-        height: 150,
-        child: CupertinoTimerPicker(
-          mode: CupertinoTimerPickerMode.hms, // hour, minute, second
-          initialTimerDuration: selectedClock,
-          onTimerDurationChanged: (Duration newTime) {
-            setState(() {
-              selectedClock = newTime;
-            });
-          },
-        ),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 150,
+            child: CupertinoTimerPicker(
+              mode: CupertinoTimerPickerMode.hms, // hour, minute, second
+              initialTimerDuration: selectedClock,
+              onTimerDurationChanged: (Duration newTime) {
+                setState(() {
+                  selectedClock = newTime;
+                });
+              },
+            ),
+          ),
+          SizedBox(height: 20),
+          Text(
+            "แจ้งเตือนเวลา : " +
+                "${selectedClock.inHours.toString().padLeft(2, '0')}:"
+                    "${(selectedClock.inMinutes % 60).toString().padLeft(2, '0')}:"
+                    "${(selectedClock.inSeconds % 60).toString().padLeft(2, '0')}" +
+                "  น. ",
+            style: TextStyle(
+              color: Colors.black,
+              fontFamily: fontMitr,
+              fontSize: 22,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -216,7 +232,7 @@ class _SettingPageState extends State<SettingPage> {
               setState(() {
                 onSelectTwoTimeButton = false;
                 onSelectOneTimeButton = false;
-                onSelectTimeButton = true;
+                onSelectTimeButton = !onSelectTimeButton;
               });
             },
             child: Container(
@@ -233,7 +249,7 @@ class _SettingPageState extends State<SettingPage> {
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: fontMitr,
-                        fontSize: 26,
+                        fontSize: 22,
                       ),
                     ),
                   ),
@@ -256,11 +272,10 @@ class _SettingPageState extends State<SettingPage> {
               ? Column(
                   children: [
                     Text(
-                      "แจ้งเตือนทุกๆ : " +
+                      "แจ้งเตือนทุก :  " +
                           "${selectedTime.inHours.toString().padLeft(2, '0')}:"
-                              "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}:"
-                              "${(selectedTime.inSeconds % 60).toString().padLeft(2, '0')}" +
-                          "   ",
+                              "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
+                              " นาที",
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: fontMitr,
@@ -271,8 +286,8 @@ class _SettingPageState extends State<SettingPage> {
                     SizedBox(
                       height: 150,
                       child: CupertinoTimerPicker(
-                        mode: CupertinoTimerPickerMode
-                            .hms, // hour, minute, second
+                        mode:
+                            CupertinoTimerPickerMode.hm, // hour, minute, second
                         initialTimerDuration: selectedTime,
                         onTimerDurationChanged: (Duration newTime) {
                           setState(() {
@@ -340,11 +355,11 @@ class _SettingPageState extends State<SettingPage> {
                 children: [
                   Container(
                     child: Text(
-                      'ทุกๆ 1 ชั่วโมง',
+                      'ทุก 1 ชั่วโมง',
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: fontMitr,
-                        fontSize: 26,
+                        fontSize: 22,
                       ),
                     ),
                   ),
@@ -369,6 +384,7 @@ class _SettingPageState extends State<SettingPage> {
           onTap: () {
             setState(() {
               isWarningOn = !isWarningOn;
+              isClockWarningOn = false;
             });
           },
           child: Container(
@@ -426,6 +442,9 @@ class _SettingPageState extends State<SettingPage> {
         setState(() {
           isClockWarningOn = !isClockWarningOn;
           isWarningOn = false;
+          onSelectTwoTimeButton = false;
+          onSelectOneTimeButton = false;
+          onSelectTimeButton = false;
         });
       },
       child: Column(
@@ -481,7 +500,15 @@ class _SettingPageState extends State<SettingPage> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           elevation: 0,
-          backgroundColor: colorAccent, //background color of button
+          backgroundColor:
+              isClockWarningOn ||
+                  (onSelectTimeButton &&
+                      (selectedTime.inHours > 0 ||
+                          selectedTime.inMinutes > 0)) ||
+                  onSelectOneTimeButton ||
+                  onSelectTwoTimeButton
+              ? colorAccent
+              : Colors.black12, //background color of button
           side: BorderSide(width: 1, color: Color.fromARGB(255, 203, 202, 202)),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
