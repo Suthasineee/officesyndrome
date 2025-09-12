@@ -7,7 +7,7 @@
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <application
-        android:label="office_syndrome"
+        android:label="ป้องกันออฟฟิศซินโดรม"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         

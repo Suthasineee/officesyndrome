@@ -1,4 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:office_syndrome/helper/application.dart';
+import 'package:office_syndrome/video/video.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter/material.dart';
@@ -14,6 +16,7 @@ class NotificationService {
 
   final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   Future<void> init() async {
     tz.initializeTimeZones();
@@ -34,14 +37,27 @@ class NotificationService {
           iOS: initializationSettingsIOS,
         );
 
-    await _notificationsPlugin.initialize(initializationSettings);
+    await _notificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse response) async {
+        // เมื่อกด Notification จะเข้ามาที่นี่
+        //if (response.payload == "openPage") {
+        Application.navigatorKey.currentState?.push(
+          MaterialPageRoute(builder: (_) => VideoPage()),
+        );
+        // }
+      },
+    );
   }
 
   Future<void> cancelAll() async {
     await _notificationsPlugin.cancelAll();
   }
 
-  Future<void> scheduleDailyNotification(DateTime selectedTime) async {
+  Future<void> scheduleDailyNotification(
+    DateTime selectedTime,
+    int count,
+  ) async {
     if (selectedTime.isBefore(DateTime.now())) {
       selectedTime = selectedTime.add(const Duration(days: 1));
     }
@@ -49,14 +65,15 @@ class NotificationService {
       selectedTime,
       tz.local,
     );
-
+    print("count:" + count.toString());
+    print("selectedTime:" + selectedTime.toString());
     try {
       await _notificationsPlugin.zonedSchedule(
-        0,
+        count,
         'ป้องกันออฟฟิศซินโดรม', // title
         'ถึงเวลาขยับร่างกาย', // body
         scheduledTime,
-        _notificationDetails(),
+        _notificationDetails(count),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
@@ -69,10 +86,11 @@ class NotificationService {
     }
   }
 
-  NotificationDetails _notificationDetails() {
+  NotificationDetails _notificationDetails(count) {
+    print("count2:" + count.toString());
     return NotificationDetails(
       android: AndroidNotificationDetails(
-        'your_channel_id',
+        count.toString(),
         'your_channel_name',
         channelDescription: 'description here',
         importance: Importance.max,
