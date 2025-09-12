@@ -1,8 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:office_syndrome/helper/app_controller.dart';
 import 'package:office_syndrome/helper/colors.dart';
+import 'package:office_syndrome/helper/notificationService.dart';
+import 'package:office_syndrome/model/notificationData.dart';
 import 'package:office_syndrome/setting/setting.dart';
 import 'package:office_syndrome/video/video.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,14 +16,94 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool isOn = false;
+  bool isOn = true;
+  NotificationData data = NotificationData();
+
+  final FlutterLocalNotificationsPlugin _notifications =
+      FlutterLocalNotificationsPlugin();
+
   @override
   void initState() {
+    // _initNotification();
+    NotificationService().init();
     super.initState();
+  }
+
+  Future<void> _initNotification() async {
+    const AndroidInitializationSettings androidInit =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    const InitializationSettings initSettings = InitializationSettings(
+      android: androidInit,
+    );
+
+    await _notifications.initialize(initSettings);
+  }
+
+  void _startTimer(int time) {
+    // _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    //   if (time > 0) {
+    //     setState(() {
+    //       time--;
+    //       print(time.toString());
+    //     });
+    //   } else {
+    //     _timer?.cancel();
+    //     _showNotification();
+    //   }
+    // });
+
+    // final endTime = DateTime.now().add(Duration(seconds: time));
+
+    // // Schedule notification
+    // _notifications.zonedSchedule(
+    //   0,
+    //   'Countdown Finished',
+    //   'Time is up!',
+    //   tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10)), // ใช้ tz
+    //   const NotificationDetails(
+    //     android: AndroidNotificationDetails(
+    //       'channelId',
+    //       'channelName',
+    //       importance: Importance.max,
+    //       priority: Priority.high,
+    //     ),
+    //   ),
+    //   androidAllowWhileIdle: true,
+    //   uiLocalNotificationDateInterpretation:
+    //       UILocalNotificationDateInterpretation.absoluteTime,
+    // );
+    DateTime selectedTime = DateTime.now().add(
+      Duration(seconds: time),
+    ); // For testing purposes
+    NotificationService().scheduleDailyNotification(selectedTime);
+  }
+
+  Future<void> _showNotification() async {
+    const AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+          'channel_id',
+          'channel_name',
+          channelDescription: 'description here',
+          importance: Importance.max,
+          priority: Priority.high,
+        );
+
+    const NotificationDetails platformDetails = NotificationDetails(
+      android: androidDetails,
+    );
+
+    await _notifications.show(
+      0, // id
+      'ป้องกันออฟฟิศซินโดรม', // title
+      'ถึงเวลาขยับร่างกาย', // body
+      platformDetails,
+    );
   }
 
   @override
   void dispose() {
+    //_timer?.cancel();
     super.dispose();
   }
 
@@ -42,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       margin: EdgeInsets.only(left: 20),
                       child: Text(
-                        'ป้องกันออฟฟิต',
+                        'ป้องกันออฟฟิศ',
                         style: TextStyle(
                           //  color: colorPrimaryDark,
                           fontSize: 35,
@@ -100,7 +186,25 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (_) => SettingPage()),
-                      );
+                      ).then((onValue) {
+                        setState(() {
+                          data = onValue;
+                          if (data.type == 1) {
+                            _startTimer(3600);
+                          } else if (data.type == 2) {
+                            _startTimer(7200);
+                          } else if (data.type == 3) {
+                            int sum =
+                                (data.clock!.inHours * 60 * 60) +
+                                (data.clock!.inMinutes * 60);
+                            _startTimer(sum);
+                          } else if (data.type == 4) {
+                            NotificationService().scheduleDailyNotification(
+                              data.date!,
+                            );
+                          }
+                        });
+                      });
                     },
                     child: Container(
                       height: 50,
@@ -119,7 +223,9 @@ class _HomePageState extends State<HomePage> {
                           Container(
                             padding: EdgeInsets.only(left: 15),
                             child: Text(
-                              'ทุกๆ 2 ชั่วโมง',
+                              data.type != null
+                                  ? data.text.toString()
+                                  : 'เลือกเวลาการแจ้งเตือน',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: fontMitr,
@@ -164,6 +270,9 @@ class _HomePageState extends State<HomePage> {
                           onChanged: (value) {
                             setState(() {
                               isOn = value;
+                              if (!isOn) {
+                                NotificationService().cancelAll;
+                              }
                             });
                           },
                         ),

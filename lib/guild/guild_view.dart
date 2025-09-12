@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:office_syndrome/helper/app_controller.dart';
 import 'package:office_syndrome/helper/colors.dart';
 import 'package:office_syndrome/home/home.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class GuildPage extends StatefulWidget {
   @override
@@ -11,12 +12,19 @@ class GuildPage extends StatefulWidget {
 class _GuildPageState extends State<GuildPage> {
   @override
   void initState() {
+    requestNotificationPermission();
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  Future<void> requestNotificationPermission() async {
+    if (await Permission.notification.isDenied) {
+      await Permission.notification.request();
+    }
   }
 
   @override

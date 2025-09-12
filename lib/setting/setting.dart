@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:office_syndrome/helper/app_controller.dart';
 import 'package:office_syndrome/helper/colors.dart';
+import 'package:office_syndrome/model/notificationData.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class _SettingPageState extends State<SettingPage> {
   bool onSelectOneTimeButton = false;
   bool onSelectTwoTimeButton = false;
   int _value = 1;
+  NotificationData data = NotificationData();
 
   @override
   void initState() {
@@ -106,6 +108,9 @@ class _SettingPageState extends State<SettingPage> {
           onSelectTwoTimeButton = true;
           onSelectOneTimeButton = false;
           onSelectTimeButton = false;
+          data.text = 'ทุก 2 ชั่วโมง';
+          data.type = 2;
+          data.time = 0;
         });
       },
       child: Container(
@@ -174,11 +179,7 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 
-  Duration selectedClock = Duration(
-    hours: DateTime.now().hour,
-    minutes: DateTime.now().minute,
-    seconds: DateTime.now().second,
-  );
+  DateTime selectedClock = DateTime.now();
   Widget _selectClockButton() {
     return InkWell(
       onTap: () {
@@ -192,29 +193,39 @@ class _SettingPageState extends State<SettingPage> {
         children: [
           SizedBox(
             height: 150,
-            child: CupertinoTimerPicker(
-              mode: CupertinoTimerPickerMode.hms, // hour, minute, second
-              initialTimerDuration: selectedClock,
-              onTimerDurationChanged: (Duration newTime) {
-                setState(() {
-                  selectedClock = newTime;
-                });
+            child: CupertinoDatePicker(
+              key: UniqueKey(),
+              mode: CupertinoDatePickerMode.time,
+              use24hFormat: true,
+              initialDateTime: DateTime.now(),
+              backgroundColor: Colors.transparent,
+              onDateTimeChanged: (DateTime date) {
+               // setState(() {
+                  selectedClock = date;
+                  data.text =
+                      "แจ้งเตือนเวลา " +
+                      "${selectedClock.hour.toString().padLeft(2, '0')}:"
+                          "${(selectedClock.minute % 60).toString().padLeft(2, '0')}"
+                      "  น. ";
+                  data.type = 4;
+                  data.time = 0;
+                  data.date = selectedClock;
+             //   });
               },
             ),
           ),
           SizedBox(height: 20),
-          Text(
-            "แจ้งเตือนเวลา : " +
-                "${selectedClock.inHours.toString().padLeft(2, '0')}:"
-                    "${(selectedClock.inMinutes % 60).toString().padLeft(2, '0')}:"
-                    "${(selectedClock.inSeconds % 60).toString().padLeft(2, '0')}" +
-                "  น. ",
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: fontMitr,
-              fontSize: 22,
-            ),
-          ),
+          // Text(
+          //   "แจ้งเตือนเวลา : " +
+          //       "${selectedClock.hour.toString().padLeft(2, '0')}:"
+          //           "${(selectedClock.minute % 60).toString().padLeft(2, '0')}:"
+          //       "  น. ",
+          //   style: TextStyle(
+          //     color: Colors.black,
+          //     fontFamily: fontMitr,
+          //     fontSize: 22,
+          //   ),
+          // ),
         ],
       ),
     );
@@ -292,6 +303,14 @@ class _SettingPageState extends State<SettingPage> {
                         onTimerDurationChanged: (Duration newTime) {
                           setState(() {
                             selectedTime = newTime;
+                            data.text =
+                                "แจ้งเตือนทุก :  " +
+                                "${selectedTime.inHours.toString().padLeft(2, '0')}:"
+                                    "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
+                                    " นาที";
+                            data.time = _value;
+                            data.type = 3;
+                            data.clock = newTime;
                           });
                         },
                       ),
@@ -340,6 +359,9 @@ class _SettingPageState extends State<SettingPage> {
           onSelectTwoTimeButton = false;
           onSelectOneTimeButton = true;
           onSelectTimeButton = false;
+          data.text = 'ทุก 1 ชั่วโมง';
+          data.type = 1;
+          data.time = 0;
         });
       },
       child: Container(
@@ -445,6 +467,16 @@ class _SettingPageState extends State<SettingPage> {
           onSelectTwoTimeButton = false;
           onSelectOneTimeButton = false;
           onSelectTimeButton = false;
+
+             
+                  data.text =
+                      "แจ้งเตือนเวลา " +
+                      "${selectedClock.hour.toString().padLeft(2, '0')}:"
+                          "${(selectedClock.minute % 60).toString().padLeft(2, '0')}"
+                      "  น. ";
+                  data.type = 4;
+                  data.time = 0;
+                  data.date = selectedClock;
         });
       },
       child: Column(
@@ -515,12 +547,7 @@ class _SettingPageState extends State<SettingPage> {
           ),
         ),
         onPressed: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (_) => TellerDetailPage(),
-          //   ),
-          // );
+          Navigator.pop(context, data);
         },
         child: Container(
           height: 50,

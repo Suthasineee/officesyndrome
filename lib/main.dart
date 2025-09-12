@@ -1,20 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:office_syndrome/guild/guild_view.dart';
 import 'package:office_syndrome/helper/colors.dart';
+import 'package:office_syndrome/home/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isFirstOpen = prefs.getBool('is_first_open') ?? true;
+
+  if (isFirstOpen) {
+    await prefs.setBool('is_first_open', false);
+  }
+
+  runApp(MyApp(isFirstOpen: isFirstOpen));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isFirstOpen;
+
+  const MyApp({super.key, required this.isFirstOpen});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '',
-       debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -33,8 +46,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: colorPrimary),
       ),
-      home:  GuildPage(),
+      home: isFirstOpen ? GuildPage() : HomePage(),
     );
   }
 }
-
