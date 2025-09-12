@@ -151,12 +151,28 @@ class _SettingPageState extends State<SettingPage> {
   void _increment() {
     setState(() {
       _value++;
+      data.time = _value;
+      data.text =
+          "แจ้งเตือน :  " +
+          "${selectedTime.inHours.toString().padLeft(2, '0')}:"
+              "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
+              " นาที  " +
+          data.time.toString() +
+          " ครั้ง";
     });
   }
 
   void _decrement() {
     setState(() {
-      if (_value > 1) _value--; // กันไม่ให้ติดลบ
+      if (_value > 1) _value--; // กันไม่ให้ติดลบ.
+      data.time = _value;
+      data.text =
+          "แจ้งเตือน :  " +
+          "${selectedTime.inHours.toString().padLeft(2, '0')}:"
+              "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
+              " นาที  " +
+          data.time.toString() +
+          " ครั้ง";
     });
   }
 
@@ -200,17 +216,17 @@ class _SettingPageState extends State<SettingPage> {
               initialDateTime: DateTime.now(),
               backgroundColor: Colors.transparent,
               onDateTimeChanged: (DateTime date) {
-               // setState(() {
-                  selectedClock = date;
-                  data.text =
-                      "แจ้งเตือนเวลา " +
-                      "${selectedClock.hour.toString().padLeft(2, '0')}:"
-                          "${(selectedClock.minute % 60).toString().padLeft(2, '0')}"
-                      "  น. ";
-                  data.type = 4;
-                  data.time = 0;
-                  data.date = selectedClock;
-             //   });
+                // setState(() {
+                selectedClock = date;
+                data.text =
+                    "แจ้งเตือนเวลา " +
+                    "${selectedClock.hour.toString().padLeft(2, '0')}:"
+                        "${(selectedClock.minute % 60).toString().padLeft(2, '0')}"
+                        "  น. ";
+                data.type = 4;
+                data.time = 0;
+                data.date = selectedClock;
+                //   });
               },
             ),
           ),
@@ -234,7 +250,6 @@ class _SettingPageState extends State<SettingPage> {
   Duration selectedTime = Duration(hours: 0, minutes: 0, seconds: 0);
   Widget _selectTimeButton() {
     return Container(
-      color: onSelectTimeButton ? colorPrimaryBg : Colors.white,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -247,14 +262,12 @@ class _SettingPageState extends State<SettingPage> {
               });
             },
             child: Container(
-              width: 250,
               height: 50,
               margin: EdgeInsets.only(top: 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(left: 54),
                     child: Text(
                       'กำหนดเวลา',
                       style: TextStyle(
@@ -264,83 +277,83 @@ class _SettingPageState extends State<SettingPage> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20),
-                    child: Icon(
-                      !onSelectTimeButton
-                          ? Icons.keyboard_arrow_down
-                          : Icons.keyboard_arrow_up,
-                      color: Colors.black,
-                      size: 40,
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: EdgeInsets.only(left: 20),
+                  //   child: Icon(
+                  //     !onSelectTimeButton
+                  //         ? Icons.keyboard_arrow_down
+                  //         : Icons.keyboard_arrow_up,
+                  //     color: Colors.black,
+                  //     size: 40,
+                  //   ),
+                  // ),
                 ],
               ),
             ),
           ),
 
-          onSelectTimeButton
-              ? Column(
-                  children: [
-                    Text(
-                      "แจ้งเตือนทุก :  " +
+          Column(
+            children: [
+              Text(
+                "แจ้งเตือนทุก :  " +
+                    "${selectedTime.inHours.toString().padLeft(2, '0')}:"
+                        "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
+                        " นาที",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: fontMitr,
+                  fontSize: 22,
+                ),
+              ),
+              SizedBox(height: 20),
+              SizedBox(
+                height: 150,
+                child: CupertinoTimerPicker(
+                  mode: CupertinoTimerPickerMode.hm, // hour, minute, second
+                  initialTimerDuration: selectedTime,
+                  onTimerDurationChanged: (Duration newTime) {
+                    setState(() {
+                      selectedTime = newTime;
+                      data.time = _value;
+                      data.text =
+                          "แจ้งเตือน :  " +
                           "${selectedTime.inHours.toString().padLeft(2, '0')}:"
                               "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
-                              " นาที",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: fontMitr,
-                        fontSize: 22,
-                      ),
+                              " นาที  " +
+                          data.time.toString() +
+                          " ครั้ง";
+
+                      data.type = 3;
+                      data.clock = newTime;
+                    });
+                  },
+                ),
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    'จำนวน',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: fontMitr,
+                      fontSize: 22,
                     ),
-                    SizedBox(height: 20),
-                    SizedBox(
-                      height: 150,
-                      child: CupertinoTimerPicker(
-                        mode:
-                            CupertinoTimerPickerMode.hm, // hour, minute, second
-                        initialTimerDuration: selectedTime,
-                        onTimerDurationChanged: (Duration newTime) {
-                          setState(() {
-                            selectedTime = newTime;
-                            data.text =
-                                "แจ้งเตือนทุก :  " +
-                                "${selectedTime.inHours.toString().padLeft(2, '0')}:"
-                                    "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
-                                    " นาที";
-                            data.time = _value;
-                            data.type = 3;
-                            data.clock = newTime;
-                          });
-                        },
-                      ),
+                  ),
+                  _CountNumber(),
+                  Text(
+                    'ครั้ง',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: fontMitr,
+                      fontSize: 22,
                     ),
-                    SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          'จำนวน',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: fontMitr,
-                            fontSize: 22,
-                          ),
-                        ),
-                        _CountNumber(),
-                        Text(
-                          'ครั้ง',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: fontMitr,
-                            fontSize: 22,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-              : Container(),
+                  ),
+                ],
+              ),
+            ],
+          ),
 
           Container(
             height: 1,
@@ -448,8 +461,8 @@ class _SettingPageState extends State<SettingPage> {
         isWarningOn
             ? Column(
                 children: [
-                  _oneHourButton(),
-                  _twoHourButton(),
+                  // _oneHourButton(),
+                  // _twoHourButton(),
                   _selectTimeButton(),
                 ],
               )
@@ -468,15 +481,14 @@ class _SettingPageState extends State<SettingPage> {
           onSelectOneTimeButton = false;
           onSelectTimeButton = false;
 
-             
-                  data.text =
-                      "แจ้งเตือนเวลา " +
-                      "${selectedClock.hour.toString().padLeft(2, '0')}:"
-                          "${(selectedClock.minute % 60).toString().padLeft(2, '0')}"
-                      "  น. ";
-                  data.type = 4;
-                  data.time = 0;
-                  data.date = selectedClock;
+          data.text =
+              "แจ้งเตือนเวลา " +
+              "${selectedClock.hour.toString().padLeft(2, '0')}:"
+                  "${(selectedClock.minute % 60).toString().padLeft(2, '0')}"
+                  "  น. ";
+          data.type = 4;
+          data.time = 0;
+          data.date = selectedClock;
         });
       },
       child: Column(
@@ -534,9 +546,7 @@ class _SettingPageState extends State<SettingPage> {
           elevation: 0,
           backgroundColor:
               isClockWarningOn ||
-                  (onSelectTimeButton &&
-                      (selectedTime.inHours > 0 ||
-                          selectedTime.inMinutes > 0)) ||
+                  ((selectedTime.inHours > 0 || selectedTime.inMinutes > 0)) ||
                   onSelectOneTimeButton ||
                   onSelectTwoTimeButton
               ? colorAccent

@@ -4,7 +4,13 @@ import 'package:office_syndrome/helper/colors.dart';
 import 'package:office_syndrome/home/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'helper/app_controller.dart';
+import 'helper/application.dart';
+
 Future<void> main() async {
+  final GlobalKey<NavigatorState> navigatorKey =
+      new GlobalKey<NavigatorState>();
+  Application.navigatorKey = navigatorKey;
   WidgetsFlutterBinding.ensureInitialized();
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -19,7 +25,6 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   final bool isFirstOpen;
-
   const MyApp({super.key, required this.isFirstOpen});
 
   // This widget is the root of your application.
@@ -27,6 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '',
+      navigatorKey:  Application.navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.

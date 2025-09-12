@@ -40,65 +40,11 @@ class _HomePageState extends State<HomePage> {
     await _notifications.initialize(initSettings);
   }
 
-  void _startTimer(int time) {
-    // _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-    //   if (time > 0) {
-    //     setState(() {
-    //       time--;
-    //       print(time.toString());
-    //     });
-    //   } else {
-    //     _timer?.cancel();
-    //     _showNotification();
-    //   }
-    // });
-
-    // final endTime = DateTime.now().add(Duration(seconds: time));
-
-    // // Schedule notification
-    // _notifications.zonedSchedule(
-    //   0,
-    //   'Countdown Finished',
-    //   'Time is up!',
-    //   tz.TZDateTime.now(tz.local).add(const Duration(seconds: 10)), // ใช้ tz
-    //   const NotificationDetails(
-    //     android: AndroidNotificationDetails(
-    //       'channelId',
-    //       'channelName',
-    //       importance: Importance.max,
-    //       priority: Priority.high,
-    //     ),
-    //   ),
-    //   androidAllowWhileIdle: true,
-    //   uiLocalNotificationDateInterpretation:
-    //       UILocalNotificationDateInterpretation.absoluteTime,
-    // );
+  void _startTimer(int time, count) {
     DateTime selectedTime = DateTime.now().add(
       Duration(seconds: time),
     ); // For testing purposes
-    NotificationService().scheduleDailyNotification(selectedTime);
-  }
-
-  Future<void> _showNotification() async {
-    const AndroidNotificationDetails androidDetails =
-        AndroidNotificationDetails(
-          'channel_id',
-          'channel_name',
-          channelDescription: 'description here',
-          importance: Importance.max,
-          priority: Priority.high,
-        );
-
-    const NotificationDetails platformDetails = NotificationDetails(
-      android: androidDetails,
-    );
-
-    await _notifications.show(
-      0, // id
-      'ป้องกันออฟฟิศซินโดรม', // title
-      'ถึงเวลาขยับร่างกาย', // body
-      platformDetails,
-    );
+    NotificationService().scheduleDailyNotification(selectedTime, count);
   }
 
   @override
@@ -190,17 +136,22 @@ class _HomePageState extends State<HomePage> {
                         setState(() {
                           data = onValue;
                           if (data.type == 1) {
-                            _startTimer(3600);
+                            //  _startTimer(3600);
                           } else if (data.type == 2) {
-                            _startTimer(7200);
+                            //  _startTimer(7200);
                           } else if (data.type == 3) {
+                            NotificationService().cancelAll;
                             int sum =
                                 (data.clock!.inHours * 60 * 60) +
                                 (data.clock!.inMinutes * 60);
-                            _startTimer(sum);
+                            for (int i = 1; i <= data.time!; i++) {
+                              _startTimer(sum * i, i);
+                            }
                           } else if (data.type == 4) {
+                            NotificationService().cancelAll;
                             NotificationService().scheduleDailyNotification(
                               data.date!,
+                              1,
                             );
                           }
                         });
