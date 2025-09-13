@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:office_syndrome/guild/guild_view.dart';
 import 'package:office_syndrome/helper/colors.dart';
+import 'package:office_syndrome/helper/notificationService.dart';
 import 'package:office_syndrome/home/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,7 +20,7 @@ Future<void> main() async {
   if (isFirstOpen) {
     await prefs.setBool('is_first_open', false);
   }
-
+  NotificationService().init(navigatorKey);
   runApp(MyApp(isFirstOpen: isFirstOpen));
 }
 
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '',
-      navigatorKey:  Application.navigatorKey,
+      navigatorKey: Application.navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.

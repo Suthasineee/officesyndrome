@@ -8,6 +8,7 @@ import 'package:office_syndrome/helper/notificationService.dart';
 import 'package:office_syndrome/model/notificationData.dart';
 import 'package:office_syndrome/setting/setting.dart';
 import 'package:office_syndrome/video/video.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class HomePage extends StatefulWidget {
@@ -18,11 +19,25 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool isOn = true;
   NotificationData data = NotificationData();
+  String name = "";
   @override
   void initState() {
-    // _initNotification();
-    NotificationService().init();
+    getData();
+
     super.initState();
+  }
+
+  late SharedPreferences prefs;
+  getData() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isOn = prefs.getBool('isOn') ?? true;
+      name = prefs.getString('text') ?? '';
+    });
+  }
+
+  setData() async {
+    await prefs.setBool('isOn', isOn);
   }
 
   void _startTimer(int time, count) {
@@ -119,25 +134,50 @@ class _HomePageState extends State<HomePage> {
                         MaterialPageRoute(builder: (_) => SettingPage()),
                       ).then((onValue) {
                         setState(() {
+                          NotificationService().cancelAll();
                           data = onValue;
+                          prefs.setString('text', data.text.toString());
                           if (data.type == 1) {
-                            //  _startTimer(3600);
+                            for (int i = 1; i <= data.time!; i++) {
+                              _startTimer(3600 * i, i);
+                            }
+                            prefs.setInt('type', 1);
                           } else if (data.type == 2) {
-                            //  _startTimer(7200);
+                            for (int i = 1; i <= data.time!; i++) {
+                              _startTimer(7200 * i, i);
+                            }
+                            prefs.setInt('type', 2);
                           } else if (data.type == 3) {
-                            NotificationService().cancelAll;
                             int sum =
                                 (data.clock!.inHours * 60 * 60) +
                                 (data.clock!.inMinutes * 60);
-                            for (int i = 1; i <= data.time!; i++) {
-                              _startTimer(sum * i, i);
+                            if (isOn) {
+                              for (int i = 1; i <= data.time!; i++) {
+                                _startTimer(sum * i, i);
+                              }
                             }
-                          } else if (data.type == 4) {
-                            NotificationService().cancelAll;
-                            NotificationService().scheduleDailyNotification(
-                              data.date!,
-                              1,
+                            DateTime selectedTime = DateTime.now();
+
+                            prefs.setInt(
+                              'clock',
+                              selectedTime.millisecondsSinceEpoch,
                             );
+                            prefs.setInt('sum', sum);
+                            prefs.setInt('time', data.time!);
+                            prefs.setInt('type', 3);
+                          } else if (data.type == 4) {
+                            if (isOn) {
+                              NotificationService().scheduleDailyNotification(
+                                data.date!,
+                                1,
+                              );
+                            }
+                            prefs.setInt(
+                              'clock',
+                              data.date!.millisecondsSinceEpoch,
+                            );
+                            prefs.setInt('time', 1);
+                            prefs.setInt('type', 4);
                           }
                         });
                       });
@@ -161,6 +201,8 @@ class _HomePageState extends State<HomePage> {
                             child: Text(
                               data.type != null
                                   ? data.text.toString()
+                                  : name != ""
+                                  ? name
                                   : 'เลือกเวลาการแจ้งเตือน',
                               style: TextStyle(
                                 color: Colors.black,
@@ -207,8 +249,57 @@ class _HomePageState extends State<HomePage> {
                             setState(() {
                               isOn = value;
                               if (!isOn) {
-                                NotificationService().cancelAll;
+                                NotificationService().cancelAll();
+                                print("cancelAll");
+                              } else {
+                                int type = prefs.getInt('type') ?? 0;
+                                if (type == 1) {
+                                  for (int i = 1; i <= data.time!; i++) {
+                                    _startTimer(3600 * i, i);
+                                  }
+                                } else if (type == 2) {
+                                  for (int i = 1; i <= data.time!; i++) {
+                                    _startTimer(7200 * i, i);
+                                  }
+                                } else if (type == 3) {
+                                  int clock = prefs.getInt('clock') ?? 0;
+                                  DateTime date =
+                                      DateTime.fromMillisecondsSinceEpoch(
+                                        clock,
+                                      );
+                                  int sum = prefs.getInt('sum') ?? 0;
+                                  int time = prefs.getInt('time') ?? 0;
+                                  for (int i = 1; i <= time; i++) {
+                                    DateTime selectedfTime = date.add(
+                                      Duration(seconds: sum * i),
+                                    );
+                                    NotificationService()
+                                        .scheduleDailyNotification(
+                                          selectedfTime,
+                                          i,
+                                        );
+                                    print(
+                                      "selectedfTime:" +
+                                          selectedfTime.second.toString(),
+                                    );
+                                  }
+                                } else if (type == 4) {
+                                  int clock = prefs.getInt('clock') ?? 0;
+                                  int time = prefs.getInt('time') ?? 0;
+                                  DateTime date;
+                                  if (clock != 0) {
+                                    date = DateTime.fromMillisecondsSinceEpoch(
+                                      clock,
+                                    );
+                                    for (int i = 1; i <= time; i++) {
+                                      print("scheduleDailyNotification");
+                                      NotificationService()
+                                          .scheduleDailyNotification(date, i);
+                                    }
+                                  }
+                                }
                               }
+                              setData();
                             });
                           },
                         ),

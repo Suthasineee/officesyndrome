@@ -268,92 +268,96 @@ class _SettingPageState extends State<SettingPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
+                    margin: EdgeInsets.only(left: 50),
                     child: Text(
                       'กำหนดเวลา',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: fontMitr,
+                        fontSize: 22,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Icon(
+                      !onSelectTimeButton
+                          ? Icons.keyboard_arrow_down
+                          : Icons.keyboard_arrow_up,
+                      color: Colors.black,
+                      size: 40,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          onSelectTimeButton
+              ? Column(
+                  children: [
+                    Text(
+                      "แจ้งเตือนทุก :  " +
+                          "${selectedTime.inHours.toString().padLeft(2, '0')}:"
+                              "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
+                              " นาที",
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: fontMitr,
                         fontSize: 18,
                       ),
                     ),
-                  ),
-                  // Padding(
-                  //   padding: EdgeInsets.only(left: 20),
-                  //   child: Icon(
-                  //     !onSelectTimeButton
-                  //         ? Icons.keyboard_arrow_down
-                  //         : Icons.keyboard_arrow_up,
-                  //     color: Colors.black,
-                  //     size: 40,
-                  //   ),
-                  // ),
-                ],
-              ),
-            ),
-          ),
+                    SizedBox(height: 20),
+                    SizedBox(
+                      height: 150,
+                      child: CupertinoTimerPicker(
+                        mode:
+                            CupertinoTimerPickerMode.hm, // hour, minute, second
+                        initialTimerDuration: selectedTime,
+                        onTimerDurationChanged: (Duration newTime) {
+                          setState(() {
+                            selectedTime = newTime;
+                            data.time = _value;
+                            data.text =
+                                "แจ้งเตือน :  " +
+                                "${selectedTime.inHours.toString().padLeft(2, '0')}:"
+                                    "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
+                                    " นาที  " +
+                                data.time.toString() +
+                                " ครั้ง";
 
-          Column(
-            children: [
-              Text(
-                "แจ้งเตือนทุก :  " +
-                    "${selectedTime.inHours.toString().padLeft(2, '0')}:"
-                        "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
-                        " นาที",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: fontMitr,
-                  fontSize: 18,
-                ),
-              ),
-              SizedBox(height: 20),
-              SizedBox(
-                height: 150,
-                child: CupertinoTimerPicker(
-                  mode: CupertinoTimerPickerMode.hm, // hour, minute, second
-                  initialTimerDuration: selectedTime,
-                  onTimerDurationChanged: (Duration newTime) {
-                    setState(() {
-                      selectedTime = newTime;
-                      data.time = _value;
-                      data.text =
-                          "แจ้งเตือน :  " +
-                          "${selectedTime.inHours.toString().padLeft(2, '0')}:"
-                              "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
-                              " นาที  " +
-                          data.time.toString() +
-                          " ครั้ง";
-
-                      data.type = 3;
-                      data.clock = newTime;
-                    });
-                  },
-                ),
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    'จำนวน',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: fontMitr,
-                      fontSize: 18,
+                            data.type = 3;
+                            data.clock = newTime;
+                          });
+                        },
+                      ),
                     ),
-                  ),
-                  _CountNumber(),
-                  Text(
-                    'ครั้ง',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: fontMitr,
-                      fontSize: 18,
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          'จำนวน',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: fontMitr,
+                            fontSize: 18,
+                          ),
+                        ),
+                        _CountNumber(),
+                        Text(
+                          'ครั้ง',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: fontMitr,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                  ],
+                )
+              : Container(),
 
           Container(
             height: 1,
@@ -461,8 +465,8 @@ class _SettingPageState extends State<SettingPage> {
         isWarningOn
             ? Column(
                 children: [
-                  // _oneHourButton(),
-                  // _twoHourButton(),
+                  _oneHourButton(),
+                  _twoHourButton(),
                   _selectTimeButton(),
                 ],
               )

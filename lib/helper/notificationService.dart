@@ -16,7 +16,7 @@ class NotificationService {
 
   final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  Future<void> init() async {
+  Future<void> init(navigatorKey) async {
     tz.initializeTimeZones();
     final String currentTimeZone = DateTime.now().timeZoneName;
     tz.setLocalLocation(tz.getLocation('Asia/Bangkok'));
@@ -40,9 +40,10 @@ class NotificationService {
       onDidReceiveNotificationResponse: (NotificationResponse response) async {
         // เมื่อกด Notification จะเข้ามาที่นี่
         //if (response.payload == "openPage") {
-        Application.navigatorKey.currentState?.push(
+        navigatorKey.currentState?.push(
           MaterialPageRoute(builder: (_) => VideoPage()),
         );
+        //Navigator.push(context, MaterialPageRoute(builder: (_) => VideoPage()));
         // }
       },
     );
@@ -50,6 +51,13 @@ class NotificationService {
 
   Future<void> cancelAll() async {
     await _notificationsPlugin.cancelAll();
+    // await _notificationsPlugin
+    //     .resolvePlatformSpecificImplementation<
+    //       IOSFlutterLocalNotificationsPlugin
+    //     >()
+    //     ?.cancelAll();
+    // final pending = await _notificationsPlugin.pendingNotificationRequests();
+    // print('PENDING: ${pending.map((e) => e.id).toList()}');
   }
 
   Future<void> scheduleDailyNotification(
