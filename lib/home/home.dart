@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -147,8 +148,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      bool c = await checkNotificationPermission();
-                      if (c) {
+                      if (await Permission.notification.isDenied &&
+                          Platform.isAndroid) {
+                        showAlertDialog(context);
+                      } else {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (_) => SettingPage()),
