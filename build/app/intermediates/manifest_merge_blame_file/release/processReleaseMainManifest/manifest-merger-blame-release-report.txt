@@ -1,0 +1,251 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.office_syndrome"
+4    android:versionCode="2"
+5    android:versionName="1.0.1" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="35" />
+10
+11    <uses-permission android:name="android.permission.VIBRATE" />
+11-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:2:5-66
+11-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:2:22-63
+12    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+12-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:3:5-76
+12-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:3:22-74
+13    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+13-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:4:5-80
+13-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:4:22-78
+14    <uses-permission android:name="android.permission.WAKE_LOCK" />
+14-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:5:5-68
+14-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:5:22-65
+15    <uses-permission
+15-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:6:6-7:38
+16        android:name="android.permission.SCHEDULE_EXACT_ALARM"
+16-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:6:23-77
+17        android:maxSdkVersion="32" />
+17-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:7:9-35
+18    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+18-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:8:5-74
+18-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:8:22-71
+19    <!--
+20         Required to query activities that can process text, see:
+21         https://developer.android.com/training/package-visibility and
+22         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+23
+24         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin.
+25    -->
+26    <queries>
+26-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:62:5-68:15
+27        <intent>
+27-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:63:9-66:18
+28            <action android:name="android.intent.action.PROCESS_TEXT" />
+28-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:64:13-72
+28-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:64:21-70
+29
+30            <data android:mimeType="text/plain" />
+30-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:65:13-50
+30-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:65:19-48
+31        </intent>
+32    </queries>
+33
+34    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+34-->[androidx.media3:media3-exoplayer:1.5.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\72c190e8e0a1da0cc68763429ee44e42\transformed\jetified-media3-exoplayer-1.5.1\AndroidManifest.xml:22:5-79
+34-->[androidx.media3:media3-exoplayer:1.5.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\72c190e8e0a1da0cc68763429ee44e42\transformed\jetified-media3-exoplayer-1.5.1\AndroidManifest.xml:22:22-76
+35
+36    <permission
+36-->[androidx.core:core:1.13.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\66aa7f682cf61ffe3ee75db6ee238d77\transformed\core-1.13.1\AndroidManifest.xml:22:5-24:47
+37        android:name="com.example.office_syndrome.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+37-->[androidx.core:core:1.13.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\66aa7f682cf61ffe3ee75db6ee238d77\transformed\core-1.13.1\AndroidManifest.xml:23:9-81
+38        android:protectionLevel="signature" />
+38-->[androidx.core:core:1.13.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\66aa7f682cf61ffe3ee75db6ee238d77\transformed\core-1.13.1\AndroidManifest.xml:24:9-44
+39
+40    <uses-permission android:name="com.example.office_syndrome.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+40-->[androidx.core:core:1.13.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\66aa7f682cf61ffe3ee75db6ee238d77\transformed\core-1.13.1\AndroidManifest.xml:26:5-97
+40-->[androidx.core:core:1.13.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\66aa7f682cf61ffe3ee75db6ee238d77\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
+41
+42    <application
+43        android:name="android.app.Application"
+43-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:11:9-42
+44        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+44-->[androidx.core:core:1.13.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\66aa7f682cf61ffe3ee75db6ee238d77\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
+45        android:exported="true"
+45-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:13:10-33
+46        android:extractNativeLibs="true"
+47        android:icon="@mipmap/ic_launcher"
+47-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:14:9-43
+48        android:label="Office Syndrome"
+48-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:10:9-40
+49        android:screenOrientation="portrait" >
+49-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:12:9-45
+50        <receiver
+50-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:16:9-131
+51            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver"
+51-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:16:44-128
+52            android:exported="false" />
+52-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:16:19-43
+53        <receiver
+53-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:17:9-125
+54            android:name="com.dexterous.flutterlocalnotifications.ActionBroadcastReceiver"
+54-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:17:44-122
+55            android:exported="false" />
+55-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:17:19-43
+56        <receiver
+56-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:18:1-25:12
+57            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver"
+57-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:18:36-124
+58            android:exported="false" >
+58-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:18:11-35
+59            <intent-filter>
+59-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:19:5-24:21
+60                <action android:name="android.intent.action.BOOT_COMPLETED" />
+60-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:20:9-70
+60-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:20:17-68
+61                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+61-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:21:9-75
+61-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:21:17-73
+62                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+62-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:22:9-74
+62-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:22:17-71
+63                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+63-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:23:9-73
+63-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:23:17-71
+64            </intent-filter>
+65        </receiver>
+66
+67        <activity
+67-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:26:9-50:20
+68            android:name="com.example.office_syndrome.MainActivity"
+68-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:27:13-41
+69            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+69-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:35:13-163
+70            android:enableOnBackInvokedCallback="true"
+70-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:34:13-55
+71            android:exported="true"
+71-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:28:13-36
+72            android:hardwareAccelerated="true"
+72-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:36:13-47
+73            android:launchMode="singleTop"
+73-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:29:13-43
+74            android:showWhenLocked="true"
+74-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:31:13-42
+75            android:taskAffinity=""
+75-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:30:13-36
+76            android:theme="@style/LaunchTheme"
+76-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:33:13-47
+77            android:turnScreenOn="true"
+77-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:32:13-40
+78            android:windowSoftInputMode="adjustResize" >
+78-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:37:13-55
+79
+80            <!--
+81                 Specifies an Android theme to apply to this Activity as soon as
+82                 the Android process has started. This theme is visible to the user
+83                 while the Flutter UI initializes. After that, this theme continues
+84                 to determine the Window background behind the Flutter UI.
+85            -->
+86            <meta-data
+86-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:42:13-45:17
+87                android:name="io.flutter.embedding.android.NormalTheme"
+87-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:43:15-70
+88                android:resource="@style/NormalTheme" />
+88-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:44:15-52
+89
+90            <intent-filter>
+90-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:46:13-49:29
+91                <action android:name="android.intent.action.MAIN" />
+91-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:47:17-68
+91-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:47:25-66
+92
+93                <category android:name="android.intent.category.LAUNCHER" />
+93-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:48:17-76
+93-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:48:27-74
+94            </intent-filter>
+95        </activity>
+96        <!--
+97             Don't delete the meta-data below.
+98             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+99        -->
+100        <meta-data
+100-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:53:9-55:33
+101            android:name="flutterEmbedding"
+101-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:54:13-44
+102            android:value="2" />
+102-->C:\Users\POTAE\Documents\GitHub\officesyndrome\android\app\src\main\AndroidManifest.xml:55:13-30
+103
+104        <uses-library
+104-->[androidx.window:window:1.2.0] C:\Users\POTAE\.gradle\caches\8.12\transforms\197f12b192a3f06912c946d4cbd2dd7d\transformed\jetified-window-1.2.0\AndroidManifest.xml:23:9-25:40
+105            android:name="androidx.window.extensions"
+105-->[androidx.window:window:1.2.0] C:\Users\POTAE\.gradle\caches\8.12\transforms\197f12b192a3f06912c946d4cbd2dd7d\transformed\jetified-window-1.2.0\AndroidManifest.xml:24:13-54
+106            android:required="false" />
+106-->[androidx.window:window:1.2.0] C:\Users\POTAE\.gradle\caches\8.12\transforms\197f12b192a3f06912c946d4cbd2dd7d\transformed\jetified-window-1.2.0\AndroidManifest.xml:25:13-37
+107        <uses-library
+107-->[androidx.window:window:1.2.0] C:\Users\POTAE\.gradle\caches\8.12\transforms\197f12b192a3f06912c946d4cbd2dd7d\transformed\jetified-window-1.2.0\AndroidManifest.xml:26:9-28:40
+108            android:name="androidx.window.sidecar"
+108-->[androidx.window:window:1.2.0] C:\Users\POTAE\.gradle\caches\8.12\transforms\197f12b192a3f06912c946d4cbd2dd7d\transformed\jetified-window-1.2.0\AndroidManifest.xml:27:13-51
+109            android:required="false" />
+109-->[androidx.window:window:1.2.0] C:\Users\POTAE\.gradle\caches\8.12\transforms\197f12b192a3f06912c946d4cbd2dd7d\transformed\jetified-window-1.2.0\AndroidManifest.xml:28:13-37
+110
+111        <provider
+111-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\POTAE\.gradle\caches\8.12\transforms\0c7cd1674da718ccee593f79cf8da244\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:24:9-32:20
+112            android:name="androidx.startup.InitializationProvider"
+112-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\POTAE\.gradle\caches\8.12\transforms\0c7cd1674da718ccee593f79cf8da244\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:25:13-67
+113            android:authorities="com.example.office_syndrome.androidx-startup"
+113-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\POTAE\.gradle\caches\8.12\transforms\0c7cd1674da718ccee593f79cf8da244\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:26:13-68
+114            android:exported="false" >
+114-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\POTAE\.gradle\caches\8.12\transforms\0c7cd1674da718ccee593f79cf8da244\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:27:13-37
+115            <meta-data
+115-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\POTAE\.gradle\caches\8.12\transforms\0c7cd1674da718ccee593f79cf8da244\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
+116                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+116-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\POTAE\.gradle\caches\8.12\transforms\0c7cd1674da718ccee593f79cf8da244\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
+117                android:value="androidx.startup" />
+117-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\POTAE\.gradle\caches\8.12\transforms\0c7cd1674da718ccee593f79cf8da244\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+118            <meta-data
+118-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+119                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+119-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+120                android:value="androidx.startup" />
+120-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+121        </provider>
+122
+123        <receiver
+123-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+124            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+124-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+125            android:directBootAware="false"
+125-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+126            android:enabled="true"
+126-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+127            android:exported="true"
+127-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+128            android:permission="android.permission.DUMP" >
+128-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+129            <intent-filter>
+129-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+130                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+130-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+130-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+131            </intent-filter>
+132            <intent-filter>
+132-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+133                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+133-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+133-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+134            </intent-filter>
+135            <intent-filter>
+135-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+136                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+136-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+136-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+137            </intent-filter>
+138            <intent-filter>
+138-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+139                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+139-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+139-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\POTAE\.gradle\caches\8.12\transforms\a41c77be64ae79775eea5abf0296f1bb\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+140            </intent-filter>
+141        </receiver>
+142    </application>
+143
+144</manifest>
