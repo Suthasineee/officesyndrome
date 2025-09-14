@@ -42,24 +42,22 @@ android {
 
      signingConfigs {
         create("release") {
-           keyAlias = keystoreProperties["keyAlias"] as String
+            keyAlias = keystoreProperties["keyAlias"] as String
             keyPassword = keystoreProperties["keyPassword"] as String
-            storeFile = keystoreProperties["storeFile"]?.let { file(it) }
+            storeFile = file('C:\Users\POTAE\Documents\GitHub\officesyndrome\release_key.jks')
             storePassword = keystoreProperties["storePassword"] as String
         }
     }
 
         buildTypes {
-            release {signingConfig = signingConfigs.getByName("debug")
-            //     signingConfig signingConfigs.release
-            //     minifyEnabled false
-            //     shrinkResources false
-            // // เปิดใช้ R8/Proguard เพื่อลดขนาดไฟล์ (ถ้าต้องการ)
-            // // minifyEnabled true
-            // // shrinkResources true
-            //     useProguard false
-            //     proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-      
+             getByName("release") {
+           isMinifyEnabled = true 
+        isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 }
