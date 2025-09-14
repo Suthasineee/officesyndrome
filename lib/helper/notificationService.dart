@@ -53,14 +53,14 @@ class NotificationService {
     );
   }
 
-  @pragma('vm:entry-point')
-  void onDidReceiveBackgroundNotificationResponse(
-    NotificationResponse response,
-  ) {
-    Application.navigatorKey.currentState?.push(
-      MaterialPageRoute(builder: (_) => VideoPage()),
-    );
-  }
+  // @pragma('vm:entry-point')
+  // void onDidReceiveBackgroundNotificationResponse(
+  //   NotificationResponse response,
+  // ) {
+  //   Application.navigatorKey.currentState?.push(
+  //     MaterialPageRoute(builder: (_) => VideoPage()),
+  //   );
+  // }
 
   Future<void> cancelAll() async {
     await _notificationsPlugin.cancelAll();

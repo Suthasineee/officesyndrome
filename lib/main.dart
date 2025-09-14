@@ -21,7 +21,7 @@ Future<void> main() async {
   if (isFirstOpen) {
     await prefs.setBool('is_first_open', false);
   }
-  requestNotificationPermission();
+  //requestNotificationPermission();
   NotificationService().init(Application.navigatorKey);
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp, // บังคับแนวตั้งปกติ
