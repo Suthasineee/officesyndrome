@@ -1,0 +1,2 @@
+C:/Users/POTAE/Documents/GitHub/officesyndrome/build/.cxx/Debug/5n6r4x6g/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/POTAE/Documents/GitHub/officesyndrome/build/.cxx/Debug/5n6r4x6g/x86_64/CMakeFiles/rebuild_cache.dir
