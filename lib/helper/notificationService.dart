@@ -17,7 +17,7 @@ class NotificationService {
   final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  Future<void> init(navigatorKey) async {
+  Future<void> init() async {
     tz.initializeTimeZones();
     final String currentTimeZone = DateTime.now().timeZoneName;
     tz.setLocalLocation(tz.getLocation('Asia/Bangkok'));
@@ -64,13 +64,6 @@ class NotificationService {
 
   Future<void> cancelAll() async {
     await _notificationsPlugin.cancelAll();
-    // await _notificationsPlugin
-    //     .resolvePlatformSpecificImplementation<
-    //       IOSFlutterLocalNotificationsPlugin
-    //     >()
-    //     ?.cancelAll();
-    // final pending = await _notificationsPlugin.pendingNotificationRequests();
-    // print('PENDING: ${pending.map((e) => e.id).toList()}');
   }
 
   Future<void> scheduleDailyNotification(
@@ -91,10 +84,11 @@ class NotificationService {
         'ถึงเวลาขยับร่างกาย', // body
         scheduledTime,
         _notificationDetails(count),
-        androidAllowWhileIdle: true,
+
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time,
+        androidScheduleMode: AndroidScheduleMode.exact,
       );
 
       debugPrint('Notification scheduled successfully');
@@ -104,7 +98,6 @@ class NotificationService {
   }
 
   NotificationDetails _notificationDetails(count) {
-
     return NotificationDetails(
       android: AndroidNotificationDetails(
         count.toString(),

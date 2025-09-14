@@ -6,7 +6,8 @@ import 'package:office_syndrome/helper/notificationService.dart';
 import 'package:office_syndrome/home/home.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 import 'helper/app_controller.dart';
 import 'helper/application.dart';
 
@@ -20,9 +21,10 @@ Future<void> main() async {
 
   if (isFirstOpen) {
     await prefs.setBool('is_first_open', false);
-  }
-  //requestNotificationPermission();
-  NotificationService().init(Application.navigatorKey);
+  } // Initialize time zone
+  tz.initializeTimeZones();
+ // requestNotificationPermission();
+  NotificationService().init();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp, // บังคับแนวตั้งปกติ
   ]);

@@ -130,7 +130,7 @@ class _SettingPageState extends State<SettingPage> {
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: fontMitr,
-                        fontSize: 22,
+                        fontSize: 18,
                       ),
                     ),
                   ),
@@ -274,7 +274,7 @@ class _SettingPageState extends State<SettingPage> {
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: fontMitr,
-                        fontSize: 22,
+                        fontSize: 18,
                       ),
                     ),
                   ),
@@ -398,7 +398,7 @@ class _SettingPageState extends State<SettingPage> {
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: fontMitr,
-                        fontSize: 22,
+                        fontSize: 18,
                       ),
                     ),
                   ),
