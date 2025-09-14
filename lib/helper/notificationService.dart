@@ -16,6 +16,7 @@ class NotificationService {
 
   final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
+
   Future<void> init(navigatorKey) async {
     tz.initializeTimeZones();
     final String currentTimeZone = DateTime.now().timeZoneName;
@@ -41,8 +42,8 @@ class NotificationService {
         _handleNotificationTap(response.payload);
       },
       // สำคัญสำหรับ Android เมื่อแอปไม่อยู่ foreground/terminated
-      onDidReceiveBackgroundNotificationResponse:
-          onDidReceiveBackgroundNotificationResponse,
+      // onDidReceiveBackgroundNotificationResponse:
+      //     onDidReceiveBackgroundNotificationResponse,
     );
   }
 
@@ -83,8 +84,6 @@ class NotificationService {
       selectedTime,
       tz.local,
     );
-    print("count:" + count.toString());
-    print("selectedTime:" + selectedTime.toString());
     try {
       await _notificationsPlugin.zonedSchedule(
         count,
@@ -105,7 +104,7 @@ class NotificationService {
   }
 
   NotificationDetails _notificationDetails(count) {
-    print("count2:" + count.toString());
+
     return NotificationDetails(
       android: AndroidNotificationDetails(
         count.toString(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:office_syndrome/guild/guild_view.dart';
 import 'package:office_syndrome/helper/colors.dart';
 import 'package:office_syndrome/helper/notificationService.dart';
@@ -22,6 +23,9 @@ Future<void> main() async {
   }
   requestNotificationPermission();
   NotificationService().init(Application.navigatorKey);
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp, // บังคับแนวตั้งปกติ
+  ]);
   runApp(MyApp(isFirstOpen: isFirstOpen));
 }
 

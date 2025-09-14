@@ -4,7 +4,7 @@
             "outputFile": "com.example.office_syndrome.app-mergeDebugResources-41:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "/Users/suthasineesangchan/.gradle/caches/8.12/transforms/0d0ad2c9a7eee0ad2b557032bddebd70/transformed/appcompat-1.1.0/res/values-night-v8/values-night-v8.xml",
+                    "source": "C:\\Users\\POTAE\\.gradle\\caches\\8.12\\transforms\\0d0ad2c9a7eee0ad2b557032bddebd70\\transformed\\appcompat-1.1.0\\res\\values-night-v8\\values-night-v8.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
@@ -21,14 +21,14 @@
                     }
                 },
                 {
-                    "source": "/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/res/values-night/styles.xml",
+                    "source": "C:\\Users\\POTAE\\Documents\\GitHub\\officesyndrome\\android\\app\\src\\main\\res\\values-night\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
-                        "startOffsets": "172,817",
+                        "startOffsets": "175,831",
                         "endLines": "7,16",
                         "endColumns": "12,12",
-                        "endOffsets": "475,981"
+                        "endOffsets": "482,997"
                     },
                     "to": {
                         "startLines": "2,6",

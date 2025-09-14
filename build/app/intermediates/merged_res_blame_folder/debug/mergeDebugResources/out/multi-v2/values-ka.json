@@ -4,7 +4,7 @@
             "outputFile": "com.example.office_syndrome.app-mergeDebugResources-41:/values-ka/values-ka.xml",
             "map": [
                 {
-                    "source": "/Users/suthasineesangchan/.gradle/caches/8.12/transforms/b83b8b00b8346c9e7414a1f1298f055d/transformed/preference-1.2.1/res/values-ka/values-ka.xml",
+                    "source": "C:\\Users\\POTAE\\.gradle\\caches\\8.12\\transforms\\b83b8b00b8346c9e7414a1f1298f055d\\transformed\\preference-1.2.1\\res\\values-ka\\values-ka.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8",
                         "startColumns": "4,4,4,4,4,4,4",
@@ -21,24 +21,7 @@
                     }
                 },
                 {
-                    "source": "/Users/suthasineesangchan/.gradle/caches/8.12/transforms/72c190e8e0a1da0cc68763429ee44e42/transformed/jetified-media3-exoplayer-1.5.1/res/values-ka/values-ka.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10",
-                        "startColumns": "4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,127,192,270,343,424,499,587,674",
-                        "endColumns": "71,64,77,72,80,74,87,86,84",
-                        "endOffsets": "122,187,265,338,419,494,582,669,754"
-                    },
-                    "to": {
-                        "startLines": "37,38,39,40,41,42,43,44,45",
-                        "startColumns": "4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "3604,3676,3741,3819,3892,3973,4048,4136,4223",
-                        "endColumns": "71,64,77,72,80,74,87,86,84",
-                        "endOffsets": "3671,3736,3814,3887,3968,4043,4131,4218,4303"
-                    }
-                },
-                {
-                    "source": "/Users/suthasineesangchan/.gradle/caches/8.12/transforms/0d0ad2c9a7eee0ad2b557032bddebd70/transformed/appcompat-1.1.0/res/values-ka/values-ka.xml",
+                    "source": "C:\\Users\\POTAE\\.gradle\\caches\\8.12\\transforms\\0d0ad2c9a7eee0ad2b557032bddebd70\\transformed\\appcompat-1.1.0\\res\\values-ka\\values-ka.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -55,7 +38,24 @@
                     }
                 },
                 {
-                    "source": "/Users/suthasineesangchan/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/res/values-ka/values-ka.xml",
+                    "source": "C:\\Users\\POTAE\\.gradle\\caches\\8.12\\transforms\\72c190e8e0a1da0cc68763429ee44e42\\transformed\\jetified-media3-exoplayer-1.5.1\\res\\values-ka\\values-ka.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,127,192,270,343,424,499,587,674",
+                        "endColumns": "71,64,77,72,80,74,87,86,84",
+                        "endOffsets": "122,187,265,338,419,494,582,669,754"
+                    },
+                    "to": {
+                        "startLines": "37,38,39,40,41,42,43,44,45",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "3604,3676,3741,3819,3892,3973,4048,4136,4223",
+                        "endColumns": "71,64,77,72,80,74,87,86,84",
+                        "endOffsets": "3671,3736,3814,3887,3968,4043,4131,4218,4303"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\POTAE\\.gradle\\caches\\8.12\\transforms\\66aa7f682cf61ffe3ee75db6ee238d77\\transformed\\core-1.13.1\\res\\values-ka\\values-ka.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
