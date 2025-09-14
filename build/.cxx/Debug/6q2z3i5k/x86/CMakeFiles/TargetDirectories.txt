@@ -1,2 +1,0 @@
-/Users/suthasineesangchan/Documents/GitHub/officesyndrome/build/.cxx/Debug/6q2z3i5k/x86/CMakeFiles/edit_cache.dir
-/Users/suthasineesangchan/Documents/GitHub/officesyndrome/build/.cxx/Debug/6q2z3i5k/x86/CMakeFiles/rebuild_cache.dir
