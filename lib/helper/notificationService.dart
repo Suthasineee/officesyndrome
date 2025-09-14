@@ -37,15 +37,27 @@ class NotificationService {
 
     await _notificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: (NotificationResponse response) async {
-        // เมื่อกด Notification จะเข้ามาที่นี่
-        //if (response.payload == "openPage") {
-        navigatorKey.currentState?.push(
-          MaterialPageRoute(builder: (_) => VideoPage()),
-        );
-        //Navigator.push(context, MaterialPageRoute(builder: (_) => VideoPage()));
-        // }
+      onDidReceiveNotificationResponse: (NotificationResponse response) {
+        _handleNotificationTap(response.payload);
       },
+      // สำคัญสำหรับ Android เมื่อแอปไม่อยู่ foreground/terminated
+      onDidReceiveBackgroundNotificationResponse:
+          onDidReceiveBackgroundNotificationResponse,
+    );
+  }
+
+  void _handleNotificationTap(String? payload) {
+    Application.navigatorKey.currentState?.push(
+      MaterialPageRoute(builder: (_) => VideoPage()),
+    );
+  }
+
+  @pragma('vm:entry-point')
+  void onDidReceiveBackgroundNotificationResponse(
+    NotificationResponse response,
+  ) {
+    Application.navigatorKey.currentState?.push(
+      MaterialPageRoute(builder: (_) => VideoPage()),
     );
   }
 

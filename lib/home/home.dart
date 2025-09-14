@@ -8,6 +8,7 @@ import 'package:office_syndrome/helper/notificationService.dart';
 import 'package:office_syndrome/model/notificationData.dart';
 import 'package:office_syndrome/setting/setting.dart';
 import 'package:office_syndrome/video/video.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart' as tz;
 
@@ -18,12 +19,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isOn = true;
+  bool isWarning = false;
   NotificationData data = NotificationData();
   String name = "";
   @override
   void initState() {
     getData();
-
     super.initState();
   }
 
@@ -51,6 +52,23 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     //_timer?.cancel();
     super.dispose();
+  }
+
+  Future<void> requestNotificationPermission() async {
+    if (await Permission.notification.isDenied && !isWarning) {
+      isWarning = true;
+      await Permission.notification.request();
+      // await openAppSettings();
+    }
+  }
+
+  Future<bool> checkNotificationPermission() async {
+    if (await Permission.notification.isDenied) {
+      showAlertDialog(context);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   @override
@@ -128,59 +146,62 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => SettingPage()),
-                      ).then((onValue) {
-                        setState(() {
-                          NotificationService().cancelAll();
-                          data = onValue;
-                          prefs.setString('text', data.text.toString());
-                          if (data.type == 1) {
-                            for (int i = 1; i <= data.time!; i++) {
-                              _startTimer(3600 * i, i);
-                            }
-                            prefs.setInt('type', 1);
-                          } else if (data.type == 2) {
-                            for (int i = 1; i <= data.time!; i++) {
-                              _startTimer(7200 * i, i);
-                            }
-                            prefs.setInt('type', 2);
-                          } else if (data.type == 3) {
-                            int sum =
-                                (data.clock!.inHours * 60 * 60) +
-                                (data.clock!.inMinutes * 60);
-                            if (isOn) {
+                    onTap: () async {
+                      bool c = await checkNotificationPermission();
+                      if (c) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => SettingPage()),
+                        ).then((onValue) {
+                          setState(() {
+                            NotificationService().cancelAll();
+                            data = onValue;
+                            prefs.setString('text', data.text.toString());
+                            if (data.type == 1) {
                               for (int i = 1; i <= data.time!; i++) {
-                                _startTimer(sum * i, i);
+                                _startTimer(3600 * i, i);
                               }
-                            }
-                            DateTime selectedTime = DateTime.now();
+                              prefs.setInt('type', 1);
+                            } else if (data.type == 2) {
+                              for (int i = 1; i <= data.time!; i++) {
+                                _startTimer(7200 * i, i);
+                              }
+                              prefs.setInt('type', 2);
+                            } else if (data.type == 3) {
+                              int sum =
+                                  (data.clock!.inHours * 60 * 60) +
+                                  (data.clock!.inMinutes * 60);
+                              if (isOn) {
+                                for (int i = 1; i <= data.time!; i++) {
+                                  _startTimer(sum * i, i);
+                                }
+                              }
+                              DateTime selectedTime = DateTime.now();
 
-                            prefs.setInt(
-                              'clock',
-                              selectedTime.millisecondsSinceEpoch,
-                            );
-                            prefs.setInt('sum', sum);
-                            prefs.setInt('time', data.time!);
-                            prefs.setInt('type', 3);
-                          } else if (data.type == 4) {
-                            if (isOn) {
-                              NotificationService().scheduleDailyNotification(
-                                data.date!,
-                                1,
+                              prefs.setInt(
+                                'clock',
+                                selectedTime.millisecondsSinceEpoch,
                               );
+                              prefs.setInt('sum', sum);
+                              prefs.setInt('time', data.time!);
+                              prefs.setInt('type', 3);
+                            } else if (data.type == 4) {
+                              if (isOn) {
+                                NotificationService().scheduleDailyNotification(
+                                  data.date!,
+                                  1,
+                                );
+                              }
+                              prefs.setInt(
+                                'clock',
+                                data.date!.millisecondsSinceEpoch,
+                              );
+                              prefs.setInt('time', 1);
+                              prefs.setInt('type', 4);
                             }
-                            prefs.setInt(
-                              'clock',
-                              data.date!.millisecondsSinceEpoch,
-                            );
-                            prefs.setInt('time', 1);
-                            prefs.setInt('type', 4);
-                          }
+                          });
                         });
-                      });
+                      }
                     },
                     child: Container(
                       height: 50,
@@ -349,6 +370,90 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Future<void> showAlertDialog(BuildContext context) async {
+    await showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(
+          "เปิดการแจ้งเตือน",
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w500,
+            fontFamily: fontMitr,
+          ),
+        ),
+        content: Text(
+          "ไปที่ตั้งค่าการแจ้งเตือน",
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w500,
+            fontFamily: fontMitr,
+            fontSize: 18,
+          ),
+        ),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  width: 50,
+                  height: 30,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'ยกเลิก',
+                    style: TextStyle(
+                      color: colorAccent,
+                      fontFamily: fontMitr,
+                      // fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: 15),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: colorAccent, //background color of button
+                  side: BorderSide(
+                    width: 1,
+                    color: Color.fromARGB(255, 203, 202, 202),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                onPressed: () async {
+                  await openAppSettings();
+                },
+                child: Container(
+                  width: 50,
+                  height: 30,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'ตกลง',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: fontMitr,
+                      // fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

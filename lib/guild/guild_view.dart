@@ -12,7 +12,7 @@ class GuildPage extends StatefulWidget {
 class _GuildPageState extends State<GuildPage> {
   @override
   void initState() {
-    requestNotificationPermission();
+   requestNotificationPermission();
     super.initState();
   }
 

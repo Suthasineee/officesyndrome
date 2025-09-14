@@ -3,25 +3,34 @@ import 'package:office_syndrome/guild/guild_view.dart';
 import 'package:office_syndrome/helper/colors.dart';
 import 'package:office_syndrome/helper/notificationService.dart';
 import 'package:office_syndrome/home/home.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'helper/app_controller.dart';
 import 'helper/application.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
   Application.navigatorKey = navigatorKey;
-  WidgetsFlutterBinding.ensureInitialized();
-
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isFirstOpen = prefs.getBool('is_first_open') ?? true;
 
   if (isFirstOpen) {
     await prefs.setBool('is_first_open', false);
   }
-  NotificationService().init(navigatorKey);
+  requestNotificationPermission();
+  NotificationService().init(Application.navigatorKey);
   runApp(MyApp(isFirstOpen: isFirstOpen));
+}
+
+Future<void> requestNotificationPermission() async {
+  if (await Permission.notification.isDenied) {
+    await Permission.notification.request();
+  } else {
+    // NotificationService().init(navigatorKey);
+  }
 }
 
 class MyApp extends StatelessWidget {
