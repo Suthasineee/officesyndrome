@@ -1,2 +1,0 @@
-C:/Users/POTAE/Documents/GitHub/officesyndrome/build/.cxx/RelWithDebInfo/2y130302/arm64-v8a/CMakeFiles/edit_cache.dir
-C:/Users/POTAE/Documents/GitHub/officesyndrome/build/.cxx/RelWithDebInfo/2y130302/arm64-v8a/CMakeFiles/rebuild_cache.dir
