@@ -41,10 +41,17 @@ class NotificationService {
       onDidReceiveNotificationResponse: (NotificationResponse response) {
         _handleNotificationTap(response.payload);
       },
+
       // สำคัญสำหรับ Android เมื่อแอปไม่อยู่ foreground/terminated
       // onDidReceiveBackgroundNotificationResponse:
       //     onDidReceiveBackgroundNotificationResponse,
     );
+    // Android 13+ runtime permission
+    await _notificationsPlugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >()
+        ?.requestNotificationsPermission();
   }
 
   void _handleNotificationTap(String? payload) {
@@ -85,8 +92,6 @@ class NotificationService {
         scheduledTime,
         _notificationDetails(count),
 
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time,
         androidScheduleMode: AndroidScheduleMode.exact,
       );
@@ -101,7 +106,7 @@ class NotificationService {
     return NotificationDetails(
       android: AndroidNotificationDetails(
         count.toString(),
-        'your_channel_name',
+        'officesyndrome',
         channelDescription: 'description here',
         importance: Importance.max,
         priority: Priority.high,
