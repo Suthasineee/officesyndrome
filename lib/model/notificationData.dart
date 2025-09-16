@@ -6,4 +6,5 @@ class NotificationData {
   Duration? clock;
   DateTime? date;
   int? time;
+  int? isAdd;
 }

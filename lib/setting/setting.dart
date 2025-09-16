@@ -5,8 +5,9 @@ import 'package:office_syndrome/helper/colors.dart';
 import 'package:office_syndrome/model/notificationData.dart';
 
 class SettingPage extends StatefulWidget {
-  @override
-  _SettingPageState createState() => _SettingPageState();
+  int type;
+  SettingPage(this.type);
+  createState() => _SettingPageState();
 }
 
 class _SettingPageState extends State<SettingPage> {
@@ -20,6 +21,7 @@ class _SettingPageState extends State<SettingPage> {
 
   @override
   void initState() {
+    data.isAdd = widget.type;
     super.initState();
   }
 

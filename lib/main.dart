@@ -22,7 +22,7 @@ Future<void> main() async {
   if (isFirstOpen) {
     await prefs.setBool('is_first_open', false);
   } // Initialize time zone
-  tz.initializeTimeZones();
+  //tz.initializeTimeZones();
  // requestNotificationPermission();
   NotificationService().init();
   await SystemChrome.setPreferredOrientations([
