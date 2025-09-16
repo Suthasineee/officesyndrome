@@ -2,13 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:office_syndrome/helper/app_controller.dart';
 import 'package:office_syndrome/helper/colors.dart';
+import 'package:office_syndrome/helper/notificationService.dart';
 import 'package:office_syndrome/helper/preferences_helper.dart';
 import 'package:office_syndrome/model/notificationData.dart';
 
 class SettingPage extends StatefulWidget {
   int type;
   int index;
-  SettingPage(this.type, this.index);
+  dynamic data;
+  SettingPage(this.type, this.index, this.data, {super.key});
   createState() => _SettingPageState();
 }
 
@@ -44,6 +46,7 @@ class _SettingPageState extends State<SettingPage> {
               ? IconButton(
                   icon: const Icon(Icons.delete),
                   onPressed: () {
+                    NotificationService().cancelID(widget.data.id!);
                     deleteNotificationData(widget.index);
                     getNotificationData();
                     data.isAdd = 3;
@@ -591,6 +594,10 @@ class _SettingPageState extends State<SettingPage> {
           ),
         ),
         onPressed: () {
+          if (widget.type == 1) {
+            NotificationService().cancelID(widget.data.id!);
+            deleteNotificationData(widget.index);
+          }
           Navigator.pop(context, data);
         },
         child: Container(
