@@ -62,6 +62,9 @@
 }
 -keep class j$.util.DesugarCollections {
   public static java.util.Map synchronizedMap(java.util.Map);
+  public static java.util.List unmodifiableList(java.util.List);
+  public static java.util.Map unmodifiableMap(java.util.Map);
+  public static java.util.Set unmodifiableSet(java.util.Set);
 }
 -keep class j$.util.DesugarTimeZone {
   public static java.util.TimeZone getTimeZone(java.lang.String);
@@ -107,6 +110,7 @@
   public static int hash(java.lang.Object[]);
   public static int hashCode(java.lang.Object);
   public static java.lang.Object requireNonNull(java.lang.Object);
+  public static java.lang.Object requireNonNull(java.lang.Object,java.lang.String);
   public static java.lang.String toString(java.lang.Object);
 }
 -keep interface j$.util.Set {
@@ -123,6 +127,7 @@
   public <init>();
   public java.lang.Object get(java.lang.Object);
   public java.lang.Object put(java.lang.Object,java.lang.Object);
+  public void putAll(java.util.Map);
   public java.lang.Object putIfAbsent(java.lang.Object,java.lang.Object);
 }
 -keep class j$.util.concurrent.ThreadLocalRandom {

@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "com.application.office_syndrome.app-debug-50:/mipmap-xhdpi_ic_launcher.jpg.flat",
+        "source": "com.application.office_syndrome.app-main-45:/mipmap-xhdpi/ic_launcher.jpg"
+    },
+    {
+        "merged": "com.application.office_syndrome.app-debug-50:/mipmap-hdpi_ic_launcher.jpeg.flat",
+        "source": "com.application.office_syndrome.app-main-45:/mipmap-hdpi/ic_launcher.jpeg"
+    },
+    {
+        "merged": "com.application.office_syndrome.app-debug-50:/mipmap-xxxhdpi_ic_launcher.jpg.flat",
+        "source": "com.application.office_syndrome.app-main-45:/mipmap-xxxhdpi/ic_launcher.jpg"
+    },
+    {
+        "merged": "com.application.office_syndrome.app-debug-50:/drawable-v21_launch_background.xml.flat",
+        "source": "com.application.office_syndrome.app-main-45:/drawable-v21/launch_background.xml"
+    },
+    {
+        "merged": "com.application.office_syndrome.app-debug-50:/mipmap-xxhdpi_ic_launcher.jpg.flat",
+        "source": "com.application.office_syndrome.app-main-45:/mipmap-xxhdpi/ic_launcher.jpg"
+    },
+    {
+        "merged": "com.application.office_syndrome.app-debug-50:/mipmap-mdpi_ic_launcher.jpg.flat",
+        "source": "com.application.office_syndrome.app-main-45:/mipmap-mdpi/ic_launcher.jpg"
+    }
+]
