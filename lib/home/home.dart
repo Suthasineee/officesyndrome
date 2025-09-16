@@ -20,7 +20,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool isOn = true;
   bool isWarning = false;
   NotificationData data = NotificationData();
   String name = "";
@@ -34,16 +33,11 @@ class _HomePageState extends State<HomePage> {
 
   late SharedPreferences prefs;
   getData() async {
-    prefs = await SharedPreferences.getInstance();
-
-    isOn = prefs.getBool('isOn') ?? true;
-    name = prefs.getString('text') ?? '';
     notificationData = await getNotificationData();
-    setState(() {});
-  }
-
-  setData() async {
-    await prefs.setBool('isOn', isOn);
+    Timer(Duration(seconds: 1), () {
+      setState(() {});
+    });
+    notificationData = await getNotificationData();
   }
 
   void _startTimer(int time, count) {
@@ -157,94 +151,11 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        addView(),
+                        notificationData.length < 12 ? addView() : Container(),
                       ],
                     ),
                     SizedBox(height: 10),
                     listNotificationView(),
-                    // Container(
-                    //   height: 50,
-                    //   margin: EdgeInsets.only(left: 15, right: 15, top: 20),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: [
-                    //       Container(
-                    //         padding: EdgeInsets.only(left: 15),
-                    //         child: Text(
-                    //           'แจ้งเตือน',
-                    //           style: TextStyle(
-                    //             color: Colors.black,
-                    //             fontFamily: fontMitr,
-                    //             fontWeight: FontWeight.w500,
-                    //             fontSize: 20,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       Switch(
-                    //         activeColor: Colors.white,
-                    //         activeTrackColor: colorAccent,
-                    //         value: isOn,
-                    //         onChanged: (value) {
-                    //           setState(() {
-                    //             isOn = value;
-                    //             if (!isOn) {
-                    //               NotificationService().cancelAll();
-                    //               print("cancelAll");
-                    //             } else {
-                    //               int type = prefs.getInt('type') ?? 0;
-                    //               if (type == 1) {
-                    //                 for (int i = 1; i <= data.time!; i++) {
-                    //                   _startTimer(3600 * i, i);
-                    //                 }
-                    //               } else if (type == 2) {
-                    //                 for (int i = 1; i <= data.time!; i++) {
-                    //                   _startTimer(7200 * i, i);
-                    //                 }
-                    //               } else if (type == 3) {
-                    //                 int clock = prefs.getInt('clock') ?? 0;
-                    //                 DateTime date =
-                    //                     DateTime.fromMillisecondsSinceEpoch(
-                    //                       clock,
-                    //                     );
-                    //                 int sum = prefs.getInt('sum') ?? 0;
-                    //                 int time = prefs.getInt('time') ?? 0;
-                    //                 for (int i = 1; i <= time; i++) {
-                    //                   DateTime selectedfTime = date.add(
-                    //                     Duration(seconds: sum * i),
-                    //                   );
-                    //                   NotificationService()
-                    //                       .scheduleDailyNotification(
-                    //                         selectedfTime,
-                    //                         i,
-                    //                       );
-                    //                   print(
-                    //                     "selectedfTime:" +
-                    //                         selectedfTime.second.toString(),
-                    //                   );
-                    //                 }
-                    //               } else if (type == 4) {
-                    //                 int clock = prefs.getInt('clock') ?? 0;
-                    //                 int time = prefs.getInt('time') ?? 0;
-                    //                 DateTime date;
-                    //                 if (clock != 0) {
-                    //                   date = DateTime.fromMillisecondsSinceEpoch(
-                    //                     clock,
-                    //                   );
-                    //                   for (int i = 1; i <= time; i++) {
-                    //                     print("scheduleDailyNotification");
-                    //                     NotificationService()
-                    //                         .scheduleDailyNotification(date, i);
-                    //                   }
-                    //                 }
-                    //               }
-                    //             }
-                    //             setData();
-                    //           });
-                    //         },
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
@@ -263,59 +174,104 @@ class _HomePageState extends State<HomePage> {
         } else {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => SettingPage(0)),
+            MaterialPageRoute(builder: (_) => SettingPage(0, 0, null)),
           ).then((onValue) {
+            bool isSave = false;
             if (onValue.isAdd == 0) {
-              setState(() {
-                NotificationService().cancelAll();
-                data = onValue;
-                // prefs.setString('text', data.text.toString());
-                if (data.type == 1) {
+              data = onValue;
+              List<int> id = [];
+              if (data.type == 1) {
+                //1-12
+                data.startAt = 0;
+                int typeCount = notificationData
+                    .where((e) => e.type == 1)
+                    .toList()
+                    .length;
+                if (typeCount < 1) {
+                  isSave = true;
+
                   for (int i = 1; i <= data.time!; i++) {
                     _startTimer(3600 * i, i);
+                    id.add(i);
                   }
-                  //   prefs.setInt('type', 1);
-                } else if (data.type == 2) {
+                } else {
+                  isSave = false;
+                }
+                data.id = id;
+              } else if (data.type == 2) {
+                //15-26
+                data.startAt = 0;
+                int typeCount = notificationData
+                    .where((e) => e.type == 2)
+                    .toList()
+                    .length;
+                if (typeCount < 1) {
+                  isSave = true;
+
                   for (int i = 1; i <= data.time!; i++) {
-                    _startTimer(7200 * i, i);
+                    _startTimer(7200 * i, i + 14);
+                    id.add(i + 14);
                   }
-                  // prefs.setInt('type', 2);
-                } else if (data.type == 3) {
-                  int sum =
-                      (data.clock!.inHours * 60 * 60) +
-                      (data.clock!.inMinutes * 60);
-                  if (isOn) {
-                    for (int i = 1; i <= data.time!; i++) {
-                      _startTimer(sum * i, i);
+                } else {
+                  isSave = false;
+                }
+                data.id = id;
+              } else if (data.type == 3) {
+                //101-3000
+                isSave = true;
+                data.startAt = 1;
+                int sum =
+                    (data.clock!.inHours * 60 * 60) +
+                    (data.clock!.inMinutes * 60);
+                List<int> id = [];
+                int num = 100;
+                for (int i = 1; i <= data.time!; i++) {
+                  for (int j = num; j <= 1000; j++) {
+                    var check = notificationData.where((item) {
+                      int typeCount = item.id!
+                          .where((e) => e == (j))
+                          .toList()
+                          .length;
+                      return typeCount > 0;
+                    }).toList();
+                    if (check.isEmpty) {
+                      _startTimer(sum * i, j);
+                      id.add(j);
+                      num = j + 1;
+                      j = 1002;
                     }
                   }
-                  DateTime selectedTime = DateTime.now();
-
-                  prefs.setInt('clock', selectedTime.millisecondsSinceEpoch);
-                  prefs.setInt('sum', sum);
-                  prefs.setInt('time', data.time!);
-                  prefs.setInt('type', 3);
-                } else if (data.type == 4) {
-                  if (isOn) {
-                    NotificationService().scheduleDailyNotification(
-                      data.date!,
-                      1,
-                    );
-                  }
-                  prefs.setInt('clock', data.date!.millisecondsSinceEpoch);
-                  prefs.setInt('time', 1);
-                  prefs.setInt('type', 4);
                 }
-              });
-              data.clock = data.date!.difference(DateTime.now());
-              NotificationData dataNoti = NotificationData();
-              dataNoti.clock = data.clock;
-              dataNoti.date = data.date;
-              dataNoti.text = data.text;
-              print("data.text:" + data.text.toString());
-              dataNoti.time = data.time;
-              dataNoti.type = data.type;
-              saveNotificationData(dataNoti);
+                data.id = id;
+              } else if (data.type == 4) {
+                //10000
+                isSave = true;
+                data.startAt = 0;
+                List<int> id = [];
+                for (int i = 0; i <= notificationData.length!; i++) {
+                  int typeCount = notificationData
+                      .where((e) => e.id![0] == (i + 10000))
+                      .toList()
+                      .length;
+                  if (typeCount == 0) {
+                    id.add(i + 10000);
+                    i = notificationData.length + 1;
+                  }
+                }
+                NotificationService().scheduleDailyNotification(
+                  data.date!,
+                  id[0],
+                );
+                data.id = id;
+              }
+
+              if (isSave) {
+                data.isON = true;
+                saveNotificationData(data);
+                getData();
+              } else {}
+            } else {
+              editNotificationData(data, data.index);
               getData();
             }
           });
@@ -325,10 +281,6 @@ class _HomePageState extends State<HomePage> {
         margin: EdgeInsets.only(right: 25),
         decoration: BoxDecoration(
           color: colorAccent,
-          // border: Border.all(
-          //   color: Colors.black26, // สีขอบ
-          //   width: 1.0, // ความหนาของเส้น
-          // ),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Icon(Icons.add, color: Colors.white),
@@ -339,12 +291,12 @@ class _HomePageState extends State<HomePage> {
   Widget listNotificationView() {
     return notificationData.isNotEmpty
         ? Container(
-            height: 230,
+            height: MediaQuery.of(context).size.height * 0.5,
             child: ListView(
               scrollDirection: Axis.vertical,
               children: <Widget>[
                 ...List.generate(notificationData.length, (index) {
-                  return notificationView(notificationData[index]);
+                  return notificationView(notificationData[index], index);
                 }),
               ],
             ),
@@ -361,7 +313,7 @@ class _HomePageState extends State<HomePage> {
           );
   }
 
-  Widget notificationView(dataT) {
+  Widget notificationView(NotificationData dataT, index) {
     return InkWell(
       onTap: () async {
         if (await Permission.notification.isDenied && Platform.isAndroid) {
@@ -369,51 +321,104 @@ class _HomePageState extends State<HomePage> {
         } else {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => SettingPage(1)),
-          ).then((onValue) {
-            if (data.isAdd == 0) {
-              setState(() {
-                NotificationService().cancelAll();
-                data = onValue;
-                prefs.setString('text', data.text.toString());
-                if (data.type == 1) {
+            MaterialPageRoute(builder: (_) => SettingPage(1, index, dataT)),
+          ).then((onValue) async {
+            notificationData = await getNotificationData();
+            bool isSave = false;
+            if (onValue.isAdd == 1) {
+              data = onValue;
+
+              List<int> id = [];
+              if (data.type == 1) {
+                //1-12
+                data.startAt = 0;
+                int typeCount = notificationData
+                    .where((e) => e.type == 1)
+                    .toList()
+                    .length;
+                if (typeCount < 1) {
+                  isSave = true;
+
                   for (int i = 1; i <= data.time!; i++) {
                     _startTimer(3600 * i, i);
+                    id.add(i);
                   }
-                  prefs.setInt('type', 1);
-                } else if (data.type == 2) {
+                } else {
+                  isSave = false;
+                }
+                data.id = id;
+              } else if (data.type == 2) {
+                //15-26
+                data.startAt = 0;
+                int typeCount = notificationData
+                    .where((e) => e.type == 2)
+                    .toList()
+                    .length;
+                if (typeCount < 1) {
+                  isSave = true;
+
                   for (int i = 1; i <= data.time!; i++) {
-                    _startTimer(7200 * i, i);
+                    _startTimer(7200 * i, i + 14);
+                    id.add(i + 14);
                   }
-                  prefs.setInt('type', 2);
-                } else if (data.type == 3) {
-                  int sum =
-                      (data.clock!.inHours * 60 * 60) +
-                      (data.clock!.inMinutes * 60);
-                  if (isOn) {
-                    for (int i = 1; i <= data.time!; i++) {
-                      _startTimer(sum * i, i);
+                } else {
+                  isSave = false;
+                }
+                data.id = id;
+              } else if (data.type == 3) {
+                //101-3000
+                isSave = true;
+                data.startAt = 1;
+                int sum =
+                    (data.clock!.inHours * 60 * 60) +
+                    (data.clock!.inMinutes * 60);
+                List<int> id = [];
+                int num = 100;
+                for (int i = 1; i <= data.time!; i++) {
+                  for (int j = num; j <= 1000; j++) {
+                    var check = notificationData.where((item) {
+                      int typeCount = item.id!
+                          .where((e) => e == (j))
+                          .toList()
+                          .length;
+                      return typeCount > 0;
+                    }).toList();
+                    if (check.isEmpty) {
+                      _startTimer(sum * i, j);
+                      id.add(j);
+                      num = j + 1;
+                      j = 1002;
                     }
                   }
-                  DateTime selectedTime = DateTime.now();
-
-                  prefs.setInt('clock', selectedTime.millisecondsSinceEpoch);
-                  prefs.setInt('sum', sum);
-                  prefs.setInt('time', data.time!);
-                  prefs.setInt('type', 3);
-                } else if (data.type == 4) {
-                  if (isOn) {
-                    NotificationService().scheduleDailyNotification(
-                      data.date!,
-                      1,
-                    );
-                  }
-                  prefs.setInt('clock', data.date!.millisecondsSinceEpoch);
-                  prefs.setInt('time', 1);
-                  prefs.setInt('type', 4);
                 }
-              });
+                data.id = id;
+              } else if (data.type == 4) {
+                //10000
+                isSave = true;
+                data.startAt = 0;
+                List<int> id = [];
+                for (int i = 0; i <= notificationData.length!; i++) {
+                  int typeCount = notificationData
+                      .where((e) => e.id![0] == (i + 10000))
+                      .toList()
+                      .length;
+                  if (typeCount == 0) {
+                    id.add(i + 10000);
+                    i = notificationData.length + 1;
+                  }
+                }
+                NotificationService().scheduleDailyNotification(
+                  data.date!,
+                  id[0],
+                );
+                data.id = id;
+              }
+              if (isSave) {
+                data.isON = true;
+                saveNotificationData(data);
+              }
             }
+            getData();
           });
         }
       },
@@ -445,8 +450,52 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: Icon(Icons.arrow_forward_ios, color: Colors.black),
+              padding: EdgeInsets.only(right: 10),
+              child: Transform.scale(
+                scale:
+                    0.8, // ปรับขนาด (1.0 = ปกติ, มากกว่าคือใหญ่ขึ้น, น้อยกว่าคือเล็กลง)
+                child: Switch(
+                  activeColor: Colors.white,
+                  activeTrackColor: colorAccent,
+                  value: dataT.isON!,
+                  onChanged: (value) {
+                    setState(() {
+                      dataT.isON = value;
+                      if (value) {
+                        if (dataT.type == 1) {
+                          //1-12
+                          for (int i = 1; i <= dataT.time!; i++) {
+                            _startTimer(3600 * i, dataT.id![i - 1]);
+                          }
+                        } else if (dataT.type == 2) {
+                          //15-26
+                          for (int i = 1; i <= dataT.time!; i++) {
+                            _startTimer(7200 * i, dataT.id![i - 1]);
+                          }
+                        } else if (dataT.type == 3) {
+                          //101-3000
+                          int sum =
+                              (dataT.clock!.inHours * 60 * 60) +
+                              (dataT.clock!.inMinutes * 60);
+                          for (int i = 1; i <= dataT.time!; i++) {
+                            _startTimer(sum * i, dataT.id![i - 1]);
+                          }
+                        } else if (dataT.type == 4) {
+                          //10000
+                          NotificationService().scheduleDailyNotification(
+                            dataT.date!,
+                            dataT.id![0],
+                          );
+                        }
+                      } else {
+                        NotificationService().cancelID(dataT.id!);
+                      }
+                      editNotificationData(dataT, index);
+                      getData();
+                    });
+                  },
+                ),
+              ),
             ),
           ],
         ),
@@ -456,7 +505,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _nextButton() {
     return Container(
-      margin: EdgeInsets.only(bottom: 20, left: 30, right: 30),
+      margin: EdgeInsets.only(bottom: 25, left: 30, right: 30),
       height: 48,
       width: MediaQuery.of(context).size.width * 0.5,
       // margin: EdgeInsets.only(top: 50),

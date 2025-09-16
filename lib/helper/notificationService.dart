@@ -73,10 +73,14 @@ class NotificationService {
     await _notificationsPlugin.cancelAll();
   }
 
-  Future<void> scheduleDailyNotification(
-    DateTime selectedTime,
-    int count,
-  ) async {
+  Future<void> cancelID(List<int> id) async {
+    for (int i = 0; i < id.length; i++) {
+      await _notificationsPlugin.cancel(id[i]);
+      print("cancelId:" + id[i].toString());
+    }
+  }
+
+  Future<void> scheduleDailyNotification(DateTime selectedTime, int id) async {
     if (selectedTime.isBefore(DateTime.now())) {
       selectedTime = selectedTime.add(const Duration(days: 1));
     }
@@ -86,16 +90,16 @@ class NotificationService {
     );
     try {
       await _notificationsPlugin.zonedSchedule(
-        count,
+        id,
         'ป้องกันออฟฟิศซินโดรม', // title
         'ถึงเวลาขยับร่างกาย', // body
         scheduledTime,
-        _notificationDetails(count),
+        _notificationDetails(id),
 
         matchDateTimeComponents: DateTimeComponents.time,
         androidScheduleMode: AndroidScheduleMode.exact,
       );
-
+      print("send:" + id.toString());
       debugPrint('Notification scheduled successfully');
     } catch (e) {
       debugPrint('Error scheduling notification: $e');
