@@ -1,0 +1,2 @@
+/Users/suthasineesangchan/Documents/GitHub/officesyndrome/build/.cxx/RelWithDebInfo/143r4i55/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/suthasineesangchan/Documents/GitHub/officesyndrome/build/.cxx/RelWithDebInfo/143r4i55/armeabi-v7a/CMakeFiles/rebuild_cache.dir

@@ -1,4 +1,4 @@
-package com.example.office_syndrome
+package com.application.office_syndrome
 
 import io.flutter.embedding.android.FlutterActivity
 
