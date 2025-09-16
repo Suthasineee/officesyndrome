@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/Users/suthasineesangchan/flutter/packages/flutter_tools/gradle/src/main/scripts/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/suthasineesangchan/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/suthasineesangchan/Documents/GitHub/officesyndrome/build/.cxx/RelWithDebInfo/143r4i55/arm64-v8a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/suthasineesangchan/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/suthasineesangchan/Documents/GitHub/officesyndrome/build/.cxx/RelWithDebInfo/143r4i55/arm64-v8a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}
