@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:office_syndrome/helper/app_controller.dart';
 import 'package:office_syndrome/helper/colors.dart';
+import 'package:office_syndrome/helper/preferences_helper.dart';
 import 'package:office_syndrome/model/notificationData.dart';
 
 class SettingPage extends StatefulWidget {
   int type;
-  SettingPage(this.type);
+  int index;
+  SettingPage(this.type, this.index);
   createState() => _SettingPageState();
 }
 
@@ -22,6 +24,7 @@ class _SettingPageState extends State<SettingPage> {
   @override
   void initState() {
     data.isAdd = widget.type;
+    data.index = widget.index;
     super.initState();
   }
 
@@ -33,7 +36,23 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(elevation: 0, backgroundColor: colorPrimary),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: colorPrimary,
+        actions: [
+          widget.type == 1
+              ? IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () {
+                    deleteNotificationData(widget.index);
+                    getNotificationData();
+                    data.isAdd = 3;
+                    Navigator.pop(context, data);
+                  },
+                )
+              : Container(),
+        ],
+      ),
       backgroundColor: Colors.white,
       bottomNavigationBar: _nextButton(),
       body: SingleChildScrollView(
@@ -112,7 +131,9 @@ class _SettingPageState extends State<SettingPage> {
           onSelectTimeButton = false;
           data.text = 'ทุก 2 ชั่วโมง';
           data.type = 2;
-          data.time = 0;
+          data.time = 12;
+          data.clock = Duration(seconds: 7200);
+          data.date = DateTime.now();
         });
       },
       child: Container(
@@ -152,7 +173,9 @@ class _SettingPageState extends State<SettingPage> {
 
   void _increment() {
     setState(() {
-      _value++;
+      if (_value <= 29) {
+        _value++;
+      }
       data.time = _value;
       data.text =
           "แจ้งเตือน :  " +
@@ -330,6 +353,7 @@ class _SettingPageState extends State<SettingPage> {
 
                             data.type = 3;
                             data.clock = newTime;
+                            data.date = DateTime.now();
                           });
                         },
                       ),
@@ -380,7 +404,9 @@ class _SettingPageState extends State<SettingPage> {
           onSelectTimeButton = false;
           data.text = 'ทุก 1 ชั่วโมง';
           data.type = 1;
-          data.time = 0;
+          data.time = 12;
+          data.clock = Duration(seconds: 3600);
+          data.date = DateTime.now();
         });
       },
       child: Container(
@@ -494,6 +520,8 @@ class _SettingPageState extends State<SettingPage> {
                   "  น. ";
           data.type = 4;
           data.time = 0;
+          data.clock = Duration(seconds: 7200);
+
           data.date = selectedClock;
         });
       },

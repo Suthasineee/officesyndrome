@@ -6,6 +6,66 @@ import 'dart:async';
 
 const String dataNotification = "dataNotification";
 
+editNotificationData(NotificationData data, index) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  List<NotificationData> dataN = await getNotificationData();
+  dataN[index].clock = data.clock;
+  dataN[index].date = data.date;
+  dataN[index].text = data.text;
+  dataN[index].type = data.type;
+  dataN[index].time = data.time;
+  dataN[index].isON = data.isON;
+  dataN[index].id = data.id;
+  dataN[index].index = data.index;
+  dataN[index].isAdd = data.isAdd;
+
+  List<Map<String, String>> list = [];
+  dataN.forEach((item) {
+    List<String> stringList = item.id!.map((e) => e.toString()).toList();
+    Map<String, String> s = {
+      "clock": item.clock!.inMilliseconds.toString() == 'null'
+          ? ''
+          : item.clock!.inMilliseconds.toString(),
+      "date": item.date!.millisecondsSinceEpoch.toString(),
+      "text": item.text.toString(),
+      "type": item.type.toString(),
+      "time": item.time.toString(),
+      "id": stringList.toString(),
+      "isON": item.isON.toString(),
+      "isAdd": item.isAdd.toString(),
+      "index": item.index.toString(),
+    };
+    list.add(s);
+  });
+  String jsonString = jsonEncode(list);
+  prefs.setString(dataNotification, jsonString);
+}
+
+deleteNotificationData(index) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  List<NotificationData> dataN = await getNotificationData();
+  dataN.removeAt(index);
+  List<Map<String, String>> list = [];
+  dataN.forEach((item) {
+    Map<String, String> s = {
+      "clock": item.clock!.inMilliseconds.toString() == 'null'
+          ? ''
+          : item.clock!.inMilliseconds.toString(),
+      "date": item.date!.millisecondsSinceEpoch.toString(),
+      "text": item.text.toString(),
+      "type": item.type.toString(),
+      "time": item.time.toString(),
+      "id": item.id.toString(),
+      "isON": item.isON.toString(),
+      "isAdd": item.isAdd.toString(),
+      "index": item.index.toString(),
+    };
+    list.add(s);
+  });
+  String jsonString = jsonEncode(list);
+  prefs.setString(dataNotification, jsonString);
+}
+
 saveNotificationData(NotificationData data) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   List<Map<String, String>> list = [];
@@ -17,6 +77,10 @@ saveNotificationData(NotificationData data) async {
     "text": data.text.toString(),
     "type": data.type.toString(),
     "time": data.time.toString(),
+    "id": data.id.toString(),
+    "isON": data.isON.toString(),
+    "isAdd": data.isAdd.toString(),
+    "index": data.index.toString(),
   };
   list.add(dataf);
   List<NotificationData> dataN = await getNotificationData();
@@ -29,6 +93,10 @@ saveNotificationData(NotificationData data) async {
       "text": item.text.toString(),
       "type": item.type.toString(),
       "time": item.time.toString(),
+      "id": data.id.toString(),
+      "isON": data.isON.toString(),
+      "isAdd": data.isAdd.toString(),
+      "index": data.index.toString(),
     };
     list.add(s);
   });
@@ -49,6 +117,10 @@ Future<List<NotificationData>> getNotificationData() async {
 
     for (int i = 0; i < list.length; i++) {
       NotificationData data = NotificationData();
+      data.id = list[i]['id'];
+      data.isAdd = int.parse(list[i]['isAdd']);
+      data.index = int.parse(list[i]['index']);
+      data.isON = list[i]['isON'];
       data.text = list[i]['text'];
       data.type = int.parse(list[i]['type']);
       data.time = int.parse(list[i]['time']);

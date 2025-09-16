@@ -20,7 +20,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool isOn = true;
   bool isWarning = false;
   NotificationData data = NotificationData();
   String name = "";
@@ -34,16 +33,8 @@ class _HomePageState extends State<HomePage> {
 
   late SharedPreferences prefs;
   getData() async {
-    prefs = await SharedPreferences.getInstance();
-
-    isOn = prefs.getBool('isOn') ?? true;
-    name = prefs.getString('text') ?? '';
     notificationData = await getNotificationData();
     setState(() {});
-  }
-
-  setData() async {
-    await prefs.setBool('isOn', isOn);
   }
 
   void _startTimer(int time, count) {
@@ -263,7 +254,154 @@ class _HomePageState extends State<HomePage> {
         } else {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => SettingPage(0)),
+            MaterialPageRoute(builder: (_) => SettingPage(0, 0)),
+          ).then((onValue) {
+            bool isSave = false;
+            if (onValue.isAdd == 0) {
+              setState(() {
+                NotificationService().cancelAll();
+                data = onValue;
+                List<int> id = [];
+                if (data.type == 1) {
+                  //1-12
+                  int typeCount = notificationData
+                      .where((e) => e.type == 1)
+                      .toList()
+                      .length;
+                  if (typeCount <= 1) {
+                    isSave = true;
+                    onValue.startAt = 0;
+                    for (int i = 1; i <= data.time!; i++) {
+                      _startTimer(3600 * i, i);
+                      id.add(i);
+                    }
+                  }
+                } else if (data.type == 2) {
+                  //15-26
+                  int typeCount = notificationData
+                      .where((e) => e.type == 2)
+                      .toList()
+                      .length;
+                  if (typeCount <= 1) {
+                    isSave = true;
+                    onValue.startAt = 0;
+                    for (int i = 1; i <= data.time!; i++) {
+                      _startTimer(7200 * i, i + 14);
+                      id.add(i + 14);
+                    }
+                  }
+                } else if (data.type == 3) {
+                  //101-3000
+                  isSave = true;
+                  int typeCount = notificationData
+                      .where((e) => e.type == 3)
+                      .toList()
+                      .length;
+                  int typeId = 0;
+                  if (notificationData.isEmpty || typeCount == 0) {
+                    onValue.startAt = 1;
+                    typeId = 1;
+                  } else {
+                    for (int i = 0; i <= 12; i++) {
+                      int typeCount = notificationData
+                          .where((e) => e.startAt == (i + 1))
+                          .toList()
+                          .length;
+
+                      if (typeCount == 0) {
+                        typeId = (i + 1);
+                        i = 13;
+                      }
+                    }
+                  }
+                  int sum =
+                      (data.clock!.inHours * 60 * 60) +
+                      (data.clock!.inMinutes * 60);
+
+                  for (int i = 1; i <= data.time!; i++) {
+                    _startTimer(sum * i, i + (typeId + 100));
+                    data.id!.add(i + (typeId + 100));
+                  }
+                } else if (data.type == 4) {
+                  //10000
+                  isSave = true;
+                  onValue.startAt = 0;
+                  int id = 0;
+                  for (int i = 0; i <= notificationData.length!; i++) {
+                    int typeCount = notificationData
+                        .where((e) => e.id == i + 10000)
+                        .toList()
+                        .length;
+                    if (typeCount == 0) {
+                      id = i + 10000;
+                      i = notificationData.length + 1;
+                    }
+                  }
+
+                  NotificationService().scheduleDailyNotification(
+                    data.date!,
+                    1,
+                  );
+                  data.id!.add(id);
+                }
+              });
+              if (isSave) {
+                data.isON = true;
+                saveNotificationData(data);
+                getData();
+              }
+            } else {
+              editNotificationData(data, data.index);
+              getData();
+            }
+          });
+        }
+      },
+      child: Container(
+        margin: EdgeInsets.only(right: 25),
+        decoration: BoxDecoration(
+          color: colorAccent,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Icon(Icons.add, color: Colors.white),
+      ),
+    );
+  }
+
+  Widget listNotificationView() {
+    return notificationData.isNotEmpty
+        ? Container(
+            height: MediaQuery.of(context).size.height * 0.5,
+            child: ListView(
+              scrollDirection: Axis.vertical,
+              children: <Widget>[
+                ...List.generate(notificationData.length, (index) {
+                  return notificationView(notificationData[index], index);
+                }),
+              ],
+            ),
+          )
+        : Container(
+            // child: Text(
+            //   'ไม่มีข้อมูล',
+            //   style: TextStyle(
+            //     color: Colors.black,
+            //     fontFamily: fontMitr,
+            //     fontSize: 18,
+            //   ),
+            // ),
+          );
+  }
+
+  Widget notificationView(NotificationData dataT, index) {
+    return InkWell(
+      onTap: () async {
+        if (await Permission.notification.isDenied && Platform.isAndroid) {
+          showAlertDialog(context);
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => SettingPage(1, index)),
           ).then((onValue) {
             if (onValue.isAdd == 0) {
               setState(() {
@@ -284,136 +422,26 @@ class _HomePageState extends State<HomePage> {
                   int sum =
                       (data.clock!.inHours * 60 * 60) +
                       (data.clock!.inMinutes * 60);
-                  if (isOn) {
-                    for (int i = 1; i <= data.time!; i++) {
-                      _startTimer(sum * i, i);
-                    }
-                  }
-                  DateTime selectedTime = DateTime.now();
 
-                  prefs.setInt('clock', selectedTime.millisecondsSinceEpoch);
-                  prefs.setInt('sum', sum);
-                  prefs.setInt('time', data.time!);
-                  prefs.setInt('type', 3);
-                } else if (data.type == 4) {
-                  if (isOn) {
-                    NotificationService().scheduleDailyNotification(
-                      data.date!,
-                      1,
-                    );
+                  for (int i = 1; i <= data.time!; i++) {
+                    _startTimer(sum * i, i);
                   }
-                  prefs.setInt('clock', data.date!.millisecondsSinceEpoch);
-                  prefs.setInt('time', 1);
-                  prefs.setInt('type', 4);
+                } else if (data.type == 4) {
+                  NotificationService().scheduleDailyNotification(
+                    data.date!,
+                    1,
+                  );
                 }
               });
-              data.clock = data.date!.difference(DateTime.now());
-              NotificationData dataNoti = NotificationData();
-              dataNoti.clock = data.clock;
-              dataNoti.date = data.date;
-              dataNoti.text = data.text;
-              print("data.text:" + data.text.toString());
-              dataNoti.time = data.time;
-              dataNoti.type = data.type;
-              saveNotificationData(dataNoti);
+              saveNotificationData(data);
+              getData();
+            } else if (onValue.isAdd == 1) {
+              editNotificationData(onValue, onValue.index);
               getData();
             }
-          });
-        }
-      },
-      child: Container(
-        margin: EdgeInsets.only(right: 25),
-        decoration: BoxDecoration(
-          color: colorAccent,
-          // border: Border.all(
-          //   color: Colors.black26, // สีขอบ
-          //   width: 1.0, // ความหนาของเส้น
-          // ),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Icon(Icons.add, color: Colors.white),
-      ),
-    );
-  }
-
-  Widget listNotificationView() {
-    return notificationData.isNotEmpty
-        ? Container(
-            height: 230,
-            child: ListView(
-              scrollDirection: Axis.vertical,
-              children: <Widget>[
-                ...List.generate(notificationData.length, (index) {
-                  return notificationView(notificationData[index]);
-                }),
-              ],
-            ),
-          )
-        : Container(
-            // child: Text(
-            //   'ไม่มีข้อมูล',
-            //   style: TextStyle(
-            //     color: Colors.black,
-            //     fontFamily: fontMitr,
-            //     fontSize: 18,
-            //   ),
-            // ),
-          );
-  }
-
-  Widget notificationView(dataT) {
-    return InkWell(
-      onTap: () async {
-        if (await Permission.notification.isDenied && Platform.isAndroid) {
-          showAlertDialog(context);
-        } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => SettingPage(1)),
-          ).then((onValue) {
-            if (data.isAdd == 0) {
-              setState(() {
-                NotificationService().cancelAll();
-                data = onValue;
-                prefs.setString('text', data.text.toString());
-                if (data.type == 1) {
-                  for (int i = 1; i <= data.time!; i++) {
-                    _startTimer(3600 * i, i);
-                  }
-                  prefs.setInt('type', 1);
-                } else if (data.type == 2) {
-                  for (int i = 1; i <= data.time!; i++) {
-                    _startTimer(7200 * i, i);
-                  }
-                  prefs.setInt('type', 2);
-                } else if (data.type == 3) {
-                  int sum =
-                      (data.clock!.inHours * 60 * 60) +
-                      (data.clock!.inMinutes * 60);
-                  if (isOn) {
-                    for (int i = 1; i <= data.time!; i++) {
-                      _startTimer(sum * i, i);
-                    }
-                  }
-                  DateTime selectedTime = DateTime.now();
-
-                  prefs.setInt('clock', selectedTime.millisecondsSinceEpoch);
-                  prefs.setInt('sum', sum);
-                  prefs.setInt('time', data.time!);
-                  prefs.setInt('type', 3);
-                } else if (data.type == 4) {
-                  if (isOn) {
-                    NotificationService().scheduleDailyNotification(
-                      data.date!,
-                      1,
-                    );
-                  }
-                  prefs.setInt('clock', data.date!.millisecondsSinceEpoch);
-                  prefs.setInt('time', 1);
-                  prefs.setInt('type', 4);
-                }
-              });
-            }
+            setState(() {
+              getData();
+            });
           });
         }
       },
@@ -445,8 +473,23 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: Icon(Icons.arrow_forward_ios, color: Colors.black),
+              padding: EdgeInsets.only(right: 10),
+              child: Transform.scale(
+                scale:
+                    0.8, // ปรับขนาด (1.0 = ปกติ, มากกว่าคือใหญ่ขึ้น, น้อยกว่าคือเล็กลง)
+                child: Switch(
+                  activeColor: Colors.white,
+                  activeTrackColor: colorAccent,
+                  value: dataT.isON!,
+                  onChanged: (value) {
+                    setState(() {
+                      dataT.isON = value;
+                      editNotificationData(dataT, index);
+                      getData();
+                    });
+                  },
+                ),
+              ),
             ),
           ],
         ),
@@ -456,7 +499,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _nextButton() {
     return Container(
-      margin: EdgeInsets.only(bottom: 20, left: 30, right: 30),
+      margin: EdgeInsets.only(bottom: 25, left: 30, right: 30),
       height: 48,
       width: MediaQuery.of(context).size.width * 0.5,
       // margin: EdgeInsets.only(top: 50),
