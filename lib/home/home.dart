@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:office_syndrome/helper/app_controller.dart';
@@ -9,6 +10,7 @@ import 'package:office_syndrome/helper/notificationService.dart';
 import 'package:office_syndrome/helper/preferences_helper.dart';
 import 'package:office_syndrome/model/notificationData.dart';
 import 'package:office_syndrome/setting/setting.dart';
+import 'package:office_syndrome/setting_view.dart';
 import 'package:office_syndrome/video/video.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -73,7 +75,42 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(elevation: 0, backgroundColor: colorPrimary),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: colorPrimary,
+        leading: IconButton(
+          icon: Icon(Icons.settings),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => SettingView()),
+            );
+          },
+        ),
+        actions: [
+          Center(
+            child: DropdownButton<Locale>(
+              value: context.locale,
+              onChanged: (Locale? locale) {
+                if (locale != null) {
+                  context.setLocale(locale); // change language
+                }
+              },
+              items: EasyLocalization.of(context)!.supportedLocales.map((
+                locale,
+              ) {
+                String languageText = locale.languageCode == 'en'
+                    ? 'English'
+                    : 'ไทย';
+                return DropdownMenuItem(
+                  value: locale,
+                  child: Text(languageText),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
+      ),
       backgroundColor: Colors.white,
       bottomNavigationBar: _nextButton(),
       body: SingleChildScrollView(
@@ -93,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                       Container(
                         margin: EdgeInsets.only(left: 20),
                         child: Text(
-                          'ป้องกันออฟฟิศ',
+                          'prevent_officee'.tr(),
                           style: TextStyle(
                             //  color: colorPrimaryDark,
                             fontSize: 35,
@@ -105,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                       Container(
                         margin: EdgeInsets.only(top: 48, left: 20),
                         child: Text(
-                          'ซินโดรม',
+                          'syndrome'.tr(),
                           style: TextStyle(
                             //  color: colorPrimaryDark,
                             fontSize: 35,
@@ -142,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                         Container(
                           padding: EdgeInsets.only(left: 25),
                           child: Text(
-                            'ตั้งเวลาการแจ้งเตือน',
+                            'notifications'.tr(),
                             style: TextStyle(
                               color: Colors.black,
                               fontFamily: fontMitr,
@@ -297,7 +334,7 @@ class _HomePageState extends State<HomePage> {
               child: Icon(Icons.add, color: Colors.black),
             ),
             Text(
-              'เพิ่มเวลา',
+              'addtime'.tr(),
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: fontMitr,
@@ -550,7 +587,7 @@ class _HomePageState extends State<HomePage> {
           height: 50,
           alignment: Alignment.center,
           child: Text(
-            'เล่นตอนนี้',
+            'play_now'.tr(),
             style: TextStyle(
               color: Colors.white,
               fontFamily: fontMitr,

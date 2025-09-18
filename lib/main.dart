@@ -59,7 +59,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '',
       navigatorKey: Application.navigatorKey,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
       debugShowCheckedModeBanner: false,
+      locale: context.locale,
       theme: ThemeData(
         // This is the theme of your application.
         //

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:office_syndrome/helper/app_controller.dart';
@@ -47,7 +48,7 @@ class _VideoPageState extends State<VideoPage> {
         elevation: 0,
         backgroundColor: colorPrimary,
         title: Text(
-          'ถึงเวลาขยับร่างกาย',
+          'move_body'.tr(),
           style: TextStyle(
             color: Colors.black,
             fontFamily: fontMitr,
