@@ -8,6 +8,7 @@
       "version": "1.0.3+3",
       "dependencies": [
         "cupertino_icons",
+        "easy_localization",
         "flutter",
         "flutter_launcher_icons",
         "flutter_local_notifications",
@@ -54,6 +55,19 @@
         "test_api",
         "vector_math",
         "vm_service"
+      ]
+    },
+    {
+      "name": "easy_localization",
+      "version": "3.0.8",
+      "dependencies": [
+        "args",
+        "easy_logger",
+        "flutter",
+        "flutter_localizations",
+        "intl",
+        "path",
+        "shared_preferences"
       ]
     },
     {
@@ -308,6 +322,42 @@
       ]
     },
     {
+      "name": "flutter_localizations",
+      "version": "0.0.0",
+      "dependencies": [
+        "characters",
+        "clock",
+        "collection",
+        "flutter",
+        "intl",
+        "material_color_utilities",
+        "meta",
+        "path",
+        "vector_math"
+      ]
+    },
+    {
+      "name": "easy_logger",
+      "version": "0.0.2",
+      "dependencies": [
+        "flutter"
+      ]
+    },
+    {
+      "name": "args",
+      "version": "2.7.0",
+      "dependencies": []
+    },
+    {
+      "name": "intl",
+      "version": "0.20.2",
+      "dependencies": [
+        "clock",
+        "meta",
+        "path"
+      ]
+    },
+    {
       "name": "http",
       "version": "1.5.0",
       "dependencies": [
@@ -389,11 +439,6 @@
         "source_span",
         "yaml"
       ]
-    },
-    {
-      "name": "args",
-      "version": "2.7.0",
-      "dependencies": []
     },
     {
       "name": "shared_preferences_windows",
