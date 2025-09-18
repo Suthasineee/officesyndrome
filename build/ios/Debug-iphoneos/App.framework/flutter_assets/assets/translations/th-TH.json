@@ -1,0 +1,23 @@
+{
+    "hello": "สวัสดี",
+    "welcome": "ยินดีต้อนรับ, {}!",
+    "addtime": "เพิ่มเวลา",
+    "prevent_officee": "ป้องกันออฟฟิศ",
+    "syndrome": "ซินโดรม",
+    "notifications": "ตั้งเวลาการแจ้งเตือน",
+    "notification": "การแจ้งเตือน",
+    "play_now": "เล่นตอนนี้",
+    "setting": "ตั้งเวลา",
+    "repeat_notification": "แจ้งเตือนซ้ำ",
+    "notification_on_time": "แจ้งเตือนตามเวลา",
+    "save": "บันทึก",
+    "every_1_hour": "ทุก 1 ชั่วโมง",
+    "every_2_hour": "ทุก 2 ชั่วโมง",
+    "ontime": "กำหนดเวลา",
+    "move_body": "ถึงเวลาขยับร่างกาย",
+    "quantity": "จำนวน",
+    "times": "ครั้ง",
+    "notify_every": "แจ้งเตือนทุกๆ",
+    "terms_and_Conditions_of_Service": "ข้อกำหนดและเงื่อนไขการบริการ",
+    "turn_on_notifications": "เปิดการแจ้งเตือน"
+}
