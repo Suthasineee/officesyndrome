@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:office_syndrome/guild/guild_view.dart';
@@ -13,6 +14,7 @@ import 'helper/application.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
   Application.navigatorKey = navigatorKey;
@@ -23,12 +25,20 @@ Future<void> main() async {
     await prefs.setBool('is_first_open', false);
   } // Initialize time zone
   //tz.initializeTimeZones();
- // requestNotificationPermission();
+  // requestNotificationPermission();
   NotificationService().init();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp, // บังคับแนวตั้งปกติ
   ]);
-  runApp(MyApp(isFirstOpen: isFirstOpen));
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: [Locale('en', 'US'), Locale('th', 'TH')],
+      path: 'assets/translations', // folder containing translation files
+      fallbackLocale: Locale('en', 'US'),
+      child: MyApp(isFirstOpen: isFirstOpen),
+    ),
+  );
 }
 
 Future<void> requestNotificationPermission() async {

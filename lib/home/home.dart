@@ -151,10 +151,10 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        notificationData.length < 12 ? addView() : Container(),
                       ],
                     ),
                     SizedBox(height: 10),
+                    notificationData.length < 12 ? addView() : Container(),
                     listNotificationView(),
                   ],
                 ),
@@ -278,12 +278,34 @@ class _HomePageState extends State<HomePage> {
         }
       },
       child: Container(
-        margin: EdgeInsets.only(right: 25),
+        height: 50,
+        margin: EdgeInsets.only(left: 15, right: 15, top: 10),
         decoration: BoxDecoration(
-          color: colorAccent,
+          color: Colors.white,
+          border: Border.all(
+            color: Colors.black26, // สีขอบ
+            width: 1.0, // ความหนาของเส้น
+          ),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Icon(Icons.add, color: Colors.white),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              margin: EdgeInsets.only(right: 2),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+              child: Icon(Icons.add, color: Colors.black),
+            ),
+            Text(
+              'เพิ่มเวลา',
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: fontMitr,
+                fontSize: 18,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
