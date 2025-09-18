@@ -467,7 +467,7 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(
                   color: Colors.black,
                   fontFamily: fontMitr,
-                  fontSize: 18,
+                  fontSize: 16,
                 ),
               ),
             ),

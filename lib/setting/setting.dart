@@ -498,7 +498,7 @@ class _SettingPageState extends State<SettingPage> {
                 children: [
                   _oneHourButton(),
                   _twoHourButton(),
-                  _selectTimeButton(),
+                  //_selectTimeButton(),
                 ],
               )
             : Container(),
