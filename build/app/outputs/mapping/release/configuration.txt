@@ -2,19 +2,7 @@
 -keep class android.app.Application { <init>(); }
 -keep class androidx.core.app.CoreComponentFactory { <init>(); }
 -keep class androidx.profileinstaller.ProfileInstallReceiver { <init>(); }
--keep class androidx.room.MultiInstanceInvalidationService { <init>(); }
 -keep class androidx.startup.InitializationProvider { <init>(); }
--keep class androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy { <init>(); }
--keep class androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy { <init>(); }
--keep class androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy { <init>(); }
--keep class androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy { <init>(); }
--keep class androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver { <init>(); }
--keep class androidx.work.impl.background.systemalarm.RescheduleReceiver { <init>(); }
--keep class androidx.work.impl.background.systemalarm.SystemAlarmService { <init>(); }
--keep class androidx.work.impl.background.systemjob.SystemJobService { <init>(); }
--keep class androidx.work.impl.diagnostics.DiagnosticsReceiver { <init>(); }
--keep class androidx.work.impl.foreground.SystemForegroundService { <init>(); }
--keep class androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver { <init>(); }
 -keep class com.application.office_syndrome.MainActivity { <init>(); }
 -keep class com.dexterous.flutterlocalnotifications.ActionBroadcastReceiver { <init>(); }
 -keep class com.dexterous.flutterlocalnotifications.NotificationService { <init>(); }
@@ -327,24 +315,6 @@
 -keepclassmembernames class com.google.common.base.Function { *; }
 
 # End of content from /Users/suthasineesangchan/.gradle/caches/8.12/transforms/83e1f731f23a3604913b51b8e19da0d6/transformed/jetified-media3-common-1.5.1/proguard.txt
-# The proguard configuration file for the following section is /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/proguard.txt
-# Keep ListenableWorker / Worker if not removed during shrinking
--keepnames class * extends androidx.work.ListenableWorker
-# Keep all constructors on ListenableWorker, Worker if class is kept
--keepclassmembers public class * extends androidx.work.ListenableWorker {
-    public <init>(...);
-}
-
-# We need to keep WorkerParameters for the ListenableWorker constructor that is used by the
-# default instantiation strategy in WorkerFactory.
--keep class androidx.work.WorkerParameters
-
-# Keep InputMerger if not removed during shrinking
--keepnames class * extends androidx.work.InputMerger
-# Keep constructor on InputMerger if class is kept
--keepclassmembers class * extends androidx.work.InputMerger { void <init>(); }
-
-# End of content from /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/proguard.txt
 # The proguard configuration file for the following section is /Users/suthasineesangchan/.gradle/caches/8.12/transforms/f84db7003533a22de0405c5251ecb704/transformed/media-1.1.0/proguard.txt
 # Copyright (C) 2017 The Android Open Source Project
 #
@@ -660,12 +630,6 @@
 }
 
 # End of content from /Users/suthasineesangchan/.gradle/caches/8.12/transforms/56e8109aa282a29ddde21be6fd974ff5/transformed/rules/lib/META-INF/proguard/androidx.datastore_datastore-preferences-core.pro
-# The proguard configuration file for the following section is /Users/suthasineesangchan/.gradle/caches/8.12/transforms/06155cb8950969a62376c8c166003442/transformed/room-runtime-2.6.1/proguard.txt
--keep class * extends androidx.room.RoomDatabase
--dontwarn androidx.room.paging.**
--dontwarn androidx.lifecycle.LiveData
-
-# End of content from /Users/suthasineesangchan/.gradle/caches/8.12/transforms/06155cb8950969a62376c8c166003442/transformed/room-runtime-2.6.1/proguard.txt
 # The proguard configuration file for the following section is /Users/suthasineesangchan/.gradle/caches/8.12/transforms/85879f220671a879b538e8ef16ed1744/transformed/jetified-startup-runtime-1.1.1/proguard.txt
 # It's important that we preserve initializer names, given they are used in the AndroidManifest.xml.
 -keepnames class * extends androidx.startup.Initializer
@@ -735,6 +699,11 @@
 }
 
 # End of content from /Users/suthasineesangchan/.gradle/caches/8.12/transforms/673d9960c6d333fbf7bd5ec800a8d705/transformed/rules/lib/META-INF/proguard/androidx-annotations.pro
+# The proguard configuration file for the following section is /Users/suthasineesangchan/.gradle/caches/8.12/transforms/c33de0d0bd83cb20048c6c4c013b1e63/transformed/rules/lib/META-INF/proguard/okio.pro
+# Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
+-dontwarn org.codehaus.mojo.animal_sniffer.*
+
+# End of content from /Users/suthasineesangchan/.gradle/caches/8.12/transforms/c33de0d0bd83cb20048c6c4c013b1e63/transformed/rules/lib/META-INF/proguard/okio.pro
 # The proguard configuration file for the following section is /Users/suthasineesangchan/.gradle/caches/8.12/transforms/28146686d17728369de454ba64a2bee7/transformed/rules/lib/META-INF/com.android.tools/r8/coroutines.pro
 # When editing this file, update the following files as well:
 # - META-INF/proguard/coroutines.pro
@@ -789,11 +758,6 @@
 }
 
 # End of content from /Users/suthasineesangchan/.gradle/caches/8.12/transforms/2dea62033718aadbfcc1fafae55b314b/transformed/rules/lib/META-INF/com.android.tools/r8-from-1.6.0/coroutines.pro
-# The proguard configuration file for the following section is /Users/suthasineesangchan/.gradle/caches/8.12/transforms/c33de0d0bd83cb20048c6c4c013b1e63/transformed/rules/lib/META-INF/proguard/okio.pro
-# Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
--dontwarn org.codehaus.mojo.animal_sniffer.*
-
-# End of content from /Users/suthasineesangchan/.gradle/caches/8.12/transforms/c33de0d0bd83cb20048c6c4c013b1e63/transformed/rules/lib/META-INF/proguard/okio.pro
 # The proguard configuration file for the following section is /Users/suthasineesangchan/.gradle/caches/8.12/transforms/5e0b50f1d8fb807cb06072162c471396/transformed/rules/lib/META-INF/proguard/gson.pro
 ### Gson ProGuard and R8 rules which are relevant for all users
 ### This file is automatically recognized by ProGuard and R8, see https://developer.android.com/build/shrink-code#configuration-files
