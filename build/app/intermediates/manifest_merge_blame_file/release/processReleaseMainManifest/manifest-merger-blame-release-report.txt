@@ -53,405 +53,207 @@
 34    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 34-->[androidx.media3:media3-exoplayer:1.5.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/72c190e8e0a1da0cc68763429ee44e42/transformed/jetified-media3-exoplayer-1.5.1/AndroidManifest.xml:22:5-79
 34-->[androidx.media3:media3-exoplayer:1.5.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/72c190e8e0a1da0cc68763429ee44e42/transformed/jetified-media3-exoplayer-1.5.1/AndroidManifest.xml:22:22-76
-35    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-35-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:26:5-77
-35-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:26:22-74
-36
-37    <permission
-37-->[androidx.core:core:1.13.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
-38        android:name="com.application.office_syndrome.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-38-->[androidx.core:core:1.13.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
-39        android:protectionLevel="signature" />
-39-->[androidx.core:core:1.13.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
-40
-41    <uses-permission android:name="com.application.office_syndrome.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-41-->[androidx.core:core:1.13.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
-41-->[androidx.core:core:1.13.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
-42
-43    <application
-44        android:name="android.app.Application"
-44-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:11:9-42
-45        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-45-->[androidx.core:core:1.13.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
-46        android:exported="true"
-46-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:13:10-33
-47        android:extractNativeLibs="true"
-48        android:icon="@mipmap/ic_launcher"
-48-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:14:9-43
-49        android:label="Office Syndrome"
-49-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:10:9-40
-50        android:screenOrientation="portrait" >
-50-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:12:9-45
-51        <receiver
-51-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:16:8-124
-52            android:name="com.dexterous.flutterlocalnotifications.ActionBroadcastReceiver"
-52-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:16:43-121
-53            android:exported="false" />
-53-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:16:18-42
-54        <receiver
-54-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:17:5-125
-55            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver"
-55-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:17:15-99
-56            android:exported="true" />
-56-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:17:100-123
-57        <receiver
-57-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:18:5-24:16
-58            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver"
-58-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:18:15-103
-59            android:enabled="true"
-59-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:18:104-126
-60            android:exported="true" >
-60-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:18:127-150
-61            <intent-filter>
-61-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:19:9-23:25
-62                <action android:name="android.intent.action.BOOT_COMPLETED" />
-62-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:20:13-74
-62-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:20:21-72
-63                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
-63-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:21:13-79
-63-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:21:21-77
-64                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
-64-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:22:13-77
-64-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:22:21-75
-65            </intent-filter>
-66        </receiver>
-67
-68        <service
-68-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:25:5-171
-69            android:name="com.dexterous.flutterlocalnotifications.NotificationService"
-69-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:25:14-88
-70            android:exported="true"
-70-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:25:146-169
-71            android:permission="android.permission.BIND_JOB_SERVICE" />
-71-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:25:89-145
-72
-73        <activity
-73-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:27:9-51:20
-74            android:name="com.application.office_syndrome.MainActivity"
-74-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:28:13-41
-75            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-75-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:36:13-163
-76            android:enableOnBackInvokedCallback="true"
-76-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:35:13-55
-77            android:exported="true"
-77-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:29:13-36
-78            android:hardwareAccelerated="true"
-78-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:37:13-47
-79            android:launchMode="singleTop"
-79-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:30:13-43
-80            android:showWhenLocked="true"
-80-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:32:13-42
-81            android:taskAffinity=""
-81-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:31:13-36
-82            android:theme="@style/LaunchTheme"
-82-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:34:13-47
-83            android:turnScreenOn="true"
-83-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:33:13-40
-84            android:windowSoftInputMode="adjustResize" >
-84-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:38:13-55
-85
-86            <!--
-87                 Specifies an Android theme to apply to this Activity as soon as
-88                 the Android process has started. This theme is visible to the user
-89                 while the Flutter UI initializes. After that, this theme continues
-90                 to determine the Window background behind the Flutter UI.
-91            -->
-92            <meta-data
-92-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:43:13-46:17
-93                android:name="io.flutter.embedding.android.NormalTheme"
-93-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:44:15-70
-94                android:resource="@style/NormalTheme" />
-94-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:45:15-52
-95
-96            <intent-filter>
-96-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:47:13-50:29
-97                <action android:name="android.intent.action.MAIN" />
-97-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:48:17-68
-97-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:48:25-66
-98
-99                <category android:name="android.intent.category.LAUNCHER" />
-99-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:49:17-76
-99-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:49:27-74
-100            </intent-filter>
-101        </activity>
-102        <!--
-103             Don't delete the meta-data below.
-104             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
-105        -->
-106        <meta-data
-106-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:54:9-56:33
-107            android:name="flutterEmbedding"
-107-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:55:13-44
-108            android:value="2" />
-108-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:56:13-30
-109
-110        <provider
-110-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:29:9-37:20
-111            android:name="androidx.startup.InitializationProvider"
-111-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:30:13-67
-112            android:authorities="com.application.office_syndrome.androidx-startup"
-112-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:31:13-68
-113            android:exported="false" >
-113-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:32:13-37
-114            <meta-data
-114-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:34:13-36:52
-115                android:name="androidx.work.WorkManagerInitializer"
-115-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:35:17-68
-116                android:value="androidx.startup" />
-116-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:36:17-49
-117            <meta-data
-117-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/0c7cd1674da718ccee593f79cf8da244/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
-118                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-118-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/0c7cd1674da718ccee593f79cf8da244/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
-119                android:value="androidx.startup" />
-119-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/0c7cd1674da718ccee593f79cf8da244/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+35
+36    <permission
+36-->[androidx.core:core:1.13.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
+37        android:name="com.application.office_syndrome.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+37-->[androidx.core:core:1.13.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
+38        android:protectionLevel="signature" />
+38-->[androidx.core:core:1.13.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
+39
+40    <uses-permission android:name="com.application.office_syndrome.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+40-->[androidx.core:core:1.13.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
+40-->[androidx.core:core:1.13.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
+41
+42    <application
+43        android:name="android.app.Application"
+43-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:11:9-42
+44        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+44-->[androidx.core:core:1.13.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
+45        android:exported="true"
+45-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:13:10-33
+46        android:extractNativeLibs="true"
+47        android:icon="@mipmap/ic_launcher"
+47-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:14:9-43
+48        android:label="Office Syndrome"
+48-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:10:9-40
+49        android:screenOrientation="portrait" >
+49-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:12:9-45
+50        <receiver
+50-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:16:8-124
+51            android:name="com.dexterous.flutterlocalnotifications.ActionBroadcastReceiver"
+51-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:16:43-121
+52            android:exported="false" />
+52-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:16:18-42
+53        <receiver
+53-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:17:5-125
+54            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver"
+54-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:17:15-99
+55            android:exported="true" />
+55-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:17:100-123
+56        <receiver
+56-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:18:5-24:16
+57            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver"
+57-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:18:15-103
+58            android:enabled="true"
+58-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:18:104-126
+59            android:exported="true" >
+59-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:18:127-150
+60            <intent-filter>
+60-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:19:9-23:25
+61                <action android:name="android.intent.action.BOOT_COMPLETED" />
+61-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:20:13-74
+61-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:20:21-72
+62                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+62-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:21:13-79
+62-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:21:21-77
+63                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+63-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:22:13-77
+63-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:22:21-75
+64            </intent-filter>
+65        </receiver>
+66
+67        <service
+67-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:25:5-171
+68            android:name="com.dexterous.flutterlocalnotifications.NotificationService"
+68-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:25:14-88
+69            android:exported="true"
+69-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:25:146-169
+70            android:permission="android.permission.BIND_JOB_SERVICE" />
+70-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:25:89-145
+71
+72        <activity
+72-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:27:9-51:20
+73            android:name="com.application.office_syndrome.MainActivity"
+73-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:28:13-41
+74            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+74-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:36:13-163
+75            android:enableOnBackInvokedCallback="true"
+75-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:35:13-55
+76            android:exported="true"
+76-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:29:13-36
+77            android:hardwareAccelerated="true"
+77-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:37:13-47
+78            android:launchMode="singleTop"
+78-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:30:13-43
+79            android:showWhenLocked="true"
+79-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:32:13-42
+80            android:taskAffinity=""
+80-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:31:13-36
+81            android:theme="@style/LaunchTheme"
+81-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:34:13-47
+82            android:turnScreenOn="true"
+82-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:33:13-40
+83            android:windowSoftInputMode="adjustResize" >
+83-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:38:13-55
+84
+85            <!--
+86                 Specifies an Android theme to apply to this Activity as soon as
+87                 the Android process has started. This theme is visible to the user
+88                 while the Flutter UI initializes. After that, this theme continues
+89                 to determine the Window background behind the Flutter UI.
+90            -->
+91            <meta-data
+91-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:43:13-46:17
+92                android:name="io.flutter.embedding.android.NormalTheme"
+92-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:44:15-70
+93                android:resource="@style/NormalTheme" />
+93-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:45:15-52
+94
+95            <intent-filter>
+95-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:47:13-50:29
+96                <action android:name="android.intent.action.MAIN" />
+96-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:48:17-68
+96-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:48:25-66
+97
+98                <category android:name="android.intent.category.LAUNCHER" />
+98-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:49:17-76
+98-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:49:27-74
+99            </intent-filter>
+100        </activity>
+101        <!--
+102             Don't delete the meta-data below.
+103             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+104        -->
+105        <meta-data
+105-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:54:9-56:33
+106            android:name="flutterEmbedding"
+106-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:55:13-44
+107            android:value="2" />
+107-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:56:13-30
+108
+109        <uses-library
+109-->[androidx.window:window:1.2.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/197f12b192a3f06912c946d4cbd2dd7d/transformed/jetified-window-1.2.0/AndroidManifest.xml:23:9-25:40
+110            android:name="androidx.window.extensions"
+110-->[androidx.window:window:1.2.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/197f12b192a3f06912c946d4cbd2dd7d/transformed/jetified-window-1.2.0/AndroidManifest.xml:24:13-54
+111            android:required="false" />
+111-->[androidx.window:window:1.2.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/197f12b192a3f06912c946d4cbd2dd7d/transformed/jetified-window-1.2.0/AndroidManifest.xml:25:13-37
+112        <uses-library
+112-->[androidx.window:window:1.2.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/197f12b192a3f06912c946d4cbd2dd7d/transformed/jetified-window-1.2.0/AndroidManifest.xml:26:9-28:40
+113            android:name="androidx.window.sidecar"
+113-->[androidx.window:window:1.2.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/197f12b192a3f06912c946d4cbd2dd7d/transformed/jetified-window-1.2.0/AndroidManifest.xml:27:13-51
+114            android:required="false" />
+114-->[androidx.window:window:1.2.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/197f12b192a3f06912c946d4cbd2dd7d/transformed/jetified-window-1.2.0/AndroidManifest.xml:28:13-37
+115
+116        <provider
+116-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/0c7cd1674da718ccee593f79cf8da244/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
+117            android:name="androidx.startup.InitializationProvider"
+117-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/0c7cd1674da718ccee593f79cf8da244/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:25:13-67
+118            android:authorities="com.application.office_syndrome.androidx-startup"
+118-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/0c7cd1674da718ccee593f79cf8da244/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:26:13-68
+119            android:exported="false" >
+119-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/0c7cd1674da718ccee593f79cf8da244/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:27:13-37
 120            <meta-data
-120-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
-121                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-121-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+120-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/0c7cd1674da718ccee593f79cf8da244/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+121                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+121-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/0c7cd1674da718ccee593f79cf8da244/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
 122                android:value="androidx.startup" />
-122-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
-123        </provider>
-124
-125        <service
-125-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:39:9-45:35
-126            android:name="androidx.work.impl.background.systemalarm.SystemAlarmService"
-126-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:40:13-88
-127            android:directBootAware="false"
-127-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:41:13-44
-128            android:enabled="@bool/enable_system_alarm_service_default"
-128-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:42:13-72
-129            android:exported="false" />
-129-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:43:13-37
-130        <service
-130-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:46:9-52:35
-131            android:name="androidx.work.impl.background.systemjob.SystemJobService"
-131-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:47:13-84
-132            android:directBootAware="false"
-132-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:48:13-44
-133            android:enabled="@bool/enable_system_job_service_default"
-133-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:49:13-70
-134            android:exported="true"
-134-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:50:13-36
-135            android:permission="android.permission.BIND_JOB_SERVICE" />
-135-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:51:13-69
-136        <service
-136-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:53:9-59:35
-137            android:name="androidx.work.impl.foreground.SystemForegroundService"
-137-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:54:13-81
-138            android:directBootAware="false"
-138-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:55:13-44
-139            android:enabled="@bool/enable_system_foreground_service_default"
-139-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:56:13-77
-140            android:exported="false" />
-140-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:57:13-37
-141
-142        <receiver
-142-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:61:9-66:35
-143            android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"
-143-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:62:13-88
-144            android:directBootAware="false"
-144-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:63:13-44
-145            android:enabled="true"
-145-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:64:13-35
-146            android:exported="false" />
-146-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:65:13-37
-147        <receiver
-147-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:67:9-77:20
-148            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy"
-148-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:68:13-106
-149            android:directBootAware="false"
-149-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:69:13-44
-150            android:enabled="false"
-150-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:70:13-36
-151            android:exported="false" >
-151-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:71:13-37
-152            <intent-filter>
-152-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:73:13-76:29
-153                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-153-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:74:17-87
-153-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:74:25-84
-154                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-154-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:75:17-90
-154-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:75:25-87
-155            </intent-filter>
-156        </receiver>
-157        <receiver
-157-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:78:9-88:20
-158            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy"
-158-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:79:13-104
-159            android:directBootAware="false"
-159-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:80:13-44
-160            android:enabled="false"
-160-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:81:13-36
-161            android:exported="false" >
-161-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:82:13-37
-162            <intent-filter>
-162-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:84:13-87:29
-163                <action android:name="android.intent.action.BATTERY_OKAY" />
-163-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:85:17-77
-163-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:85:25-74
-164                <action android:name="android.intent.action.BATTERY_LOW" />
-164-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:86:17-76
-164-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:86:25-73
-165            </intent-filter>
-166        </receiver>
-167        <receiver
-167-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:89:9-99:20
-168            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy"
-168-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:90:13-104
-169            android:directBootAware="false"
-169-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:91:13-44
-170            android:enabled="false"
-170-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:92:13-36
-171            android:exported="false" >
-171-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:93:13-37
-172            <intent-filter>
-172-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:95:13-98:29
-173                <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
-173-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:96:17-83
-173-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:96:25-80
-174                <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
-174-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:97:17-82
-174-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:97:25-79
-175            </intent-filter>
-176        </receiver>
-177        <receiver
-177-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:100:9-109:20
-178            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy"
-178-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:101:13-103
-179            android:directBootAware="false"
-179-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:102:13-44
-180            android:enabled="false"
-180-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:103:13-36
-181            android:exported="false" >
-181-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:104:13-37
-182            <intent-filter>
-182-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:106:13-108:29
-183                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-183-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:107:17-79
-183-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:107:25-76
-184            </intent-filter>
-185        </receiver>
-186        <receiver
-186-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:110:9-121:20
-187            android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver"
-187-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:111:13-88
-188            android:directBootAware="false"
-188-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:112:13-44
-189            android:enabled="false"
-189-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:113:13-36
-190            android:exported="false" >
-190-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:114:13-37
-191            <intent-filter>
-191-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:116:13-120:29
-192                <action android:name="android.intent.action.BOOT_COMPLETED" />
-192-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:20:13-74
-192-->/Users/suthasineesangchan/Documents/GitHub/officesyndrome/android/app/src/main/AndroidManifest.xml:20:21-72
-193                <action android:name="android.intent.action.TIME_SET" />
-193-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:118:17-73
-193-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:118:25-70
-194                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-194-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:119:17-81
-194-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:119:25-78
-195            </intent-filter>
-196        </receiver>
-197        <receiver
-197-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:122:9-131:20
-198            android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver"
-198-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:123:13-99
-199            android:directBootAware="false"
-199-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:124:13-44
-200            android:enabled="@bool/enable_system_alarm_service_default"
-200-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:125:13-72
-201            android:exported="false" >
-201-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:126:13-37
-202            <intent-filter>
-202-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:128:13-130:29
-203                <action android:name="androidx.work.impl.background.systemalarm.UpdateProxies" />
-203-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:129:17-98
-203-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:129:25-95
-204            </intent-filter>
-205        </receiver>
-206        <receiver
-206-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:132:9-142:20
-207            android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver"
-207-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:133:13-78
-208            android:directBootAware="false"
-208-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:134:13-44
-209            android:enabled="true"
-209-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:135:13-35
-210            android:exported="true"
-210-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:136:13-36
-211            android:permission="android.permission.DUMP" >
-211-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:137:13-57
-212            <intent-filter>
-212-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:139:13-141:29
-213                <action android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS" />
-213-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:140:17-88
-213-->[androidx.work:work-runtime:2.10.2] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/ad35eedb6939a59a9bb709b294d87684/transformed/work-runtime-2.10.2/AndroidManifest.xml:140:25-85
-214            </intent-filter>
-215        </receiver>
-216
-217        <uses-library
-217-->[androidx.window:window:1.2.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/197f12b192a3f06912c946d4cbd2dd7d/transformed/jetified-window-1.2.0/AndroidManifest.xml:23:9-25:40
-218            android:name="androidx.window.extensions"
-218-->[androidx.window:window:1.2.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/197f12b192a3f06912c946d4cbd2dd7d/transformed/jetified-window-1.2.0/AndroidManifest.xml:24:13-54
-219            android:required="false" />
-219-->[androidx.window:window:1.2.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/197f12b192a3f06912c946d4cbd2dd7d/transformed/jetified-window-1.2.0/AndroidManifest.xml:25:13-37
-220        <uses-library
-220-->[androidx.window:window:1.2.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/197f12b192a3f06912c946d4cbd2dd7d/transformed/jetified-window-1.2.0/AndroidManifest.xml:26:9-28:40
-221            android:name="androidx.window.sidecar"
-221-->[androidx.window:window:1.2.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/197f12b192a3f06912c946d4cbd2dd7d/transformed/jetified-window-1.2.0/AndroidManifest.xml:27:13-51
-222            android:required="false" />
-222-->[androidx.window:window:1.2.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/197f12b192a3f06912c946d4cbd2dd7d/transformed/jetified-window-1.2.0/AndroidManifest.xml:28:13-37
-223
-224        <service
-224-->[androidx.room:room-runtime:2.6.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/06155cb8950969a62376c8c166003442/transformed/room-runtime-2.6.1/AndroidManifest.xml:24:9-28:63
-225            android:name="androidx.room.MultiInstanceInvalidationService"
-225-->[androidx.room:room-runtime:2.6.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/06155cb8950969a62376c8c166003442/transformed/room-runtime-2.6.1/AndroidManifest.xml:25:13-74
-226            android:directBootAware="true"
-226-->[androidx.room:room-runtime:2.6.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/06155cb8950969a62376c8c166003442/transformed/room-runtime-2.6.1/AndroidManifest.xml:26:13-43
-227            android:exported="false" />
-227-->[androidx.room:room-runtime:2.6.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/06155cb8950969a62376c8c166003442/transformed/room-runtime-2.6.1/AndroidManifest.xml:27:13-37
-228
-229        <receiver
-229-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
-230            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-230-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
-231            android:directBootAware="false"
-231-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
-232            android:enabled="true"
-232-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
-233            android:exported="true"
-233-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
-234            android:permission="android.permission.DUMP" >
-234-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
-235            <intent-filter>
-235-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
-236                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-236-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
-236-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
-237            </intent-filter>
-238            <intent-filter>
-238-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
-239                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-239-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
-239-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
-240            </intent-filter>
-241            <intent-filter>
-241-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
-242                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-242-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
-242-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
-243            </intent-filter>
-244            <intent-filter>
-244-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
-245                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-245-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
-245-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
-246            </intent-filter>
-247        </receiver>
-248    </application>
-249
-250</manifest>
+122-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/0c7cd1674da718ccee593f79cf8da244/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+123            <meta-data
+123-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+124                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+124-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+125                android:value="androidx.startup" />
+125-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+126        </provider>
+127
+128        <receiver
+128-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+129            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+129-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+130            android:directBootAware="false"
+130-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+131            android:enabled="true"
+131-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+132            android:exported="true"
+132-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+133            android:permission="android.permission.DUMP" >
+133-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+134            <intent-filter>
+134-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+135                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+135-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+135-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+136            </intent-filter>
+137            <intent-filter>
+137-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+138                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+138-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+138-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+139            </intent-filter>
+140            <intent-filter>
+140-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+141                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+141-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+141-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+142            </intent-filter>
+143            <intent-filter>
+143-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+144                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+144-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+144-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/suthasineesangchan/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+145            </intent-filter>
+146        </receiver>
+147    </application>
+148
+149</manifest>
