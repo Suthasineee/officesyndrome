@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.application.office_syndrome.app-mergeReleaseResources-48:/values-sl/values-sl.xml",
+            "outputFile": "com.application.office_syndrome.app-mergeReleaseResources-41:/values-sl/values-sl.xml",
             "map": [
                 {
                     "source": "/Users/suthasineesangchan/.gradle/caches/8.12/transforms/b83b8b00b8346c9e7414a1f1298f055d/transformed/preference-1.2.1/res/values-sl/values-sl.xml",
