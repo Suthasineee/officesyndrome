@@ -183,38 +183,22 @@ class _HomePageState extends State<HomePage> {
               if (data.type == 1) {
                 //1-12
                 data.startAt = 0;
-                int typeCount = notificationData
-                    .where((e) => e.type == 1)
-                    .toList()
-                    .length;
-                if (typeCount < 1) {
-                  isSave = true;
-
-                  for (int i = 1; i <= data.time!; i++) {
-                    _startTimer(3600 * i, i);
-                    id.add(i);
-                  }
-                } else {
-                  isSave = false;
+                isSave = true;
+                for (int i = 1; i <= data.time!; i++) {
+                  _startTimer(60 * 60 * data.time! * i, i);
+                  id.add(i);
                 }
                 data.id = id;
               } else if (data.type == 2) {
                 //15-26
                 data.startAt = 0;
-                int typeCount = notificationData
-                    .where((e) => e.type == 2)
-                    .toList()
-                    .length;
-                if (typeCount < 1) {
-                  isSave = true;
+                isSave = true;
 
-                  for (int i = 1; i <= data.time!; i++) {
-                    _startTimer(7200 * i, i + 14);
-                    id.add(i + 14);
-                  }
-                } else {
-                  isSave = false;
+                for (int i = 1; i <= data.time!; i++) {
+                  _startTimer(7200 * i, i + 14);
+                  id.add(i + 14);
                 }
+
                 data.id = id;
               } else if (data.type == 3) {
                 //101-3000
@@ -354,20 +338,14 @@ class _HomePageState extends State<HomePage> {
               if (data.type == 1) {
                 //1-12
                 data.startAt = 0;
-                int typeCount = notificationData
-                    .where((e) => e.type == 1)
-                    .toList()
-                    .length;
-                if (typeCount < 1) {
-                  isSave = true;
 
-                  for (int i = 1; i <= data.time!; i++) {
-                    _startTimer(3600 * i, i);
-                    id.add(i);
-                  }
-                } else {
-                  isSave = false;
+                isSave = true;
+
+                for (int i = 1; i <= data.time!; i++) {
+                  _startTimer(60 * 60 * data.time! * i, i);
+                  id.add(i);
                 }
+
                 data.id = id;
               } else if (data.type == 2) {
                 //15-26
@@ -487,7 +465,10 @@ class _HomePageState extends State<HomePage> {
                         if (dataT.type == 1) {
                           //1-12
                           for (int i = 1; i <= dataT.time!; i++) {
-                            _startTimer(3600 * i, dataT.id![i - 1]);
+                            _startTimer(
+                              60 * 60 * dataT.time! * i,
+                              dataT.id![i - 1],
+                            );
                           }
                         } else if (dataT.type == 2) {
                           //15-26

@@ -180,13 +180,14 @@ class _SettingPageState extends State<SettingPage> {
         _value++;
       }
       data.time = _value;
-      data.text =
-          "แจ้งเตือน :  " +
-          "${selectedTime.inHours.toString().padLeft(2, '0')}:"
-              "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
-              " นาที  " +
-          data.time.toString() +
-          " ครั้ง";
+      data.text = 'ทุก ' + _value.toString() + ' ชั่วโมง';
+      // data.text =
+      //     "แจ้งเตือน :  " +
+      //     "${selectedTime.inHours.toString().padLeft(2, '0')}:"
+      //         "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
+      //         " นาที  " +
+      //     data.time.toString() +
+      //     " ครั้ง";
     });
   }
 
@@ -194,13 +195,14 @@ class _SettingPageState extends State<SettingPage> {
     setState(() {
       if (_value > 1) _value--; // กันไม่ให้ติดลบ.
       data.time = _value;
-      data.text =
-          "แจ้งเตือน :  " +
-          "${selectedTime.inHours.toString().padLeft(2, '0')}:"
-              "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
-              " นาที  " +
-          data.time.toString() +
-          " ครั้ง";
+      data.text = 'ทุก ' + _value.toString() + ' ชั่วโมง';
+      // data.text =
+      //     "แจ้งเตือน :  " +
+      //     "${selectedTime.inHours.toString().padLeft(2, '0')}:"
+      //         "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
+      //         " นาที  " +
+      //     data.time.toString() +
+      //     " ครั้ง";
     });
   }
 
@@ -212,9 +214,9 @@ class _SettingPageState extends State<SettingPage> {
           icon: Icon(Icons.remove_circle_outline, size: 30),
           onPressed: _decrement,
         ),
-        SizedBox(width: 10),
+        SizedBox(width: 2),
         Text('$_value', style: TextStyle(fontSize: 18)),
-        SizedBox(width: 10),
+        SizedBox(width: 2),
         IconButton(
           icon: Icon(Icons.add_circle_outline, size: 30),
           onPressed: _increment,
@@ -373,6 +375,7 @@ class _SettingPageState extends State<SettingPage> {
                             fontSize: 18,
                           ),
                         ),
+
                         _CountNumber(),
                         Text(
                           'ครั้ง',
@@ -405,9 +408,9 @@ class _SettingPageState extends State<SettingPage> {
           onSelectTwoTimeButton = false;
           onSelectOneTimeButton = true;
           onSelectTimeButton = false;
-          data.text = 'ทุก 1 ชั่วโมง';
+          data.text = 'ทุก ' + _value.toString() + ' ชั่วโมง';
           data.type = 1;
-          data.time = 12;
+          data.time = _value;
           data.clock = Duration(seconds: 3600);
           data.date = DateTime.now();
         });
@@ -418,20 +421,44 @@ class _SettingPageState extends State<SettingPage> {
           children: [
             Container(
               height: 50,
-              width: MediaQuery.of(context).size.width * 0.6,
+              width: MediaQuery.of(context).size.width * 0.7,
               margin: EdgeInsets.only(top: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    child: Text(
-                      'ทุก 1 ชั่วโมง',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: fontMitr,
-                        fontSize: 18,
+                  // Container(
+                  //   child: Text(
+                  //     'ทุก 1 ชั่วโมง',
+                  //     style: TextStyle(
+                  //       color: Colors.black,
+                  //       fontFamily: fontMitr,
+                  //       fontSize: 18,
+                  //     ),
+                  //   ),
+                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        'ทุก',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: fontMitr,
+                          fontSize: 18,
+                        ),
                       ),
-                    ),
+                      SizedBox(width: 15),
+                      _CountNumber(),
+                      SizedBox(width: 15),
+                      Text(
+                        'ชั่วโมง',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: fontMitr,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -455,6 +482,14 @@ class _SettingPageState extends State<SettingPage> {
             setState(() {
               isWarningOn = !isWarningOn;
               isClockWarningOn = false;
+              onSelectTwoTimeButton = false;
+              onSelectOneTimeButton = true;
+              onSelectTimeButton = false;
+              data.text = 'ทุก ' + _value.toString() + ' ชั่วโมง';
+              data.type = 1;
+              data.time = _value;
+              data.clock = Duration(seconds: 3600);
+              data.date = DateTime.now();
             });
           },
           child: Container(
@@ -497,8 +532,8 @@ class _SettingPageState extends State<SettingPage> {
             ? Column(
                 children: [
                   _oneHourButton(),
-                  _twoHourButton(),
-                  //_selectTimeButton(),
+                  // _twoHourButton(),
+                  // _selectTimeButton(),
                 ],
               )
             : Container(),
@@ -584,8 +619,7 @@ class _SettingPageState extends State<SettingPage> {
           backgroundColor:
               isClockWarningOn ||
                   ((selectedTime.inHours > 0 || selectedTime.inMinutes > 0)) ||
-                  onSelectOneTimeButton ||
-                  onSelectTwoTimeButton
+                  isWarningOn
               ? colorAccent
               : Colors.black12, //background color of button
           side: BorderSide(width: 1, color: Color.fromARGB(255, 203, 202, 202)),

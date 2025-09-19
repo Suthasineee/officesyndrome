@@ -37,6 +37,8 @@ class _VideoPageState extends State<VideoPage> {
 
   @override
   void dispose() {
+    _controller.pause();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -71,14 +73,12 @@ class _VideoPageState extends State<VideoPage> {
       //   ),
       // ),
       body: _controller.value.isInitialized
-          ? Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
+          ? 
                 Stack(
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.75,
+                      height: MediaQuery.of(context).size.height * 0.95,
                       child: AspectRatio(
                         aspectRatio: _controller.value.aspectRatio,
                         child: VideoPlayer(_controller),
@@ -86,12 +86,15 @@ class _VideoPageState extends State<VideoPage> {
                     ),
 
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.65,
-                        ),
+                        // Container(
+                        //   height: MediaQuery.of(context).size.height * 0.65,
+                        // ),
                         // ปุ่มเล่น/หยุด
                         Container(
+                          height: 150,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
@@ -101,7 +104,7 @@ class _VideoPageState extends State<VideoPage> {
                           ),
                           child: Column(
                             children: [
-                              SizedBox(height: 15),
+                              SizedBox(height: 5),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -109,7 +112,8 @@ class _VideoPageState extends State<VideoPage> {
                                     icon: Icon(
                                       _controller.value.volume == 0
                                           ? Icons.volume_off
-                                          : Icons.volume_up,        size: 30,
+                                          : Icons.volume_up,
+                                      size: 30,
                                     ),
                                     onPressed: () {
                                       setState(() {
@@ -233,14 +237,12 @@ class _VideoPageState extends State<VideoPage> {
                                   );
                                 },
                               ),
-                             // const SizedBox(height: 8),
+                              // const SizedBox(height: 8),
                             ],
                           ),
                         ),
                       ],
                     ),
-                  ],
-                ),
               ],
             )
           : const Center(child: CircularProgressIndicator()),
