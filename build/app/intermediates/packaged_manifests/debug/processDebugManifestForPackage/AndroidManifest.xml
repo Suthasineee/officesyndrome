@@ -21,6 +21,7 @@
         android:name="android.permission.SCHEDULE_EXACT_ALARM"
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <!--
  Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
@@ -36,6 +37,10 @@
         </intent>
     </queries>
 
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <permission
@@ -111,6 +116,24 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <receiver
+            android:name="com.gdelataillade.alarm.alarm.AlarmReceiver"
+            android:exported="true" />
+        <receiver
+            android:name="com.gdelataillade.alarm.alarm.BootReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.gdelataillade.alarm.alarm.AlarmService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" >
+        </service>
 
         <uses-library
             android:name="androidx.window.extensions"
