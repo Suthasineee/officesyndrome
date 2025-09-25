@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.application.office_syndrome.app-mergeReleaseResources-41:/values-or/values-or.xml",
+            "outputFile": "com.application.office_syndrome.app-mergeReleaseResources-42:/values-or/values-or.xml",
             "map": [
                 {
                     "source": "/Users/suthasineesangchan/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/res/values-or/values-or.xml",

@@ -1,26 +1,30 @@
 [
     {
-        "merged": "com.application.office_syndrome.app-debug-43:/mipmap-xhdpi_ic_launcher.jpg.flat",
-        "source": "com.application.office_syndrome.app-main-38:/mipmap-xhdpi/ic_launcher.jpg"
-    },
-    {
-        "merged": "com.application.office_syndrome.app-debug-43:/mipmap-hdpi_ic_launcher.jpeg.flat",
+        "merged": "com.application.office_syndrome.app-debug-44:/mipmap-hdpi_ic_launcher.jpeg.flat",
         "source": "com.application.office_syndrome.app-main-38:/mipmap-hdpi/ic_launcher.jpeg"
     },
     {
-        "merged": "com.application.office_syndrome.app-debug-43:/mipmap-xxxhdpi_ic_launcher.jpg.flat",
-        "source": "com.application.office_syndrome.app-main-38:/mipmap-xxxhdpi/ic_launcher.jpg"
+        "merged": "com.application.office_syndrome.app-debug-44:/mipmap-xhdpi_ic_launcher.jpg.flat",
+        "source": "com.application.office_syndrome.app-main-38:/mipmap-xhdpi/ic_launcher.jpg"
     },
     {
-        "merged": "com.application.office_syndrome.app-debug-43:/drawable-v21_launch_background.xml.flat",
+        "merged": "com.application.office_syndrome.app-debug-44:/drawable-v21_launch_background.xml.flat",
         "source": "com.application.office_syndrome.app-main-38:/drawable-v21/launch_background.xml"
     },
     {
-        "merged": "com.application.office_syndrome.app-debug-43:/mipmap-xxhdpi_ic_launcher.jpg.flat",
-        "source": "com.application.office_syndrome.app-main-38:/mipmap-xxhdpi/ic_launcher.jpg"
+        "merged": "com.application.office_syndrome.app-debug-44:/raw_alarm.mp3.flat",
+        "source": "com.application.office_syndrome.app-main-38:/raw/alarm.mp3"
     },
     {
-        "merged": "com.application.office_syndrome.app-debug-43:/mipmap-mdpi_ic_launcher.jpg.flat",
+        "merged": "com.application.office_syndrome.app-debug-44:/mipmap-xxxhdpi_ic_launcher.jpg.flat",
+        "source": "com.application.office_syndrome.app-main-38:/mipmap-xxxhdpi/ic_launcher.jpg"
+    },
+    {
+        "merged": "com.application.office_syndrome.app-debug-44:/mipmap-mdpi_ic_launcher.jpg.flat",
         "source": "com.application.office_syndrome.app-main-38:/mipmap-mdpi/ic_launcher.jpg"
+    },
+    {
+        "merged": "com.application.office_syndrome.app-debug-44:/mipmap-xxhdpi_ic_launcher.jpg.flat",
+        "source": "com.application.office_syndrome.app-main-38:/mipmap-xxhdpi/ic_launcher.jpg"
     }
 ]

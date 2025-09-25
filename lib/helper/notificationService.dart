@@ -39,7 +39,7 @@ class NotificationService {
     await _notificationsPlugin.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
-        _handleNotificationTap(response.payload);
+      //  _handleNotificationTap(response.payload);
       },
 
       // สำคัญสำหรับ Android เมื่อแอปไม่อยู่ foreground/terminated
@@ -54,11 +54,11 @@ class NotificationService {
         ?.requestNotificationsPermission();
   }
 
-  void _handleNotificationTap(String? payload) {
-    Application.navigatorKey.currentState?.push(
-      MaterialPageRoute(builder: (_) => VideoPage()),
-    );
-  }
+  // void _handleNotificationTap(String? payload) {
+  //   Application.navigatorKey.currentState?.push(
+  //     MaterialPageRoute(builder: (_) => VideoPage()),
+  //   );
+  // }
 
   // @pragma('vm:entry-point')
   // void onDidReceiveBackgroundNotificationResponse(
@@ -69,42 +69,43 @@ class NotificationService {
   //   );
   // }
 
-  Future<void> cancelAll() async {
-    await _notificationsPlugin.cancelAll();
-  }
+  // Future<void> cancelAll() async {
+  //   await _notificationsPlugin.cancelAll();
+  // }
 
-  Future<void> cancelID(List<int> id) async {
-    for (int i = 0; i < id.length; i++) {
-      await _notificationsPlugin.cancel(id[i]);
-      print("cancelId:" + id[i].toString());
-    }
-  }
+  // Future<void> cancelID(List<int> id) async {
+  //   for (int i = 0; i < id.length; i++) {
+  //     await _notificationsPlugin.cancel(id[i]);
+  //     print("cancelId:" + id[i].toString());
+  //   }
+  // }
 
-  Future<void> scheduleDailyNotification(DateTime selectedTime, int id) async {
-    if (selectedTime.isBefore(DateTime.now())) {
-      selectedTime = selectedTime.add(const Duration(days: 1));
-    }
-    final tz.TZDateTime scheduledTime = tz.TZDateTime.from(
-      selectedTime,
-      tz.local,
-    );
-    try {
-      await _notificationsPlugin.zonedSchedule(
-        id,
-        'ป้องกันออฟฟิศซินโดรม', // title
-        'ถึงเวลาขยับร่างกาย', // body
-        scheduledTime,
-        _notificationDetails(id),
+  // Future<void> scheduleDailyNotification(DateTime selectedTime, int id) async {
+  //   if (selectedTime.isBefore(DateTime.now())) {
+  //     selectedTime = selectedTime.add(const Duration(days: 1));
+  //   }
+  //   final tz.TZDateTime scheduledTime = tz.TZDateTime.from(
+  //     selectedTime,
+  //     tz.local,
+  //   );
+  //   try {
+  //     await _notificationsPlugin.zonedSchedule(
+  //       id,
+  //       'ป้องกันออฟฟิศซินโดรม', // title
+  //       'ถึงเวลาขยับร่างกาย', // body
+  //       scheduledTime,
+  //       _notificationDetails(id),
 
-        matchDateTimeComponents: DateTimeComponents.time,
-        androidScheduleMode: AndroidScheduleMode.exact,
-      );
-      print("send:" + id.toString());
-      debugPrint('Notification scheduled successfully');
-    } catch (e) {
-      debugPrint('Error scheduling notification: $e');
-    }
-  }
+  //       matchDateTimeComponents: DateTimeComponents.time,
+
+  //       androidScheduleMode: AndroidScheduleMode.exact,
+  //     );
+  //     print("send:" + id.toString());
+  //     debugPrint('Notification scheduled successfully');
+  //   } catch (e) {
+  //     debugPrint('Error scheduling notification: $e');
+  //   }
+  // }
 
   NotificationDetails _notificationDetails(count) {
     return NotificationDetails(
@@ -115,8 +116,19 @@ class NotificationService {
         importance: Importance.max,
         priority: Priority.high,
         showWhen: false,
+        playSound: true,
+        sound: RawResourceAndroidNotificationSound('alarm'),
+        fullScreenIntent: true,
+        timeoutAfter: 15000,
       ),
-      iOS: DarwinNotificationDetails(),
+      iOS: DarwinNotificationDetails(
+        presentAlert: true,
+        presentSound: true,
+        presentBadge: true,
+        criticalSoundVolume: 1,
+        interruptionLevel: InterruptionLevel.critical,
+        sound: 'alarm.wav',
+      ),
     );
   }
 }

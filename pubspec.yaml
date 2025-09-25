@@ -42,6 +42,7 @@ dependencies:
   flutter_local_notifications: ^19.4.2
   timezone: ^0.10.1
   easy_localization: ^3.0.8
+  alarm: ^5.1.5
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,7 @@ flutter:
   assets:
     - assets/image/
     - assets/videos/
+    - assets/alarm.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.application.office_syndrome.app-mergeReleaseResources-41:/values-gu/values-gu.xml",
+            "outputFile": "com.application.office_syndrome.app-mergeReleaseResources-42:/values-gu/values-gu.xml",
             "map": [
                 {
                     "source": "/Users/suthasineesangchan/.gradle/caches/8.12/transforms/72c190e8e0a1da0cc68763429ee44e42/transformed/jetified-media3-exoplayer-1.5.1/res/values-gu/values-gu.xml",

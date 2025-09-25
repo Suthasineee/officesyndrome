@@ -1,3 +1,4 @@
+import 'package:alarm/alarm.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,13 +15,15 @@ import 'helper/application.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Alarm.init();
   await EasyLocalization.ensureInitialized();
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
   Application.navigatorKey = navigatorKey;
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isFirstOpen = prefs.getBool('is_first_open') ?? true;
-
+  tz.initializeTimeZones();
+  tz.setLocalLocation(tz.getLocation('Asia/Bangkok'));
   if (isFirstOpen) {
     await prefs.setBool('is_first_open', false);
   } // Initialize time zone

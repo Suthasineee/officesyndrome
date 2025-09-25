@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.application.office_syndrome.app-mergeDebugResources-41:/values-eu/values-eu.xml",
+            "outputFile": "com.application.office_syndrome.app-mergeDebugResources-42:/values-eu/values-eu.xml",
             "map": [
                 {
                     "source": "/Users/suthasineesangchan/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/res/values-eu/values-eu.xml",

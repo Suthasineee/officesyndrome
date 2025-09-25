@@ -1,3 +1,4 @@
+import 'package:alarm/alarm.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:office_syndrome/helper/app_controller.dart';
@@ -46,7 +47,8 @@ class _SettingPageState extends State<SettingPage> {
               ? IconButton(
                   icon: const Icon(Icons.delete),
                   onPressed: () {
-                    NotificationService().cancelID(widget.data.id!);
+                    //  NotificationService().cancelID(widget.data.id!);
+                    Alarm.stop(widget.data.id!);
                     deleteNotificationData(widget.index);
                     getNotificationData();
                     data.isAdd = 3;
@@ -627,9 +629,15 @@ class _SettingPageState extends State<SettingPage> {
             borderRadius: BorderRadius.circular(30),
           ),
         ),
-        onPressed: () {
+        onPressed: () async {
           if (widget.type == 1) {
-            NotificationService().cancelID(widget.data.id!);
+            // NotificationService().cancelID(widget.data.id!);
+
+            final alarms = await Alarm.getAlarms();
+            final ids = alarms.map((a) => widget.data.id!).toList();
+            if (ids.isNotEmpty) {
+              Alarm.stop(widget.data.id![0]);
+            }
             deleteNotificationData(widget.index);
           }
           Navigator.pop(context, data);

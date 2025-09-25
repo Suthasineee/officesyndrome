@@ -1,3 +1,4 @@
+import 'package:alarm/alarm.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:office_syndrome/helper/app_controller.dart';
@@ -5,6 +6,8 @@ import 'package:office_syndrome/helper/colors.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPage extends StatefulWidget {
+  int id;
+  VideoPage(this.id);
   @override
   _VideoPageState createState() => _VideoPageState();
 }
@@ -23,9 +26,14 @@ class _VideoPageState extends State<VideoPage> {
     super.initState();
     _controller = VideoPlayerController.asset("assets/videos/simple.mp4")
       ..initialize().then((_) {
-        setState(() {}); // refresh หลังโหลดเสร็จ
-        //_controller.play(); // เริ่มเล่นอัตโนมัติ
+        setState(() {}); 
+        if(widget.id!=-1){
+          // refresh หลังโหลดเสร็จ
+        _controller.play();
+         } // เริ่มเล่นอัตโนมัติ
       });
+
+    Alarm.stop(widget.id);
   }
 
   String _format(Duration d) {
@@ -73,176 +81,168 @@ class _VideoPageState extends State<VideoPage> {
       //   ),
       // ),
       body: _controller.value.isInitialized
-          ? 
-                Stack(
+          ? Stack(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.95,
+                  child: AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: VideoPlayer(_controller),
+                  ),
+                ),
+
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+                    // Container(
+                    //   height: MediaQuery.of(context).size.height * 0.65,
+                    // ),
+                    // ปุ่มเล่น/หยุด
                     Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.95,
-                      child: AspectRatio(
-                        aspectRatio: _controller.value.aspectRatio,
-                        child: VideoPlayer(_controller),
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(46),
+                          topRight: Radius.circular(46),
+                        ),
                       ),
-                    ),
-
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        // Container(
-                        //   height: MediaQuery.of(context).size.height * 0.65,
-                        // ),
-                        // ปุ่มเล่น/หยุด
-                        Container(
-                          height: 150,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(46),
-                              topRight: Radius.circular(46),
-                            ),
-                          ),
-                          child: Column(
+                      child: Column(
+                        children: [
+                          SizedBox(height: 5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(height: 5),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  IconButton(
-                                    icon: Icon(
-                                      _controller.value.volume == 0
-                                          ? Icons.volume_off
-                                          : Icons.volume_up,
-                                      size: 30,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        if (_controller.value.volume == 0) {
-                                          _controller.setVolume(1); // unmute
-                                        } else {
-                                          _controller.setVolume(0); // mute
-                                        }
-                                      });
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: Icon(
-                                      _controller.value.isPlaying
-                                          ? Icons.pause
-                                          : Icons.play_arrow,
-                                      size: 30,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        _controller.value.isPlaying
-                                            ? _controller.pause()
-                                            : _controller.play();
-                                      });
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.replay_10, size: 30),
-                                    onPressed: () async {
-                                      final pos =
-                                          _controller.value.position -
-                                          const Duration(seconds: 10);
-                                      await _controller.seekTo(
-                                        pos < Duration.zero
-                                            ? Duration.zero
-                                            : pos,
-                                      );
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.forward_10,
-                                      size: 30,
-                                    ),
-                                    onPressed: () async {
-                                      final d = _controller.value.duration;
-                                      final pos =
-                                          _controller.value.position +
-                                          const Duration(seconds: 10);
-                                      await _controller.seekTo(
-                                        pos > d ? d : pos,
-                                      );
-                                    },
-                                  ),
-                                ],
+                              IconButton(
+                                icon: Icon(
+                                  _controller.value.volume == 0
+                                      ? Icons.volume_off
+                                      : Icons.volume_up,
+                                  size: 30,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    if (_controller.value.volume == 0) {
+                                      _controller.setVolume(1); // unmute
+                                    } else {
+                                      _controller.setVolume(0); // mute
+                                    }
+                                  });
+                                },
                               ),
-                              // ใช้ AnimatedBuilder เพื่ออัปเดตเวลาบน UI ตาม controller
-                              AnimatedBuilder(
-                                animation: _controller,
-                                builder: (context, _) {
-                                  final duration = _controller.value.duration;
-                                  final position = _controller.value.position;
-                                  final remaining = duration - position;
-
-                                  // ป้องกันค่า Slider เกินช่วง
-                                  final max = duration.inMilliseconds
-                                      .toDouble()
-                                      .clamp(0, double.infinity);
-                                  final value = position.inMilliseconds
-                                      .clamp(0, duration.inMilliseconds)
-                                      .toDouble();
-
-                                  return Column(
-                                    children: [
-                                      // Slider ที่ลากเลื่อนได้
-                                      Slider(
-                                        value: max == 0 ? 0 : value,
-                                        min: 0,
-                                        max: (max.toDouble() == 0)
-                                            ? 1
-                                            : max.toDouble(),
-                                        onChanged: (v) {
-                                          _controller.seekTo(
-                                            Duration(milliseconds: v.toInt()),
-                                          );
-                                        },
-                                      ),
-
-                                      // แถบ progress มาตรฐาน (มี buffered สีเทา) + ลากได้
-                                      // Padding(
-                                      //   padding: const EdgeInsets.symmetric(horizontal: 12),
-                                      //   child: VideoProgressIndicator(
-                                      //     _controller,
-                                      //     allowScrubbing: true,
-                                      //     padding: const EdgeInsets.symmetric(vertical: 6),
-                                      //     colors: VideoProgressColors(
-                                      //       playedColor: Colors.blue,
-                                      //       bufferedColor: Colors.grey,
-                                      //       backgroundColor: Colors.black12,
-                                      //     ),
-                                      //   ),
-                                      // ),
-
-                                      // แถวตัวเลขเวลา: current / total (remaining)
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 12,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(_format(position)), // current
-                                            Text(
-                                              '${_format(duration)}',
-                                            ), // total + remaining
-                                          ],
-                                        ),
-                                      ),
-                                    ],
+                              IconButton(
+                                icon: Icon(
+                                  _controller.value.isPlaying
+                                      ? Icons.pause
+                                      : Icons.play_arrow,
+                                  size: 30,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _controller.value.isPlaying
+                                        ? _controller.pause()
+                                        : _controller.play();
+                                  });
+                                },
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.replay_10, size: 30),
+                                onPressed: () async {
+                                  final pos =
+                                      _controller.value.position -
+                                      const Duration(seconds: 10);
+                                  await _controller.seekTo(
+                                    pos < Duration.zero ? Duration.zero : pos,
                                   );
                                 },
                               ),
-                              // const SizedBox(height: 8),
+                              IconButton(
+                                icon: const Icon(Icons.forward_10, size: 30),
+                                onPressed: () async {
+                                  final d = _controller.value.duration;
+                                  final pos =
+                                      _controller.value.position +
+                                      const Duration(seconds: 10);
+                                  await _controller.seekTo(pos > d ? d : pos);
+                                },
+                              ),
                             ],
                           ),
-                        ),
-                      ],
+                          // ใช้ AnimatedBuilder เพื่ออัปเดตเวลาบน UI ตาม controller
+                          AnimatedBuilder(
+                            animation: _controller,
+                            builder: (context, _) {
+                              final duration = _controller.value.duration;
+                              final position = _controller.value.position;
+                              final remaining = duration - position;
+
+                              // ป้องกันค่า Slider เกินช่วง
+                              final max = duration.inMilliseconds
+                                  .toDouble()
+                                  .clamp(0, double.infinity);
+                              final value = position.inMilliseconds
+                                  .clamp(0, duration.inMilliseconds)
+                                  .toDouble();
+
+                              return Column(
+                                children: [
+                                  // Slider ที่ลากเลื่อนได้
+                                  Slider(
+                                    value: max == 0 ? 0 : value,
+                                    min: 0,
+                                    max: (max.toDouble() == 0)
+                                        ? 1
+                                        : max.toDouble(),
+                                    onChanged: (v) {
+                                      _controller.seekTo(
+                                        Duration(milliseconds: v.toInt()),
+                                      );
+                                    },
+                                  ),
+
+                                  // แถบ progress มาตรฐาน (มี buffered สีเทา) + ลากได้
+                                  // Padding(
+                                  //   padding: const EdgeInsets.symmetric(horizontal: 12),
+                                  //   child: VideoProgressIndicator(
+                                  //     _controller,
+                                  //     allowScrubbing: true,
+                                  //     padding: const EdgeInsets.symmetric(vertical: 6),
+                                  //     colors: VideoProgressColors(
+                                  //       playedColor: Colors.blue,
+                                  //       bufferedColor: Colors.grey,
+                                  //       backgroundColor: Colors.black12,
+                                  //     ),
+                                  //   ),
+                                  // ),
+
+                                  // แถวตัวเลขเวลา: current / total (remaining)
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(_format(position)), // current
+                                        Text(
+                                          '${_format(duration)}',
+                                        ), // total + remaining
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                          // const SizedBox(height: 8),
+                        ],
+                      ),
                     ),
+                  ],
+                ),
               ],
             )
           : const Center(child: CircularProgressIndicator()),

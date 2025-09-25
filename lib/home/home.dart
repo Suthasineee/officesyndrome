@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:office_syndrome/helper/app_controller.dart';
+import 'package:office_syndrome/helper/application.dart';
 import 'package:office_syndrome/helper/colors.dart';
 import 'package:office_syndrome/helper/notificationService.dart';
 import 'package:office_syndrome/helper/preferences_helper.dart';
@@ -13,6 +14,7 @@ import 'package:office_syndrome/video/video.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart' as tz;
+import 'package:alarm/alarm.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -24,15 +26,101 @@ class _HomePageState extends State<HomePage> {
   NotificationData data = NotificationData();
   String name = "";
   List<NotificationData> notificationData = [];
-
+  int id = 0;
   @override
   void initState() {
     getData();
+    initNoti();
+    // Alarm.stopAll();
     super.initState();
   }
 
+  cancelID(id) {
+    Alarm.stop(id);
+  }
+
+  int i = 0;
+  initNoti() async {
+    _ringSub?.cancel(); // กันสมัครซ้ำ
+
+    if (await Alarm.isRinging()) {
+      final alarms = await Alarm.getAlarms();
+      if (alarms.isNotEmpty) {
+        //  WidgetsBinding.instance.addPostFrameCallback((_) {
+        // Application.navigatorKey.currentState?.push(
+        //   MaterialPageRoute(builder: (_) => VideoPage(-1)),
+        // );
+        //  });
+      }
+    } else {}
+    _ringSub = Alarm.ringing.listen((alarmSet) {
+      //   Alarm.stopAll();
+      // เลือกอันแรกหรือวนลูปตามต้องการ
+
+      final ids = alarmSet.alarms.map((a) => a.id).toList();
+      // ถ้าคุณไม่ได้ให้ซ้อนกัน ปกติจะมีอันเดียว:
+      final currentId = ids.first;
+      id = currentId;
+      i++;
+      // if(i==1){
+      //      if (_navCooldown?.isActive ?? false) return;
+      // _navCooldown = Timer(_cooldown, () {i=0;});
+      int _seconds = 1;
+      Timer? timer;
+      Timer.periodic(Duration(seconds: 5), (timer) async {
+        _seconds++;
+        print(_seconds.toString());
+        final exists = (await Alarm.getAlarm(id)) != null;
+        if (!exists) {
+          timer.cancel();
+        }
+        if (_seconds == 4 && exists) {
+          timer.cancel();
+          if (!Navigator.canPop(context)) {
+            Application.navigatorKey.currentState?.push(
+              MaterialPageRoute(builder: (_) => VideoPage(currentId)),
+            );
+          }
+        }
+      });
+
+      //}
+      // Alarm.stop(currentId);
+    });
+  }
+
+  setNoti(time, id) async {
+    final alarmSettings = AlarmSettings(
+      id: id,
+      dateTime: time,
+      assetAudioPath: 'assets/alarm.mp3',
+      loopAudio: true,
+      vibrate: true,
+      allowAlarmOverlap: true,
+      warningNotificationOnKill: Platform.isIOS,
+      androidFullScreenIntent: true,
+      volumeSettings: VolumeSettings.fade(
+        volume: 0.7,
+        fadeDuration: Duration(seconds: 5),
+        volumeEnforced: true,
+      ),
+      notificationSettings: const NotificationSettings(
+        title: 'ป้องกันออฟฟิศซินโดรม',
+        body: 'ถึงเวลาขยับร่างกาย',
+        stopButton: 'หยุดการแจ้งเตือน',
+        icon: 'notification_icon',
+        iconColor: colorPrimary,
+      ),
+    );
+    await Alarm.set(alarmSettings: alarmSettings);
+  }
+
+  StreamSubscription? _ringSub;
+
   late SharedPreferences prefs;
+
   getData() async {
+    //await Alarm.set(alarmSettings: alarmSettings);
     notificationData = await getNotificationData();
     Timer(Duration(seconds: 1), () {
       setState(() {});
@@ -41,15 +129,19 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _startTimer(int time, count) {
-    DateTime selectedTime = DateTime.now().add(
-      Duration(seconds: time),
-    ); // For testing purposes
-    NotificationService().scheduleDailyNotification(selectedTime, count);
+    DateTime selectedTime = DateTime.now().add(Duration(seconds: time - 2));
+    // if (selectedTime.isBefore(DateTime.now())) {
+    //   selectedTime.add(Duration(days: 1));
+    // }
+    // For testing purposes
+    // NotificationService().scheduleDailyNotification(selectedTime, count);
+    setNoti(selectedTime, count);
   }
 
   @override
   void dispose() {
     //_timer?.cancel();
+    _ringSub!.cancel();
     super.dispose();
   }
 
@@ -76,92 +168,158 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(elevation: 0, backgroundColor: colorPrimary),
       backgroundColor: Colors.white,
       bottomNavigationBar: _nextButton(),
-      body: SingleChildScrollView(
-        physics: ScrollPhysics(),
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: MediaQuery.sizeOf(context).width,
-              color: colorPrimary,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 70),
-                  Stack(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(left: 20),
-                        child: Text(
-                          'ป้องกันออฟฟิศ',
-                          style: TextStyle(
-                            //  color: colorPrimaryDark,
-                            fontSize: 35,
-                            fontFamily: fontMitr,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 48, left: 20),
-                        child: Text(
-                          'ซินโดรม',
-                          style: TextStyle(
-                            //  color: colorPrimaryDark,
-                            fontSize: 35,
-                            fontFamily: fontMitr,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                ],
-              ),
-            ),
-            Container(
-              color: colorPrimary,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(46),
-                    topRight: Radius.circular(46),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 20),
-                    Row(
-                      // crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(left: 25),
-                          child: Text(
-                            'ตั้งเวลาการแจ้งเตือน',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: fontMitr,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            physics: ScrollPhysics(),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.sizeOf(context).width,
+                  color: colorPrimary,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 70),
+                      Stack(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 20),
+                            child: Text(
+                              'ป้องกันออฟฟิศ',
+                              style: TextStyle(
+                                //  color: colorPrimaryDark,
+                                fontSize: 35,
+                                fontFamily: fontMitr,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
+                          Container(
+                            margin: EdgeInsets.only(top: 48, left: 20),
+                            child: Text(
+                              'ซินโดรม',
+                              style: TextStyle(
+                                //  color: colorPrimaryDark,
+                                fontSize: 35,
+                                fontFamily: fontMitr,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+                Container(
+                  color: colorPrimary,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(46),
+                        topRight: Radius.circular(46),
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 20),
+                        Row(
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(left: 25),
+                              child: Text(
+                                'ตั้งเวลาการแจ้งเตือน',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: fontMitr,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
+                        SizedBox(height: 10),
+                        notificationData.length < 12 ? addView() : Container(),
+                        listNotificationView(),
                       ],
                     ),
-                    SizedBox(height: 10),
-                    notificationData.length < 12 ? addView() : Container(),
-                    listNotificationView(),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: <Widget>[
+          //     Container(
+          //       decoration: BoxDecoration(
+          //         color: Colors.white,
+          //         borderRadius: BorderRadius.circular(18),
+          //       ),
+          //       width: MediaQuery.sizeOf(context).width * 0.85,
+          //       height: 120,
+          //       alignment: Alignment.center,
+          //       child: Column(
+          //         mainAxisAlignment: MainAxisAlignment.center,
+          //         crossAxisAlignment: CrossAxisAlignment.center,
+          //         children: [
+          //           Text(
+          //             'หยุดการแจ้งเตือน',
+          //             style: TextStyle(
+          //               color: Colors.black,
+          //               fontFamily: fontMitr,
+          //               // fontWeight: FontWeight.w600,
+          //               fontSize: 18,
+          //             ),
+          //           ),
+          //           SizedBox(height: 15),
+          //           ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //               elevation: 0,
+          //               backgroundColor:
+          //                   Colors.white, //background color of button
+          //               side: BorderSide(
+          //                 width: 1,
+          //                 color: Color.fromARGB(255, 203, 202, 202),
+          //               ),
+          //               shape: RoundedRectangleBorder(
+          //                 borderRadius: BorderRadius.circular(10),
+          //               ),
+          //             ),
+          //             onPressed: () async {
+          //               Alarm.stopAll();
+          //             },
+          //             child: Container(
+          //               width: MediaQuery.sizeOf(context).width * 0.6,
+          //               height: 30,
+          //               alignment: Alignment.center,
+          //               child: Text(
+          //                 'ตกลง',
+          //                 style: TextStyle(
+          //                   color: Colors.black,
+          //                   fontFamily: fontMitr,
+          //                   // fontWeight: FontWeight.w600,
+          //                   fontSize: 18,
+          //                 ),
+          //               ),
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ],
+          // ),
+        ],
       ),
     );
   }
@@ -242,10 +400,30 @@ class _HomePageState extends State<HomePage> {
                     i = notificationData.length + 1;
                   }
                 }
-                NotificationService().scheduleDailyNotification(
-                  data.date!,
-                  id[0],
+                // DateTime minus15 = data.date!.subtract(Duration(seconds: 2));
+                // if (minus15.isBefore(DateTime.now())) {
+                //   minus15.add(Duration(days: 1));
+                // }
+
+                final now = tz.TZDateTime.now(tz.local);
+                var scheduled = tz.TZDateTime(
+                  tz.local,
+                  now.year,
+                  now.month,
+                  now.day,
+                  data.date!.hour,
+                  data.date!.minute,
                 );
+                int t1 = scheduled.hour * 60 + scheduled.minute;
+                int t2 = now.hour * 60 + now.minute;
+                t1 < t2;
+
+                if (t1 < t2) {
+                  scheduled = scheduled.add(const Duration(days: 1));
+                  print("scheduled:" + scheduled.day.toString());
+                }
+
+                setNoti(scheduled, id[0]);
                 data.id = id;
               }
 
@@ -297,6 +475,7 @@ class _HomePageState extends State<HomePage> {
   Widget listNotificationView() {
     return notificationData.isNotEmpty
         ? Container(
+            margin: EdgeInsets.only(bottom: 20),
             height: MediaQuery.of(context).size.height * 0.5,
             child: ListView(
               scrollDirection: Axis.vertical,
@@ -325,101 +504,104 @@ class _HomePageState extends State<HomePage> {
         if (await Permission.notification.isDenied && Platform.isAndroid) {
           showAlertDialog(context);
         } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => SettingPage(1, index, dataT)),
-          ).then((onValue) async {
-            notificationData = await getNotificationData();
-            bool isSave = false;
-            if (onValue.isAdd == 1) {
-              data = onValue;
-
-              List<int> id = [];
-              if (data.type == 1) {
-                //1-12
-                data.startAt = 0;
-
-                isSave = true;
-
-                for (int i = 1; i <= data.time!; i++) {
-                  _startTimer(60 * 60 * data.time! * i, i);
-                  id.add(i);
-                }
-
-                data.id = id;
-              } else if (data.type == 2) {
-                //15-26
-                data.startAt = 0;
-                int typeCount = notificationData
-                    .where((e) => e.type == 2)
-                    .toList()
-                    .length;
-                if (typeCount < 1) {
-                  isSave = true;
-
-                  for (int i = 1; i <= data.time!; i++) {
-                    _startTimer(7200 * i, i + 14);
-                    id.add(i + 14);
-                  }
-                } else {
-                  isSave = false;
-                }
-                data.id = id;
-              } else if (data.type == 3) {
-                //101-3000
-                isSave = true;
-                data.startAt = 1;
-                int sum =
-                    (data.clock!.inHours * 60 * 60) +
-                    (data.clock!.inMinutes * 60);
-                List<int> id = [];
-                int num = 100;
-                for (int i = 1; i <= data.time!; i++) {
-                  for (int j = num; j <= 1000; j++) {
-                    var check = notificationData.where((item) {
-                      int typeCount = item.id!
-                          .where((e) => e == (j))
-                          .toList()
-                          .length;
-                      return typeCount > 0;
-                    }).toList();
-                    if (check.isEmpty) {
-                      _startTimer(sum * i, j);
-                      id.add(j);
-                      num = j + 1;
-                      j = 1002;
-                    }
-                  }
-                }
-                data.id = id;
-              } else if (data.type == 4) {
-                //10000
-                isSave = true;
-                data.startAt = 0;
-                List<int> id = [];
-                for (int i = 0; i <= notificationData.length!; i++) {
-                  int typeCount = notificationData
-                      .where((e) => e.id![0] == (i + 10000))
-                      .toList()
-                      .length;
-                  if (typeCount == 0) {
-                    id.add(i + 10000);
-                    i = notificationData.length + 1;
-                  }
-                }
-                NotificationService().scheduleDailyNotification(
-                  data.date!,
-                  id[0],
-                );
-                data.id = id;
-              }
-              if (isSave) {
-                data.isON = true;
-                saveNotificationData(data);
-              }
-            }
-            getData();
+          showAlertDeleteDialog(context, dataT.id![0], index).then((onValue) {
+            setState(() {
+              getData();
+            });
           });
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (_) => SettingPage(1, index, dataT)),
+          // ).then((onValue) async {
+          //   notificationData = await getNotificationData();
+          //   bool isSave = false;
+          //   if (onValue.isAdd == 1) {
+          //     data = onValue;
+
+          //     List<int> id = [];
+          //     if (data.type == 1) {
+          //       //1-12
+          //       data.startAt = 0;
+
+          //       isSave = true;
+
+          //       for (int i = 1; i <= data.time!; i++) {
+          //         _startTimer(60 * 60 * data.time! * i, i);
+          //         id.add(i);
+          //       }
+
+          //       data.id = id;
+          //     } else if (data.type == 2) {
+          //       //15-26
+          //       data.startAt = 0;
+          //       int typeCount = notificationData
+          //           .where((e) => e.type == 2)
+          //           .toList()
+          //           .length;
+          //       if (typeCount < 1) {
+          //         isSave = true;
+
+          //         for (int i = 1; i <= data.time!; i++) {
+          //           _startTimer(7200 * i, i + 14);
+          //           id.add(i + 14);
+          //         }
+          //       } else {
+          //         isSave = false;
+          //       }
+          //       data.id = id;
+          //     } else if (data.type == 3) {
+          //       //101-3000
+          //       isSave = true;
+          //       data.startAt = 1;
+          //       int sum =
+          //           (data.clock!.inHours * 60 * 60) +
+          //           (data.clock!.inMinutes * 60);
+          //       List<int> id = [];
+          //       int num = 100;
+          //       for (int i = 1; i <= data.time!; i++) {
+          //         for (int j = num; j <= 1000; j++) {
+          //           var check = notificationData.where((item) {
+          //             int typeCount = item.id!
+          //                 .where((e) => e == (j))
+          //                 .toList()
+          //                 .length;
+          //             return typeCount > 0;
+          //           }).toList();
+          //           if (check.isEmpty) {
+          //             _startTimer(sum * i, j);
+          //             id.add(j);
+          //             num = j + 1;
+          //             j = 1002;
+          //           }
+          //         }
+          //       }
+          //       data.id = id;
+          //     } else if (data.type == 4) {
+          //       //10000
+          //       isSave = true;
+          //       data.startAt = 0;
+          //       List<int> id = [];
+          //       for (int i = 0; i <= notificationData.length!; i++) {
+          //         int typeCount = notificationData
+          //             .where((e) => e.id![0] == (i + 10000))
+          //             .toList()
+          //             .length;
+          //         if (typeCount == 0) {
+          //           id.add(i + 10000);
+          //           i = notificationData.length + 1;
+          //         }
+          //       }
+          //       DateTime minus15 = data.date!.subtract(Duration(seconds: 15));
+          //       setNoti(minus15, id[0]);
+          //       data.id = id;
+          //     }
+          //     if (isSave) {
+          //       data.isON = true;
+          //       saveNotificationData(data);
+          //     }
+          //   }
+          //   getData();
+          // });
         }
       },
       child: Container(
@@ -449,8 +631,9 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+            // Icon(Icons.delete, size: 30),
             Padding(
-              padding: EdgeInsets.only(right: 10),
+              padding: EdgeInsets.zero,
               child: Transform.scale(
                 scale:
                     0.8, // ปรับขนาด (1.0 = ปกติ, มากกว่าคือใหญ่ขึ้น, น้อยกว่าคือเล็กลง)
@@ -485,13 +668,16 @@ class _HomePageState extends State<HomePage> {
                           }
                         } else if (dataT.type == 4) {
                           //10000
-                          NotificationService().scheduleDailyNotification(
-                            dataT.date!,
-                            dataT.id![0],
-                          );
+                          // DateTime minus15 = dataT.date!.subtract(
+                          //   Duration(seconds: 2),
+                          // );
+                          if (dataT.date!.isBefore(DateTime.now())) {
+                            dataT.date!.add(Duration(days: 1));
+                          }
+                          setNoti(dataT.date!, dataT.id![0]);
                         }
                       } else {
-                        NotificationService().cancelID(dataT.id!);
+                        cancelID(dataT.id![0]!);
                       }
                       editNotificationData(dataT, index);
                       getData();
@@ -500,6 +686,8 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+
+            //SizedBox(width: 5),
           ],
         ),
       ),
@@ -521,11 +709,23 @@ class _HomePageState extends State<HomePage> {
             borderRadius: BorderRadius.circular(30),
           ),
         ),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => VideoPage()),
-          );
+        onPressed: () async {
+          if (await Alarm.isRinging()) {
+            Alarm.ringing.listen((alarmSet) {
+              final ids = alarmSet.alarms.map((a) => a.id).toList();
+              // ถ้าคุณไม่ได้ให้ซ้อนกัน ปกติจะมีอันเดียว:
+              final currentId = ids.first;
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => VideoPage(currentId)),
+              );
+            });
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => VideoPage(-1)),
+            );
+          }
         },
         child: Container(
           height: 50,
@@ -620,6 +820,109 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> showAlertDeleteDialog(BuildContext context, id, index) async {
+    await showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        backgroundColor: Colors.white,
+        title: Text(
+          "",
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w500,
+            fontFamily: fontMitr,
+          ),
+        ),
+        content: SizedBox(
+          child: Text(
+            "ต้องการลบการแจ้งเตือนหรือไม่?",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+              fontFamily: fontMitr,
+              fontSize: 18,
+            ),
+          ),
+        ),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      backgroundColor: colorAccent, //background color of button
+                      side: BorderSide(
+                        width: 1,
+                        color: Color.fromARGB(255, 203, 202, 202),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    onPressed: () async {
+                      // await openAppSettings();
+                      final alarms = await Alarm.getAlarms();
+                      final ids = alarms.map((a) => id!).toList();
+                      if (ids.isNotEmpty) {
+                        Alarm.stop(id);
+                      }
+                      deleteNotificationData(index);
+
+                      Navigator.pop(context);
+                      setState(() {});
+                    },
+                    child: Container(
+                      width: 100,
+                      height: 30,
+                      alignment: Alignment.center,
+                      child: Text(
+                        'ตกลง',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: fontMitr,
+                          // fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 15),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      width: 50,
+                      height: 30,
+                      alignment: Alignment.center,
+                      child: Text(
+                        'ยกเลิก',
+                        style: TextStyle(
+                          color: colorAccent,
+                          fontFamily: fontMitr,
+                          // fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 15),
+                ],
               ),
             ],
           ),
