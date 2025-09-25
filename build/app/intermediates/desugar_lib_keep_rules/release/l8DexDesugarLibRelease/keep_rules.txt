@@ -4,6 +4,8 @@
 -keep enum j$.time.DayOfWeek {
 }
 -keep class j$.time.Duration {
+  public int getNano();
+  public long getSeconds();
   public static j$.time.Duration ofMillis(long);
   public long toMillis();
 }
@@ -72,10 +74,12 @@
 -keep interface j$.util.List {
   public void replaceAll(java.util.function.UnaryOperator);
   public void sort(java.util.Comparator);
+  public j$.util.Spliterator spliterator();
 }
 -keep class j$.util.List$-CC {
   public static void $default$replaceAll(java.util.List,java.util.function.UnaryOperator);
   public static void $default$sort(java.util.List,java.util.Comparator);
+  public static j$.util.Spliterator $default$spliterator(java.util.List);
 }
 -keep interface j$.util.Map {
   public java.lang.Object compute(java.lang.Object,java.util.function.BiFunction);
@@ -95,6 +99,7 @@
   public static java.lang.Object $default$computeIfAbsent(java.util.Map,java.lang.Object,java.util.function.Function);
   public static java.lang.Object $default$computeIfPresent(java.util.Map,java.lang.Object,java.util.function.BiFunction);
   public static void $default$forEach(java.util.Map,java.util.function.BiConsumer);
+  public static java.lang.Object $default$getOrDefault(java.util.Map,java.lang.Object,java.lang.Object);
   public static java.lang.Object $default$merge(java.util.Map,java.lang.Object,java.lang.Object,java.util.function.BiFunction);
   public static java.lang.Object $default$putIfAbsent(java.util.Map,java.lang.Object,java.lang.Object);
   public static boolean $default$remove(java.util.Map,java.lang.Object,java.lang.Object);
@@ -125,10 +130,14 @@
 }
 -keep class j$.util.concurrent.ConcurrentHashMap {
   public <init>();
+  public <init>(int);
+  public void clear();
   public java.lang.Object get(java.lang.Object);
+  public boolean isEmpty();
   public java.lang.Object put(java.lang.Object,java.lang.Object);
-  public void putAll(java.util.Map);
   public java.lang.Object putIfAbsent(java.lang.Object,java.lang.Object);
+  public java.lang.Object remove(java.lang.Object);
+  public java.util.Collection values();
 }
 -keep class j$.util.concurrent.ThreadLocalRandom {
   public static j$.util.concurrent.ThreadLocalRandom current();
