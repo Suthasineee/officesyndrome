@@ -5,6 +5,28 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 
 const String dataNotification = "dataNotification";
+const String name = "name";
+const String img = "img";
+
+saveImg(String data) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString(img, data);
+}
+
+Future<String> getImg() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString(img) ?? "";
+}
+
+saveName(String data) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString(name, data);
+}
+
+Future<String> getName() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString(name) ?? "";
+}
 
 editNotificationData(NotificationData data, index) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();

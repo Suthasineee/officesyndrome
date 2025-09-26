@@ -1,5 +1,6 @@
 import 'package:alarm/alarm.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:office_syndrome/guild/guild_view.dart';
@@ -15,6 +16,15 @@ import 'helper/application.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      apiKey: apiKey,
+      appId: appId,
+      messagingSenderId: messagingSenderId,
+      projectId: projectId,
+      storageBucket: storageBucket,
+    ),
+  );
   await Alarm.init();
   await EasyLocalization.ensureInitialized();
   final GlobalKey<NavigatorState> navigatorKey =
