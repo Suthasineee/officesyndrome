@@ -1,3 +1,4 @@
+import 'package:alarm/alarm.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,8 @@ class _SettingPageState extends State<SettingPage> {
               ? IconButton(
                   icon: const Icon(Icons.delete),
                   onPressed: () {
-                    NotificationService().cancelID(widget.data.id!);
+                    //  NotificationService().cancelID(widget.data.id!);
+                    Alarm.stop(widget.data.id!);
                     deleteNotificationData(widget.index);
                     getNotificationData();
                     data.isAdd = 3;
@@ -181,13 +183,14 @@ class _SettingPageState extends State<SettingPage> {
         _value++;
       }
       data.time = _value;
-      data.text =
-          "แจ้งเตือน :  " +
-          "${selectedTime.inHours.toString().padLeft(2, '0')}:"
-              "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
-              " นาที  " +
-          data.time.toString() +
-          " ครั้ง";
+      data.text = 'ทุก ' + _value.toString() + ' ชั่วโมง';
+      // data.text =
+      //     "แจ้งเตือน :  " +
+      //     "${selectedTime.inHours.toString().padLeft(2, '0')}:"
+      //         "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
+      //         " นาที  " +
+      //     data.time.toString() +
+      //     " ครั้ง";
     });
   }
 
@@ -195,13 +198,14 @@ class _SettingPageState extends State<SettingPage> {
     setState(() {
       if (_value > 1) _value--; // กันไม่ให้ติดลบ.
       data.time = _value;
-      data.text =
-          "แจ้งเตือน :  " +
-          "${selectedTime.inHours.toString().padLeft(2, '0')}:"
-              "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
-              " นาที  " +
-          data.time.toString() +
-          " ครั้ง";
+      data.text = 'ทุก ' + _value.toString() + ' ชั่วโมง';
+      // data.text =
+      //     "แจ้งเตือน :  " +
+      //     "${selectedTime.inHours.toString().padLeft(2, '0')}:"
+      //         "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
+      //         " นาที  " +
+      //     data.time.toString() +
+      //     " ครั้ง";
     });
   }
 
@@ -213,9 +217,9 @@ class _SettingPageState extends State<SettingPage> {
           icon: Icon(Icons.remove_circle_outline, size: 30),
           onPressed: _decrement,
         ),
-        SizedBox(width: 10),
+        SizedBox(width: 2),
         Text('$_value', style: TextStyle(fontSize: 18)),
-        SizedBox(width: 10),
+        SizedBox(width: 2),
         IconButton(
           icon: Icon(Icons.add_circle_outline, size: 30),
           onPressed: _increment,
@@ -375,6 +379,7 @@ class _SettingPageState extends State<SettingPage> {
                             fontSize: 18,
                           ),
                         ),
+
                         _CountNumber(),
                         Text(
                           'times'.tr(),
@@ -407,9 +412,9 @@ class _SettingPageState extends State<SettingPage> {
           onSelectTwoTimeButton = false;
           onSelectOneTimeButton = true;
           onSelectTimeButton = false;
-          data.text = 'every_1_hour'.tr();
+          data.text = 'ทุก 1 ชั่วโมง';
           data.type = 1;
-          data.time = 12;
+          data.time = _value;
           data.clock = Duration(seconds: 3600);
           data.date = DateTime.now();
         });
@@ -420,14 +425,14 @@ class _SettingPageState extends State<SettingPage> {
           children: [
             Container(
               height: 50,
-              width: MediaQuery.of(context).size.width * 0.6,
+              width: MediaQuery.of(context).size.width * 0.7,
               margin: EdgeInsets.only(top: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     child: Text(
-                      'every_1_hour'.tr(),
+                      'ทุก 1 ชั่วโมง',
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: fontMitr,
@@ -457,6 +462,14 @@ class _SettingPageState extends State<SettingPage> {
             setState(() {
               isWarningOn = !isWarningOn;
               isClockWarningOn = false;
+              onSelectTwoTimeButton = false;
+              onSelectOneTimeButton = true;
+              onSelectTimeButton = false;
+              data.text = 'ทุก ' + _value.toString() + ' ชั่วโมง';
+              data.type = 1;
+              data.time = _value;
+              data.clock = Duration(seconds: 3600);
+              data.date = DateTime.now();
             });
           },
           child: Container(
@@ -499,8 +512,8 @@ class _SettingPageState extends State<SettingPage> {
             ? Column(
                 children: [
                   _oneHourButton(),
-                  _twoHourButton(),
-                  _selectTimeButton(),
+                  // _twoHourButton(),
+                  // _selectTimeButton(),
                 ],
               )
             : Container(),
@@ -586,8 +599,7 @@ class _SettingPageState extends State<SettingPage> {
           backgroundColor:
               isClockWarningOn ||
                   ((selectedTime.inHours > 0 || selectedTime.inMinutes > 0)) ||
-                  onSelectOneTimeButton ||
-                  onSelectTwoTimeButton
+                  isWarningOn
               ? colorAccent
               : Colors.black12, //background color of button
           side: BorderSide(width: 1, color: Color.fromARGB(255, 203, 202, 202)),
@@ -595,9 +607,15 @@ class _SettingPageState extends State<SettingPage> {
             borderRadius: BorderRadius.circular(30),
           ),
         ),
-        onPressed: () {
+        onPressed: () async {
           if (widget.type == 1) {
-            NotificationService().cancelID(widget.data.id!);
+            // NotificationService().cancelID(widget.data.id!);
+
+            final alarms = await Alarm.getAlarms();
+            final ids = alarms.map((a) => widget.data.id!).toList();
+            if (ids.isNotEmpty) {
+              Alarm.stop(widget.data.id![0]);
+            }
             deleteNotificationData(widget.index);
           }
           Navigator.pop(context, data);
