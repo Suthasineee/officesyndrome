@@ -29,7 +29,7 @@ class _VideoPageState extends State<VideoPage> {
         setState(() {}); 
         if(widget.id!=-1){
           // refresh หลังโหลดเสร็จ
-        _controller.play();
+       // _controller.play();
          } // เริ่มเล่นอัตโนมัติ
       });
 
@@ -85,7 +85,7 @@ class _VideoPageState extends State<VideoPage> {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.95,
+                 // height: MediaQuery.of(context).size.height * 0.95,
                   child: AspectRatio(
                     aspectRatio: _controller.value.aspectRatio,
                     child: VideoPlayer(_controller),

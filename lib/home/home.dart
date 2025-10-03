@@ -21,19 +21,90 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   bool isWarning = false;
   NotificationData data = NotificationData();
   String name = "";
   List<NotificationData> notificationData = [];
   int id = 0;
+  bool isAppInForeground = true;
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     getData();
     initNoti();
     // Alarm.stopAll();
     super.initState();
   }
+
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   if (state == AppLifecycleState.resumed) {
+  //     print("App is in FOREGROUND");
+  //     isAppInForeground = true;
+  //   } else {
+  //     isAppInForeground = false;
+  //     print("App is in BACKGROUND or INACTIVE");
+  //   }
+  // }
+
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   //  _state = state;
+  //   switch (state) {
+  //     case AppLifecycleState.resumed:
+  //       print('✅ หน้าจอกลับมาเปิดใช้งาน');
+  //       Alarm.ringing.listen((alarmSet) {
+  //         final ids = alarmSet.alarms.map((a) => a.id).toList();
+  //         // ถ้าคุณไม่ได้ให้ซ้อนกัน ปกติจะมีอันเดียว:
+  //         final currentId = ids.first;
+  //         id = currentId;
+  //         if (!Navigator.canPop(context)) {
+  //           Application.navigatorKey.currentState?.push(
+  //             MaterialPageRoute(builder: (_) => VideoPage(currentId)),
+  //           );
+  //         }
+  //       });
+
+  //       isAppInForeground = true;
+  //       break;
+  //     case AppLifecycleState.inactive:
+  //     case AppLifecycleState.paused:
+  //       isAppInForeground = false;
+  //       Alarm.ringing.listen((alarmSet) {
+  //         final ids = alarmSet.alarms.map((a) => a.id).toList();
+  //         // ถ้าคุณไม่ได้ให้ซ้อนกัน ปกติจะมีอันเดียว:
+  //         final currentId = ids.first;
+  //         id = currentId;
+  //         // if (!Navigator.canPop(context)) {
+  //         //   Application.navigatorKey.currentState?.push(
+  //         //     MaterialPageRoute(builder: (_) => VideoPage(currentId)),
+  //         //   );
+  //         // }
+  //       });
+  //       break;
+  //     case AppLifecycleState.detached:
+  //       print('🔌 แอปถูกถอดออกจาก UI tree');
+  //       isAppInForeground = false;
+  //       Alarm.ringing.listen((alarmSet) {
+  //         final ids = alarmSet.alarms.map((a) => a.id).toList();
+  //         // ถ้าคุณไม่ได้ให้ซ้อนกัน ปกติจะมีอันเดียว:
+  //         final currentId = ids.first;
+  //         id = currentId;
+  //       });
+  //       break;
+  //     case AppLifecycleState.hidden:
+  //       // TODO: Handle this case.
+  //       isAppInForeground = false;
+  //       Alarm.ringing.listen((alarmSet) {
+  //         final ids = alarmSet.alarms.map((a) => a.id).toList();
+  //         // ถ้าคุณไม่ได้ให้ซ้อนกัน ปกติจะมีอันเดียว:
+  //         final currentId = ids.first;
+  //         id = currentId;
+  //       });
+  //       throw UnimplementedError();
+  //   }
+  // }
 
   cancelID(id) {
     Alarm.stop(id);
@@ -54,11 +125,7 @@ class _HomePageState extends State<HomePage> {
       }
     } else {}
     _ringSub = Alarm.ringing.listen((alarmSet) {
-      //   Alarm.stopAll();
-      // เลือกอันแรกหรือวนลูปตามต้องการ
-
       final ids = alarmSet.alarms.map((a) => a.id).toList();
-      // ถ้าคุณไม่ได้ให้ซ้อนกัน ปกติจะมีอันเดียว:
       final currentId = ids.first;
       id = currentId;
       i++;
@@ -67,22 +134,21 @@ class _HomePageState extends State<HomePage> {
       // _navCooldown = Timer(_cooldown, () {i=0;});
       int _seconds = 1;
       Timer? timer;
-      Timer.periodic(Duration(seconds: 5), (timer) async {
-        _seconds++;
-        print(_seconds.toString());
-        final exists = (await Alarm.getAlarm(id)) != null;
-        if (!exists) {
-          timer.cancel();
-        }
-        if (_seconds == 4 && exists) {
-          timer.cancel();
-          if (!Navigator.canPop(context)) {
-            Application.navigatorKey.currentState?.push(
-              MaterialPageRoute(builder: (_) => VideoPage(currentId)),
-            );
-          }
-        }
-      });
+      //  Timer.periodic(Duration(seconds: 5), (timer) async {
+      _seconds++;
+      //   final exists = (await Alarm.getAlarm(id)) != null;
+      // if (!exists) {
+      //  timer.cancel();
+      // }
+      // if (_seconds == 4 && exists) {
+      //  timer.cancel();
+      if (!Navigator.canPop(context)) {
+        Application.navigatorKey.currentState?.push(
+          MaterialPageRoute(builder: (_) => VideoPage(currentId)),
+        );
+      }
+      //  }
+      //  });
 
       //}
       // Alarm.stop(currentId);
@@ -98,7 +164,7 @@ class _HomePageState extends State<HomePage> {
       vibrate: true,
       allowAlarmOverlap: true,
       warningNotificationOnKill: Platform.isIOS,
-      androidFullScreenIntent: true,
+      androidFullScreenIntent: false,
       volumeSettings: VolumeSettings.fade(
         volume: 0.7,
         fadeDuration: Duration(seconds: 5),
@@ -140,6 +206,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     //_timer?.cancel();
     _ringSub!.cancel();
     super.dispose();
