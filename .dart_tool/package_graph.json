@@ -540,7 +540,7 @@
     },
     {
       "name": "shared_preferences_android",
-      "version": "2.4.12",
+      "version": "2.4.13",
       "dependencies": [
         "flutter",
         "shared_preferences_platform_interface"
@@ -609,7 +609,7 @@
     },
     {
       "name": "video_player_avfoundation",
-      "version": "2.8.4",
+      "version": "2.8.3",
       "dependencies": [
         "flutter",
         "video_player_platform_interface"
@@ -617,7 +617,7 @@
     },
     {
       "name": "video_player_android",
-      "version": "2.8.13",
+      "version": "2.8.14",
       "dependencies": [
         "flutter",
         "video_player_platform_interface"

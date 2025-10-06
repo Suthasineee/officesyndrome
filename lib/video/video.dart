@@ -26,11 +26,11 @@ class _VideoPageState extends State<VideoPage> {
     super.initState();
     _controller = VideoPlayerController.asset("assets/videos/simple.mp4")
       ..initialize().then((_) {
-        setState(() {}); 
-        if(widget.id!=-1){
+        setState(() {});
+        if (widget.id != -1) {
           // refresh หลังโหลดเสร็จ
-       // _controller.play();
-         } // เริ่มเล่นอัตโนมัติ
+          // _controller.play();
+        } // เริ่มเล่นอัตโนมัติ
       });
 
     Alarm.stop(widget.id);
@@ -52,6 +52,7 @@ class _VideoPageState extends State<VideoPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Size videoSize = _controller.value.size;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -67,6 +68,7 @@ class _VideoPageState extends State<VideoPage> {
         ),
       ),
       backgroundColor: Colors.white,
+
       //bottomNavigationBar: _nextButton(),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {
@@ -82,13 +84,19 @@ class _VideoPageState extends State<VideoPage> {
       // ),
       body: _controller.value.isInitialized
           ? Stack(
+              fit: StackFit.expand,
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                 // height: MediaQuery.of(context).size.height * 0.95,
-                  child: AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: VideoPlayer(_controller),
+                ClipRect(
+                  // กันล้นขอบจอ
+                  child: FittedBox(
+                    fit: BoxFit.cover, // <— สำคัญ: ครอปให้เต็มจอ
+                    alignment: Alignment
+                        .topCenter, // เปลี่ยนเป็น .topCenter / .bottomCenter ได้
+                    child: SizedBox(
+                      width: videoSize.width,
+                      height: videoSize.height,
+                      child: VideoPlayer(_controller),
+                    ),
                   ),
                 ),
 
