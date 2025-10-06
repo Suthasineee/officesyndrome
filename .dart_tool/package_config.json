@@ -579,13 +579,13 @@
     },
     {
       "name": "video_player_android",
-      "rootUri": "file:///Users/suthasineesangchan/.pub-cache/hosted/pub.dev/video_player_android-2.8.13",
+      "rootUri": "file:///Users/suthasineesangchan/.pub-cache/hosted/pub.dev/video_player_android-2.8.14",
       "packageUri": "lib/",
       "languageVersion": "3.7"
     },
     {
       "name": "video_player_avfoundation",
-      "rootUri": "file:///Users/suthasineesangchan/.pub-cache/hosted/pub.dev/video_player_avfoundation-2.8.4",
+      "rootUri": "file:///Users/suthasineesangchan/.pub-cache/hosted/pub.dev/video_player_avfoundation-2.8.3",
       "packageUri": "lib/",
       "languageVersion": "3.6"
     },
