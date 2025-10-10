@@ -80,7 +80,7 @@ class _ProfilePageState extends State<ProfilePage> {
           );
 
     return Scaffold(
-      appBar: AppBar(title: Text("Profile"), backgroundColor: colorPrimary),
+      appBar: AppBar(title: Text("โปรไฟล์"), backgroundColor: colorPrimary),
       backgroundColor: colorPrimary,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,7 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 imgWidget,
                 ElevatedButton(
                   onPressed: _pickFromGallery,
-                  child: Text("Upload"),
+                  child: Text("อัปโหลด"),
                 ),
               ],
             ),
@@ -124,8 +124,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: TextField(
                         controller: controller,
                         decoration: InputDecoration(
-                          labelText: name == "" ? 'Your name' : name,
-                          hintText: 'Enter your name',
+                          labelText: name == "" ? 'ชื่อ' : name,
+                          hintText: 'ชื่อ',
                           prefixIcon: const Icon(Icons.person),
                           suffixIcon: controller.text.isEmpty
                               ? null

@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:office_syndrome/firebase_options.dart';
 import 'package:office_syndrome/guild/guild_view.dart';
 import 'package:office_syndrome/helper/colors.dart';
 import 'package:office_syndrome/helper/notificationService.dart';
@@ -16,15 +17,7 @@ import 'helper/application.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: FirebaseOptions(
-      apiKey: apiKey,
-      appId: appId,
-      messagingSenderId: messagingSenderId,
-      projectId: projectId,
-      storageBucket: storageBucket,
-    ),
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Alarm.init();
   await EasyLocalization.ensureInitialized();
   final GlobalKey<NavigatorState> navigatorKey =
@@ -72,10 +65,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '',
       navigatorKey: Application.navigatorKey,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
       debugShowCheckedModeBanner: false,
-      locale: context.locale,
       theme: ThemeData(
         // This is the theme of your application.
         //

@@ -1,15 +1,16 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:office_syndrome/BmiPage.dart';
 import 'package:office_syndrome/helper/app_controller.dart';
 import 'package:office_syndrome/helper/application.dart';
 import 'package:office_syndrome/helper/colors.dart';
 import 'package:office_syndrome/helper/notificationService.dart';
 import 'package:office_syndrome/helper/preferences_helper.dart';
+import 'package:office_syndrome/learn.dart';
+import 'package:office_syndrome/map.dart';
 import 'package:office_syndrome/model/notificationData.dart';
 import 'package:office_syndrome/profile_page.dart';
 import 'package:office_syndrome/setting/setting.dart';
@@ -35,80 +36,20 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
+    getMenu();
     getData();
     initNoti();
     // Alarm.stopAll();
     super.initState();
   }
-
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) {
-  //   if (state == AppLifecycleState.resumed) {
-  //     print("App is in FOREGROUND");
-  //     isAppInForeground = true;
-  //   } else {
-  //     isAppInForeground = false;
-  //     print("App is in BACKGROUND or INACTIVE");
-  //   }
-  // }
-
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) {
-  //   //  _state = state;
-  //   switch (state) {
-  //     case AppLifecycleState.resumed:
-  //       print('✅ หน้าจอกลับมาเปิดใช้งาน');
-  //       Alarm.ringing.listen((alarmSet) {
-  //         final ids = alarmSet.alarms.map((a) => a.id).toList();
-  //         // ถ้าคุณไม่ได้ให้ซ้อนกัน ปกติจะมีอันเดียว:
-  //         final currentId = ids.first;
-  //         id = currentId;
-  //         if (!Navigator.canPop(context)) {
-  //           Application.navigatorKey.currentState?.push(
-  //             MaterialPageRoute(builder: (_) => VideoPage(currentId)),
-  //           );
-  //         }
-  //       });
-
-  //       isAppInForeground = true;
-  //       break;
-  //     case AppLifecycleState.inactive:
-  //     case AppLifecycleState.paused:
-  //       isAppInForeground = false;
-  //       Alarm.ringing.listen((alarmSet) {
-  //         final ids = alarmSet.alarms.map((a) => a.id).toList();
-  //         // ถ้าคุณไม่ได้ให้ซ้อนกัน ปกติจะมีอันเดียว:
-  //         final currentId = ids.first;
-  //         id = currentId;
-  //         // if (!Navigator.canPop(context)) {
-  //         //   Application.navigatorKey.currentState?.push(
-  //         //     MaterialPageRoute(builder: (_) => VideoPage(currentId)),
-  //         //   );
-  //         // }
-  //       });
-  //       break;
-  //     case AppLifecycleState.detached:
-  //       print('🔌 แอปถูกถอดออกจาก UI tree');
-  //       isAppInForeground = false;
-  //       Alarm.ringing.listen((alarmSet) {
-  //         final ids = alarmSet.alarms.map((a) => a.id).toList();
-  //         // ถ้าคุณไม่ได้ให้ซ้อนกัน ปกติจะมีอันเดียว:
-  //         final currentId = ids.first;
-  //         id = currentId;
-  //       });
-  //       break;
-  //     case AppLifecycleState.hidden:
-  //       // TODO: Handle this case.
-  //       isAppInForeground = false;
-  //       Alarm.ringing.listen((alarmSet) {
-  //         final ids = alarmSet.alarms.map((a) => a.id).toList();
-  //         // ถ้าคุณไม่ได้ให้ซ้อนกัน ปกติจะมีอันเดียว:
-  //         final currentId = ids.first;
-  //         id = currentId;
-  //       });
-  //       throw UnimplementedError();
-  //   }
-  // }
+  bool isOpen = false;
+  getMenu() async {
+    await FirebaseFirestore.instance.collection("menu").get().then((value) {
+      setState(() {
+        isOpen = value.docs.first.get("one");
+      });
+    });
+  }
 
   cancelID(id) {
     Alarm.stop(id);
@@ -232,136 +173,301 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       return true;
     }
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: colorPrimary,
-        leading: IconButton(
-          icon: Icon(Icons.settings),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => SettingView()),
-            );
-          },
-        ),
-        actions: [
-          Center(
-            child: DropdownButton<Locale>(
-              value: context.locale,
-              onChanged: (Locale? locale) {
-                if (locale != null) {
-                  context.setLocale(locale); // change language
-                }
-              },
-              items: EasyLocalization.of(context)!.supportedLocales.map((
-                locale,
-              ) {
-                String languageText = locale.languageCode == 'en'
-                    ? 'English'
-                    : 'ไทย';
-                return DropdownMenuItem(
-                  value: locale,
-                  child: Text(languageText),
-                );
-              }).toList(),
-            ),
+  Widget Profileiew() {
+    return InkWell(
+      onTap: () async {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => ProfilePage()),
+        );
+      },
+      child: Container(
+        height: 50,
+        margin: EdgeInsets.only(left: 15, right: 15, top: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            color: Colors.black26, // สีขอบ
+            width: 1.0, // ความหนาของเส้น
           ),
-        ],
-      ),
-      backgroundColor: Colors.white,
-      bottomNavigationBar: _nextButton(),
-      body: SingleChildScrollView(
-        physics: ScrollPhysics(),
-        child: Column(
-          children: <Widget>[
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
             Container(
-              width: MediaQuery.sizeOf(context).width,
-              color: colorPrimary,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 70),
-                  Stack(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(left: 20),
-                        child: Text(
-                          'ป้องกันออฟฟิศ',
-                          style: TextStyle(
-                            //  color: colorPrimaryDark,
-                            fontSize: 35,
-                            fontFamily: fontMitr,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 48, left: 20),
-                        child: Text(
-                          'ซินโดรม',
-                          style: TextStyle(
-                            //  color: colorPrimaryDark,
-                            fontSize: 35,
-                            fontFamily: fontMitr,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                ],
-              ),
+              margin: EdgeInsets.only(right: 2),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+              child: Icon(Icons.person, color: Colors.black),
             ),
-            Container(
-              color: colorPrimary,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(46),
-                    topRight: Radius.circular(46),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 20),
-                    Row(
-                      // crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(left: 25),
-                          child: Text(
-                            'ตั้งเวลาการแจ้งเตือน',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: fontMitr,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Profileiew(),
-                    BmiView(),
-                    notificationData.length < 12 ? addView() : Container(),
-                    listNotificationView(),
-                  ],
-                ),
+            Text(
+              'โปรไฟล์',
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: fontMitr,
+                fontSize: 18,
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget Learn() {
+    return InkWell(
+      onTap: () async {
+        Navigator.push(context, MaterialPageRoute(builder: (_) => LearnPage()));
+      },
+      child: Container(
+        height: 50,
+        margin: EdgeInsets.only(left: 15, right: 15, top: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            color: Colors.black26, // สีขอบ
+            width: 1.0, // ความหนาของเส้น
+          ),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              margin: EdgeInsets.only(right: 2),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+              child: Icon(Icons.accessibility, color: Colors.black),
+            ),
+            Text(
+              'ท่ายืดออกกำลังกาย',
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: fontMitr,
+                fontSize: 18,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget Learn2() {
+    return InkWell(
+      onTap: () async {
+        Navigator.push(context, MaterialPageRoute(builder: (_) => MapPage()));
+      },
+      child: Container(
+        height: 50,
+        margin: EdgeInsets.only(left: 15, right: 15, top: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            color: Colors.black26, // สีขอบ
+            width: 1.0, // ความหนาของเส้น
+          ),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              margin: EdgeInsets.only(right: 2),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+              child: Icon(Icons.health_and_safety, color: Colors.black),
+            ),
+            Text(
+              'รักษาออฟฟิศซินโดรม',
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: fontMitr,
+                fontSize: 18,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+    appBar: AppBar(
+        elevation: 0,
+        backgroundColor: colorPrimary,
+        leading: isOpen
+            ? IconButton(
+                icon: Icon(Icons.settings),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => SettingView()),
+                  );
+                },
+              )
+            : Container(),
+        actions: [
+        ],
+      ),
+     
+      backgroundColor: Colors.white,
+      bottomNavigationBar: _nextButton(),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            physics: ScrollPhysics(),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.sizeOf(context).width,
+                  color: colorPrimary,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 70),
+                      Stack(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 20),
+                            child: Text(
+                              'ป้องกันออฟฟิศ',
+                              style: TextStyle(
+                                //  color: colorPrimaryDark,
+                                fontSize: 35,
+                                fontFamily: fontMitr,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 48, left: 20),
+                            child: Text(
+                              'ซินโดรม',
+                              style: TextStyle(
+                                //  color: colorPrimaryDark,
+                                fontSize: 35,
+                                fontFamily: fontMitr,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+                Container(
+                  color: colorPrimary,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(46),
+                        topRight: Radius.circular(46),
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 20),
+                        Row(
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(left: 25),
+                              child: Text(
+                                'ตั้งเวลาการแจ้งเตือน',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: fontMitr,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                         isOpen
+                        ? Column(children: [Profileiew(), Learn(), Learn2()])
+                        : Container(),
+                        notificationData.length < 12 ? addView() : Container(),
+                        listNotificationView(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: <Widget>[
+          //     Container(
+          //       decoration: BoxDecoration(
+          //         color: Colors.white,
+          //         borderRadius: BorderRadius.circular(18),
+          //       ),
+          //       width: MediaQuery.sizeOf(context).width * 0.85,
+          //       height: 120,
+          //       alignment: Alignment.center,
+          //       child: Column(
+          //         mainAxisAlignment: MainAxisAlignment.center,
+          //         crossAxisAlignment: CrossAxisAlignment.center,
+          //         children: [
+          //           Text(
+          //             'หยุดการแจ้งเตือน',
+          //             style: TextStyle(
+          //               color: Colors.black,
+          //               fontFamily: fontMitr,
+          //               // fontWeight: FontWeight.w600,
+          //               fontSize: 18,
+          //             ),
+          //           ),
+          //           SizedBox(height: 15),
+          //           ElevatedButton(
+          //             style: ElevatedButton.styleFrom(
+          //               elevation: 0,
+          //               backgroundColor:
+          //                   Colors.white, //background color of button
+          //               side: BorderSide(
+          //                 width: 1,
+          //                 color: Color.fromARGB(255, 203, 202, 202),
+          //               ),
+          //               shape: RoundedRectangleBorder(
+          //                 borderRadius: BorderRadius.circular(10),
+          //               ),
+          //             ),
+          //             onPressed: () async {
+          //               Alarm.stopAll();
+          //             },
+          //             child: Container(
+          //               width: MediaQuery.sizeOf(context).width * 0.6,
+          //               height: 30,
+          //               alignment: Alignment.center,
+          //               child: Text(
+          //                 'ตกลง',
+          //                 style: TextStyle(
+          //                   color: Colors.black,
+          //                   fontFamily: fontMitr,
+          //                   // fontWeight: FontWeight.w600,
+          //                   fontSize: 18,
+          //                 ),
+          //               ),
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ],
+          // ),
+        ],
       ),
     );
   }
@@ -501,86 +607,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               child: Icon(Icons.add, color: Colors.black),
             ),
             Text(
-              'addtime'.tr(),
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: fontMitr,
-                fontSize: 18,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget Profileiew() {
-    return InkWell(
-      onTap: () async {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => ProfilePage()),
-        );
-      },
-      child: Container(
-        height: 50,
-        margin: EdgeInsets.only(left: 15, right: 15, top: 10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-            color: Colors.black26, // สีขอบ
-            width: 1.0, // ความหนาของเส้น
-          ),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              margin: EdgeInsets.only(right: 2),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-              child: Icon(Icons.person, color: Colors.black),
-            ),
-            Text(
-              'Profile',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: fontMitr,
-                fontSize: 18,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget BmiView() {
-    return InkWell(
-      onTap: () async {
-        Navigator.push(context, MaterialPageRoute(builder: (_) => BmiPage()));
-      },
-      child: Container(
-        height: 50,
-        margin: EdgeInsets.only(left: 15, right: 15, top: 10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-            color: Colors.black26, // สีขอบ
-            width: 1.0, // ความหนาของเส้น
-          ),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              margin: EdgeInsets.only(right: 2),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-              child: Icon(Icons.monitor_weight, color: Colors.black),
-            ),
-            Text(
-              'BMI',
+              'เพิ่มเวลา',
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: fontMitr,
@@ -852,7 +879,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           height: 50,
           alignment: Alignment.center,
           child: Text(
-            'play_now'.tr(),
+            'เล่นตอนนี้',
             style: TextStyle(
               color: Colors.white,
               fontFamily: fontMitr,

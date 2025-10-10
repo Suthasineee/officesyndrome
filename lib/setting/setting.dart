@@ -1,5 +1,4 @@
 import 'package:alarm/alarm.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:office_syndrome/helper/app_controller.dart';
@@ -78,7 +77,7 @@ class _SettingPageState extends State<SettingPage> {
                       Container(
                         margin: EdgeInsets.only(left: 20),
                         child: Text(
-                          'setting'.tr(),
+                          'ตั้งเวลา',
                           style: TextStyle(
                             //  color: colorPrimaryDark,
                             fontSize: 35,
@@ -90,7 +89,7 @@ class _SettingPageState extends State<SettingPage> {
                       Container(
                         margin: EdgeInsets.only(top: 48, left: 20),
                         child: Text(
-                          'notification'.tr(),
+                          'การแจ้งเตือน',
                           style: TextStyle(
                             //  color: colorPrimaryDark,
                             fontSize: 35,
@@ -135,7 +134,7 @@ class _SettingPageState extends State<SettingPage> {
           onSelectTwoTimeButton = true;
           onSelectOneTimeButton = false;
           onSelectTimeButton = false;
-          data.text = 'every_2_hour'.tr();
+          data.text = 'ทุก 2 ชั่วโมง';
           data.type = 2;
           data.time = 12;
           data.clock = Duration(seconds: 7200);
@@ -155,7 +154,7 @@ class _SettingPageState extends State<SettingPage> {
                 children: [
                   Container(
                     child: Text(
-                      'every_2_hour'.tr(),
+                      'ทุก 2 ชั่วโมง',
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: fontMitr,
@@ -303,7 +302,7 @@ class _SettingPageState extends State<SettingPage> {
                   Container(
                     margin: EdgeInsets.only(left: 50),
                     child: Text(
-                      'ontime'.tr(),
+                      'กำหนดเวลา',
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: fontMitr,
@@ -330,8 +329,7 @@ class _SettingPageState extends State<SettingPage> {
               ? Column(
                   children: [
                     Text(
-                      'notify_every'.tr() +
-                          " :  " +
+                      "แจ้งเตือนทุก :  " +
                           "${selectedTime.inHours.toString().padLeft(2, '0')}:"
                               "${(selectedTime.inMinutes % 60).toString().padLeft(2, '0')}"
                               " นาที",
@@ -372,7 +370,7 @@ class _SettingPageState extends State<SettingPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          'quantity'.tr(),
+                          'จำนวน',
                           style: TextStyle(
                             color: Colors.black,
                             fontFamily: fontMitr,
@@ -382,7 +380,7 @@ class _SettingPageState extends State<SettingPage> {
 
                         _CountNumber(),
                         Text(
-                          'times'.tr(),
+                          'ครั้ง',
                           style: TextStyle(
                             color: Colors.black,
                             fontFamily: fontMitr,
@@ -412,7 +410,7 @@ class _SettingPageState extends State<SettingPage> {
           onSelectTwoTimeButton = false;
           onSelectOneTimeButton = true;
           onSelectTimeButton = false;
-          data.text = 'ทุก 1 ชั่วโมง';
+          data.text = 'ทุก ' + _value.toString() + ' ชั่วโมง';
           data.type = 1;
           data.time = _value;
           data.clock = Duration(seconds: 3600);
@@ -430,15 +428,39 @@ class _SettingPageState extends State<SettingPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    child: Text(
-                      'ทุก 1 ชั่วโมง',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: fontMitr,
-                        fontSize: 18,
+                  // Container(
+                  //   child: Text(
+                  //     'ทุก 1 ชั่วโมง',
+                  //     style: TextStyle(
+                  //       color: Colors.black,
+                  //       fontFamily: fontMitr,
+                  //       fontSize: 18,
+                  //     ),
+                  //   ),
+                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        'ทุก',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: fontMitr,
+                          fontSize: 18,
+                        ),
                       ),
-                    ),
+                      SizedBox(width: 15),
+                      _CountNumber(),
+                      SizedBox(width: 15),
+                      Text(
+                        'ชั่วโมง',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: fontMitr,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -481,7 +503,7 @@ class _SettingPageState extends State<SettingPage> {
                 Container(
                   padding: EdgeInsets.only(left: 15),
                   child: Text(
-                    'repeat_notification'.tr(),
+                    'แจ้งเตือนซ้ำ',
                     style: TextStyle(
                       color: Colors.black,
                       fontFamily: fontMitr,
@@ -554,7 +576,7 @@ class _SettingPageState extends State<SettingPage> {
                 Container(
                   padding: EdgeInsets.only(left: 15),
                   child: Text(
-                    'notification_on_time'.tr(),
+                    'แจ้งเตือนตามเวลา',
                     style: TextStyle(
                       color: Colors.black,
                       fontFamily: fontMitr,
@@ -624,7 +646,7 @@ class _SettingPageState extends State<SettingPage> {
           height: 50,
           alignment: Alignment.center,
           child: Text(
-            'save'.tr(),
+            'บันทึก',
             style: TextStyle(
               color: Colors.white,
               fontFamily: fontMitr,

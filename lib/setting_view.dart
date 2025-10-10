@@ -1,7 +1,9 @@
+import 'package:alarm/alarm.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:office_syndrome/helper/app_controller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../helper/colors.dart';
 import 'package:flutter/material.dart';
@@ -57,13 +59,19 @@ class _SettingViewState extends State<SettingView> {
     );
   }
 
+  Future<void> _openLink() async {
+    final Uri url = Uri.parse('https://www.termsfeed.com/live/77c7612f-e8c9-4c19-9d5e-c8ad0586848e');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw Exception('Could not launch $url');
+    }
+  }
+
   cardTermView() {
     return InkWell(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (_) => CardSelectPage(1)),
-        // );
+       _openLink();
       },
       child: Container(
         height: 60,
@@ -106,6 +114,7 @@ class _SettingViewState extends State<SettingView> {
   cardNotificationView() {
     return InkWell(
       onTap: () {
+        Alarm.stopAll();
         // Navigator.push(
         //   context,
         //   MaterialPageRoute(builder: (_) => CardSelectPage(1)),
