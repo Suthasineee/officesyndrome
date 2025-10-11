@@ -92,7 +92,7 @@ class _SettingViewState extends State<SettingView> {
               Container(
                 padding: EdgeInsets.only(left: 15),
                 child: Text(
-                  'terms_and_Conditions_of_Service'.tr(),
+                  'ข้อกำหนดและเงื่อนไขการใช้งาน',
                   style: TextStyle(
                     color: Colors.black,
                     fontFamily: fontMitr,
@@ -139,7 +139,7 @@ class _SettingViewState extends State<SettingView> {
               Container(
                 padding: EdgeInsets.only(left: 15),
                 child: Text(
-                  'turn_on_notifications'.tr(),
+                  'เปิดการแจ้งเตือน',
                   style: TextStyle(
                     color: Colors.black,
                     fontFamily: fontMitr,
