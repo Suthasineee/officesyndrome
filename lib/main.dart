@@ -14,11 +14,12 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 import 'helper/app_controller.dart';
 import 'helper/application.dart';
+import 'dart:io' show Platform;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await Alarm.init();
+
   await EasyLocalization.ensureInitialized();
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
@@ -32,7 +33,12 @@ Future<void> main() async {
   } // Initialize time zone
   //tz.initializeTimeZones();
   // requestNotificationPermission();
-  NotificationService().init();
+  if (Platform.isIOS) {
+    NotificationService().init();
+    await Alarm.init();
+  } else {
+    await Alarm.init();
+  }
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp, // บังคับแนวตั้งปกติ
   ]);

@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:office_syndrome/helper/app_controller.dart';
 import 'package:office_syndrome/helper/colors.dart';
+import 'package:office_syndrome/helper/notificationService.dart';
 import 'package:video_player/video_player.dart';
+import 'dart:io' show Platform;
 
 class VideoPage extends StatefulWidget {
   int id;
@@ -33,7 +35,12 @@ class _VideoPageState extends State<VideoPage> {
         } // เริ่มเล่นอัตโนมัติ
       });
 
-    Alarm.stop(widget.id);
+    if (Platform.isIOS) {
+     NotificationService().cancelID(widget.id);
+       Alarm.stop(widget.id);
+    } else {
+      Alarm.stop(widget.id);
+    }
   }
 
   String _format(Duration d) {

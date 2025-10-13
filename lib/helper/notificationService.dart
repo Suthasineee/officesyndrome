@@ -39,9 +39,10 @@ class NotificationService {
     await _notificationsPlugin.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
-      //  _handleNotificationTap(response.payload);
+        _handleNotificationTap(response);
       },
-
+      // (optional) secondary callback for action buttons:
+    //  onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
       // สำคัญสำหรับ Android เมื่อแอปไม่อยู่ foreground/terminated
       // onDidReceiveBackgroundNotificationResponse:
       //     onDidReceiveBackgroundNotificationResponse,
@@ -54,11 +55,19 @@ class NotificationService {
         ?.requestNotificationsPermission();
   }
 
-  // void _handleNotificationTap(String? payload) {
-  //   Application.navigatorKey.currentState?.push(
-  //     MaterialPageRoute(builder: (_) => VideoPage()),
-  //   );
+  // @pragma('vm:entry-point')
+  // void notificationTapBackground(NotificationResponse response) {
+  //   // You can persist the payload somewhere if needed; navigation must happen when app is resumed.
+  //   _handleNotificationTap(response);
   // }
+
+  void _handleNotificationTap(payload) {
+    final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+    Application.navigatorKey.currentState?.push(
+      MaterialPageRoute(builder: (_) => VideoPage(payload.id)),
+    );
+  }
 
   // @pragma('vm:entry-point')
   // void onDidReceiveBackgroundNotificationResponse(
@@ -69,43 +78,41 @@ class NotificationService {
   //   );
   // }
 
-  // Future<void> cancelAll() async {
-  //   await _notificationsPlugin.cancelAll();
-  // }
+  Future<void> cancelAll() async {
+    await _notificationsPlugin.cancelAll();
+  }
 
-  // Future<void> cancelID(List<int> id) async {
-  //   for (int i = 0; i < id.length; i++) {
-  //     await _notificationsPlugin.cancel(id[i]);
-  //     print("cancelId:" + id[i].toString());
-  //   }
-  // }
+  Future<void> cancelID(id) async {
+    await _notificationsPlugin.cancel(id);
+  }
 
-  // Future<void> scheduleDailyNotification(DateTime selectedTime, int id) async {
-  //   if (selectedTime.isBefore(DateTime.now())) {
-  //     selectedTime = selectedTime.add(const Duration(days: 1));
-  //   }
-  //   final tz.TZDateTime scheduledTime = tz.TZDateTime.from(
-  //     selectedTime,
-  //     tz.local,
-  //   );
-  //   try {
-  //     await _notificationsPlugin.zonedSchedule(
-  //       id,
-  //       'ป้องกันออฟฟิศซินโดรม', // title
-  //       'ถึงเวลาขยับร่างกาย', // body
-  //       scheduledTime,
-  //       _notificationDetails(id),
+  Future<void> scheduleDailyNotification(
+    DateTime selectedTime,
+    int count,
+  ) async {
+    if (selectedTime.isBefore(DateTime.now())) {
+      selectedTime = selectedTime.add(const Duration(days: 1));
+    }
+    final tz.TZDateTime scheduledTime = tz.TZDateTime.from(
+      selectedTime,
+      tz.local,
+    );
+    try {
+      await _notificationsPlugin.zonedSchedule(
+        count,
+        'ป้องกันออฟฟิศซินโดรม', // title
+        'ถึงเวลาขยับร่างกาย', // body
+        scheduledTime,
+        _notificationDetails(count),
+        matchDateTimeComponents: DateTimeComponents.time,
+        androidScheduleMode: AndroidScheduleMode.exact,
+      );
 
-  //       matchDateTimeComponents: DateTimeComponents.time,
-
-  //       androidScheduleMode: AndroidScheduleMode.exact,
-  //     );
-  //     print("send:" + id.toString());
-  //     debugPrint('Notification scheduled successfully');
-  //   } catch (e) {
-  //     debugPrint('Error scheduling notification: $e');
-  //   }
-  // }
+      debugPrint('Notification scheduled successfully');
+    } catch (e) {
+      debugPrint('Error scheduling notification: $e');
+    }
+  }
 
   NotificationDetails _notificationDetails(count) {
     return NotificationDetails(
@@ -116,18 +123,11 @@ class NotificationService {
         importance: Importance.max,
         priority: Priority.high,
         showWhen: false,
-        playSound: true,
-        sound: RawResourceAndroidNotificationSound('alarm'),
-        fullScreenIntent: true,
-        timeoutAfter: 15000,
       ),
       iOS: DarwinNotificationDetails(
+        sound: 'alarm.mp3',
         presentAlert: true,
         presentSound: true,
-        presentBadge: true,
-        criticalSoundVolume: 1,
-        interruptionLevel: InterruptionLevel.critical,
-        sound: 'alarm.wav',
       ),
     );
   }

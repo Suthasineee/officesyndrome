@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'dart:io' show Platform;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -36,12 +36,30 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
+    if (Platform.isIOS) {
+      NotificationService().cancelAll();
+    }
     getMenu();
     getData();
     initNoti();
-    // Alarm.stopAll();
+
+    notificationData.forEach((item) {
+      if (item.date!.day == DateTime.now().day &&
+          item.date!.hour == DateTime.now().hour &&
+          item.date!.minute == DateTime.now().minute &&
+          item.startAt != 3) {
+        item.startAt = 3;
+        print("VideoPage2");
+        print(" item.startAt:" + item.startAt.toString());
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => VideoPage(0)),
+        );
+      }
+    });
     super.initState();
   }
+
   bool isOpen = false;
   getMenu() async {
     await FirebaseFirestore.instance.collection("menu").get().then((value) {
@@ -70,33 +88,23 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       }
     } else {}
     _ringSub = Alarm.ringing.listen((alarmSet) {
+      print("Alarm:ringing");
+      NotificationService().cancelAll();
       final ids = alarmSet.alarms.map((a) => a.id).toList();
       final currentId = ids.first;
-      id = currentId;
-      i++;
-      // if(i==1){
-      //      if (_navCooldown?.isActive ?? false) return;
-      // _navCooldown = Timer(_cooldown, () {i=0;});
-      int _seconds = 1;
-      Timer? timer;
-      //  Timer.periodic(Duration(seconds: 5), (timer) async {
-      _seconds++;
-      //   final exists = (await Alarm.getAlarm(id)) != null;
-      // if (!exists) {
-      //  timer.cancel();
-      // }
-      // if (_seconds == 4 && exists) {
-      //  timer.cancel();
-      if (!Navigator.canPop(context)) {
+      var data;
+      notificationData.forEach((item) {
+        data = item;
+        if (item.id == currentId) {
+          item.startAt = 3;
+        }
+      });
+      if (!Navigator.canPop(context) && data.startAt != 3) {
+        print("VideoPage1");
         Application.navigatorKey.currentState?.push(
           MaterialPageRoute(builder: (_) => VideoPage(currentId)),
         );
       }
-      //  }
-      //  });
-
-      //}
-      // Alarm.stop(currentId);
     });
   }
 
@@ -108,7 +116,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       loopAudio: true,
       vibrate: true,
       allowAlarmOverlap: true,
-      warningNotificationOnKill: Platform.isIOS,
+      warningNotificationOnKill: Platform.isLinux,
       androidFullScreenIntent: false,
       volumeSettings: VolumeSettings.fade(
         volume: 0.7,
@@ -140,13 +148,17 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void _startTimer(int time, count) {
-    DateTime selectedTime = DateTime.now().add(Duration(seconds: time - 2));
+    DateTime selectedTime = DateTime.now().add(Duration(seconds: time));
     // if (selectedTime.isBefore(DateTime.now())) {
     //   selectedTime.add(Duration(days: 1));
     // }
     // For testing purposes
-    // NotificationService().scheduleDailyNotification(selectedTime, count);
-    setNoti(selectedTime, count);
+    if (Platform.isIOS) {
+      // NotificationService().scheduleDailyNotification(selectedTime, count);
+      setNoti(selectedTime, count);
+    } else {
+      setNoti(selectedTime, count);
+    }
   }
 
   @override
@@ -157,11 +169,25 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  Future<void> requestNotificationPermission() async {
-    if (await Permission.notification.isDenied && !isWarning) {
-      isWarning = true;
-      await Permission.notification.request();
-      // await openAppSettings();
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print("state:" + state.name);
+    if (state == AppLifecycleState.paused) {
+      if (Platform.isIOS) {
+        NotificationService().cancelAll();
+        // Alarm.stopAll();
+        notificationData.forEach((item) async {
+          item.id!.forEach((i) async {
+            if (item.isON!) {
+              NotificationService().scheduleDailyNotification(item.date!, i);
+            }
+          });
+        });
+      }
+    } else if (state == AppLifecycleState.resumed) {
+      print("🟢 App in foreground");
+    } else if (state == AppLifecycleState.detached) {
+      print("🔴 App terminated");
     }
   }
 
@@ -173,6 +199,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       return true;
     }
   }
+
   Widget Profileiew() {
     return InkWell(
       onTap: () async {
@@ -293,7 +320,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    appBar: AppBar(
+      appBar: AppBar(
         elevation: 0,
         backgroundColor: colorPrimary,
         leading: isOpen
@@ -307,10 +334,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 },
               )
             : Container(),
-        actions: [
-        ],
+        actions: [],
       ),
-     
+
       backgroundColor: Colors.white,
       bottomNavigationBar: _nextButton(),
       body: Stack(
@@ -393,9 +419,11 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           ],
                         ),
                         SizedBox(height: 10),
-                         isOpen
-                        ? Column(children: [Profileiew(), Learn(), Learn2()])
-                        : Container(),
+                        isOpen
+                            ? Column(
+                                children: [Profileiew(), Learn(), Learn2()],
+                              )
+                            : Container(),
                         notificationData.length < 12 ? addView() : Container(),
                         listNotificationView(),
                       ],
@@ -562,16 +590,17 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   data.date!.hour,
                   data.date!.minute,
                 );
-                int t1 = scheduled.hour * 60 + scheduled.minute;
-                int t2 = now.hour * 60 + now.minute;
-                t1 < t2;
 
-                if (t1 < t2) {
-                  scheduled = scheduled.add(const Duration(days: 1));
-                  print("scheduled:" + scheduled.day.toString());
+                if (Platform.isIOS) {
+                  // NotificationService().scheduleDailyNotification(
+                  //   scheduled,
+                  //   id[0],
+                  // );
+                  setNoti(scheduled, id[0]);
+                } else {
+                  setNoti(scheduled, id[0]);
                 }
 
-                setNoti(scheduled, id[0]);
                 data.id = id;
               }
 
@@ -822,7 +851,16 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           if (dataT.date!.isBefore(DateTime.now())) {
                             dataT.date!.add(Duration(days: 1));
                           }
-                          setNoti(dataT.date!, dataT.id![0]);
+
+                          if (Platform.isIOS) {
+                            // NotificationService().scheduleDailyNotification(
+                            //   dataT.date!,
+                            //   dataT.id![0],
+                            // );
+                            setNoti(dataT.date!, dataT.id![0]);
+                          } else {
+                            setNoti(dataT.date!, dataT.id![0]);
+                          }
                         }
                       } else {
                         cancelID(dataT.id![0]!);
@@ -863,12 +901,14 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               final ids = alarmSet.alarms.map((a) => a.id).toList();
               // ถ้าคุณไม่ได้ให้ซ้อนกัน ปกติจะมีอันเดียว:
               final currentId = ids.first;
+              print("VideoPage3");
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => VideoPage(currentId)),
               );
             });
           } else {
+            print("VideoPage4");
             Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => VideoPage(-1)),
@@ -1024,13 +1064,23 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                     ),
                     onPressed: () async {
                       // await openAppSettings();
-                      final alarms = await Alarm.getAlarms();
-                      final ids = alarms.map((a) => id!).toList();
-                      if (ids.isNotEmpty) {
-                        Alarm.stop(id);
+
+                      if (Platform.isIOS) {
+                        //NotificationService().cancelID(id);
+                        final alarms = await Alarm.getAlarms();
+                        final ids = alarms.map((a) => id!).toList();
+                        if (ids.isNotEmpty) {
+                          Alarm.stop(id);
+                        }
+                      } else {
+                        final alarms = await Alarm.getAlarms();
+                        final ids = alarms.map((a) => id!).toList();
+                        if (ids.isNotEmpty) {
+                          Alarm.stop(id);
+                        }
                       }
                       deleteNotificationData(index);
-
+                      print("VideoPage5");
                       Navigator.pop(context);
                       setState(() {});
                     },
@@ -1052,6 +1102,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   SizedBox(width: 15),
                   InkWell(
                     onTap: () {
+                      print("VideoPage6");
                       Navigator.pop(context);
                     },
                     child: Container(
